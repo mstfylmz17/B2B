@@ -1,0 +1,180 @@
+﻿@using VNNB2B.Models.Hata
+@{
+    ViewData["Title"] = "Departman";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    ParametreHata.Icerik = "";
+}
+
+<nav class="breadcrumb-one" aria-label="breadcrumb" style="margin-top:20px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </a>
+        </li>
+        <li class="breadcrumb-item active"><a href="#">Departmanlar</a></li>
+    </ol>
+</nav>
+
+<div class="row layout-top-spacing" id="cancel-row">
+    <div class="col-xl-3 layout-spacing">
+        <div class="widget-content widget-content-area br-6">
+            <div class="title">
+                <h4>Yeni Departman Kaydı</h4>
+            </div>
+            <form id="EklemeForm">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-md-12 mb-12">
+                            <label>Departman Adı</label>
+                            <input type="text" class="form-control" placeholder="Departman Adı" id="DepartmanAdi" autofocus required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer md-button">
+                    <button type="button" onclick="AddForm()" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-xl-8 layout-spacing">
+        <div class="widget-content widget-content-area br-6">
+            <div class="table-responsive mb-4 mt-4">
+                <table id="myTable" class="table table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Departman</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/Template/plugins/table/datatable/datatables.css">
+<link rel="stylesheet" type="text/css" href="/Template/plugins/table/datatable/dt-global_style.css">
+<link rel="stylesheet" type="text/css" href="/Template/plugins/table/datatable/custom_dt_multiple_tables.css">
+
+<script>
+    var myDataTable;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#myTable', {
+            ajax: {
+                url: '/ParametreApi/DepartmanList',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    console.log(xhr.status);
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                { data: 'DepartmanAdi' },
+                {
+                    data: 'ID',
+                    render: function (data, type, full, meta) {
+                        return '<center><button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">< path d = "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" /><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" /></svg></button></center>'
+                    }
+                }
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            }
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        initializeDataTable();
+    })
+    function sil(element) {
+        swal({
+            title: 'Emin Misin?',
+            text: "Kayıt Silinecek!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                submitForm(element);
+            }
+        })
+    }
+    function submitForm(element) {
+        $.ajax({
+            type: "POST",
+            url: "/ParametreApi/DepartmanSil/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
+    function AddForm() {
+        var formData = {
+            DepartmanAdi: $("#DepartmanAdi").val(),
+        };
+        $.ajax({
+            type: "get",
+            url: "/ParametreApi/DepartmanEkle",
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                swal({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                $("#DepartmanAdi").val('');
+                tabloGuncelle();
+            }
+        });
+    }
+</script>

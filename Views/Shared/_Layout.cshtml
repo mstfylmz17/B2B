@@ -1,0 +1,249 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>Admin Panel</title>
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <link href="/Template/assets/css/loader.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="/Template/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Template/assets/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="/Template/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
+    <link href="/Template/assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />
+    <link href="/Template/assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="alt-menu sidebar-noneoverflow">
+    <div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
+    <div class="header-container" style="background-color:white">
+        <header class="header navbar navbar-expand-sm">
+
+            <a href="javascript:void(0);" class="sidebarCollapse" style="color:black" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+
+            <div class="nav-logo align-self-center">
+                <a class="navbar-brand" href="#"><img alt="logo" src="~/Resimler/logo.jpg"> </a>
+            </div>
+
+            <ul class="navbar-item flex-row mr-auto">
+            </ul>
+
+            <ul class="navbar-item flex-row nav-dropdowns" style="color:black">
+
+                <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1" style="color:black">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="media" style="color:black">
+                            <div class="media-body align-self-center" style="color:black">
+                                <h6 style="color:black">Andy King</h6>
+                                <p style="color:black">Manager</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="user-profile-section">
+                            <div class="media mx-auto slack">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slack"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"></path><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"></path><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"></path><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"></path><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"></path><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"></path><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"></path></svg>
+                                <div class="media-body">
+                                    <h5>Slack</h5>
+                                    <p>5</p>
+                                </div>
+                            </div>
+                            <div class="media mx-auto trello">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trello"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>
+                                <div class="media-body">
+                                    <h5>Trello</h5>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="user_profile.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> <span> Profile</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="apps_mailbox.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg> <span> Inbox</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="auth_lockscreen.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Lock Screen</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="auth_login.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> <span>Log Out</span>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </header>
+    </div>
+    <div class="main-container" id="container">
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
+        <div class="topbar-nav header navbar" role="banner">
+            <nav id="topbar">
+                <ul class="navbar-nav theme-brand flex-row  text-center">
+                    <li class="nav-item theme-logo">
+                        <a href="#">
+                            <img src="~/Resimler/logo.jpg" class="navbar-logo" alt="logo">
+                        </a>
+                    </li>
+                </ul>
+                <ul class="list-unstyled menu-categories" id="topAccordion">
+                    <li class="menu single-menu">
+                        <a href="/Admin" class="dropdown-toggle">
+                            <div class="">
+                                <span>AnaSayfa</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu single-menu">
+                        <a href="#app" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <span>Sipariş</span>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="app" data-parent="#topAccordion">
+                            <li>
+                                <a href="/Siparis/Aktif"> Aktif </a>
+                            </li>
+                            <li>
+                                <a href="/Siparis/Gecmis"> Geçmiş </a>
+                            </li>
+                            <li>
+                                <a href="/Siparis/KT"> Kısmı Teslimatlar </a>
+                            </li>
+                            <li>
+                                <a href="/Siparis/TesBek"> Teslimat Bekleyenler </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu single-menu">
+                        <a href="#app" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <span>Satın Alma</span>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="app" data-parent="#topAccordion">
+                            <li>
+                                <a href="/SatinAlma/Aktif"> Aktif </a>
+                            </li>
+                            <li>
+                                <a href="/SatinAlma/Gecmis"> Geçmiş </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu single-menu">
+                        <a href="#app" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <span>Ürünler</span>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="app" data-parent="#topAccordion">
+                            <li>
+                                <a href="/Hammadde"> Hammadde </a>
+                            </li>
+                            <li>
+                                <a href="/YariMamul"> Yarı Mamul </a>
+                            </li>
+                            <li>
+                                <a href="/Mamul"> Mamul </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu single-menu">
+                        <a href="/Bayi" class="dropdown-toggle">
+                            <div class="">
+                                <span>Bayiler</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu single-menu">
+                        <a href="/Tedarikci" class="dropdown-toggle">
+                            <div class="">
+                                <span>Tedarikçiler</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu single-menu">
+                        <a href="/Odemeler" class="dropdown-toggle">
+                            <div class="">
+                                <span>Ödemeler</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu single-menu">
+                        <a href="#app" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <span>Parametreler</span>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="app" data-parent="#topAccordion">
+                            <li>
+                                <a href="/Parametre/Birim"> Birimler </a>
+                            </li>
+                            <li>
+                                <a href="/Parametre/Departman"> Departmanlar </a>
+                            </li>
+                            <li>
+                                <a href="/Parametre/Kategori"> Kategoriler </a>
+                            </li>
+                            <li>
+                                <a href="/Parametre/Kullanici"> Kullanıcılar </a>
+                            </li>
+                            <li>
+                                <a href="/Parametre/Yetki"> Yetki Tanımları </a>
+                            </li>
+                            <li>
+                                <a href="/Parametre/Ozellik"> Ürün Özellikleri  </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu single-menu">
+                        <a href="/Login/Cikis" class="dropdown-toggle">
+                            <div class="">
+                                <span>Çıkış</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div id="content" class="main-content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="/Template/assets/js/loader.js"></script>
+    <script src="/Template/assets/js/libs/jquery-3.1.1.min.js"></script>
+    <script src="/Template/bootstrap/js/popper.min.js"></script>
+    <script src="/Template/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/Template/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/Template/assets/js/app.js"></script>
+    <script>
+        $(document).ready(function () {
+            App.init();
+        });
+    </script>
+    <script src="/Template/assets/js/custom.js"></script>
+    <script src="/Template/plugins/highlight/highlight.pack.js"></script>
+    <script src="/Template/plugins/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+    <script src="/Template/plugins/bootstrap-maxlength/custom-bs-maxlength.js"></script>
+</body>
+</html>
