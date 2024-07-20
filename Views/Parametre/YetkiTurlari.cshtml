@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Birim";
+    ViewData["Title"] = "YetkiTurlari";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -26,7 +26,7 @@
 <nav class="breadcrumb-one" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
-        <li class="breadcrumb-item"><a href="#">Birimler</a></li>
+        <li class="breadcrumb-item"><a href="#">Yetki Tanımları</a></li>
     </ol>
 </nav>
 <div class="row">
@@ -36,14 +36,14 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Birim Ekle</h4>
+                            <h4>Yetki Tanımı Ekle</h4>
                         </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
                     <form>
                         <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="BirimAdi" aria-describedby="emailHelp1" placeholder="Birim Adı">
+                            <input type="text" class="form-control" id="YetkiAdi" aria-describedby="emailHelp1" placeholder="Yetki Tanımı">
                         </div>
                         <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
                     </form>
@@ -57,7 +57,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Birimler</h4>
+                            <h4>Yetki Tanımları</h4>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <table id="myTable" class="table table-hover" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Birim</th>
+                                    <th>Yetki</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -88,7 +88,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/ParametreApi/BirimList',
+                url: '/ParametreApi/YetkiList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -104,7 +104,7 @@
                 }
             },
             columns: [
-                { data: 'birimAdi' },
+                { data: 'yetkiAdi' },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
@@ -145,7 +145,7 @@
     function submitForm(element) {
         $.ajax({
             type: "POST",
-            url: "/ParametreApi/BirimSil/" + element,
+            url: "/ParametreApi/YetkiSil/" + element,
             dataType: "json",
             success: function (result) {
                 swal.fire({
@@ -160,11 +160,11 @@
     }
     function AddForm() {
         var formData = {
-            BirimAdi: $("#BirimAdi").val(),
+            YetkiAdi: $("#YetkiAdi").val(),
         };
         $.ajax({
             type: "POST",
-            url: "/ParametreApi/BirimEkle",
+            url: "/ParametreApi/YetkiEkle",
             data: formData,
             dataType: "json",
             success: function (result) {
@@ -174,7 +174,7 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
-                $("#BirimAdi").val('');
+                $("#YetkiAdi").val('');
                 tabloGuncelle();
             }
         });

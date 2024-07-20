@@ -14,8 +14,11 @@
     <link href="/Template/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="/Template/assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />
     <link href="/Template/assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link href="/Template/assets/css/tables/table-basic.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="alt-menu sidebar-noneoverflow">
+
     <div id="load_screen">
         <div class="loader">
             <div class="loader-content">
@@ -208,7 +211,7 @@
                                 <a href="/Parametre/Kullanici"> Kullanıcılar </a>
                             </li>
                             <li>
-                                <a href="/Parametre/Yetki"> Yetki Tanımları </a>
+                                <a href="/Parametre/YetkiTurlari"> Yetki Tanımları </a>
                             </li>
                             <li>
                                 <a href="/Parametre/Ozellik"> Ürün Özellikleri  </a>
@@ -225,9 +228,14 @@
                 </ul>
             </nav>
         </div>
+    </div>
+
+    <div class="main-container" id="container">
         <div id="content" class="main-content">
             @RenderBody()
         </div>
+        <br />
+        <br />
     </div>
 
     <script src="/Template/assets/js/loader.js"></script>

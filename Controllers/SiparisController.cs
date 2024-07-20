@@ -1,19 +1,18 @@
 ﻿using DataAccessLayer.Concrate;
-using EntityLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using VNNB2B.Models.Hata;
 
 namespace VNNB2B.Controllers
 {
-    public class ParametreController : Controller
+    public class SiparisController : Controller
     {
         private readonly Context c;
-        public ParametreController(Context context)
+        public SiparisController(Context context)
         {
             c = context;
         }
-        public IActionResult Birim()
+        public IActionResult Index()
         {
             HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
@@ -23,11 +22,11 @@ namespace VNNB2B.Controllers
             }
             else
             {
-                ViewBag.hata = ParametreHata.Icerik;
+                ViewBag.hata = SiparisHata.Icerik;
                 return View();
             }
         }
-        public IActionResult Departman()
+        public IActionResult Aktif()
         {
             HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
@@ -37,11 +36,11 @@ namespace VNNB2B.Controllers
             }
             else
             {
-                ViewBag.hata = ParametreHata.Icerik;
+                ViewBag.hata = SiparisHata.Icerik;
                 return View();
             }
         }
-        public IActionResult YetkiTurlari()
+        public IActionResult Gecmis()
         {
             HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
@@ -51,11 +50,11 @@ namespace VNNB2B.Controllers
             }
             else
             {
-                ViewBag.hata = ParametreHata.Icerik;
+                ViewBag.hata = SiparisHata.Icerik;
                 return View();
             }
         }
-        public IActionResult Kategori()
+        public IActionResult KT()
         {
             HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
@@ -65,11 +64,11 @@ namespace VNNB2B.Controllers
             }
             else
             {
-                ViewBag.hata = ParametreHata.Icerik;
+                ViewBag.hata = SiparisHata.Icerik;
                 return View();
             }
         }
-        public IActionResult Kullanici()
+        public IActionResult TesBek()
         {
             HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
@@ -79,20 +78,11 @@ namespace VNNB2B.Controllers
             }
             else
             {
-
-                List<SelectListItem> departman = (from x in c.Departmans.Where(x => x.Durum == true).ToList()
-                                                  select new SelectListItem
-                                                  {
-                                                      Text = x.DepartmanAdi.ToString(),
-                                                      Value = x.ID.ToString()
-                                                  }).ToList();
-
-                ViewBag.departman = departman;
-                ViewBag.hata = ParametreHata.Icerik;
+                ViewBag.hata = SiparisHata.Icerik;
                 return View();
             }
         }
-        public IActionResult KullaniciDetay(int id)
+        public IActionResult Gun()
         {
             HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
@@ -102,51 +92,11 @@ namespace VNNB2B.Controllers
             }
             else
             {
-                List<SelectListItem> departman = (from x in c.Departmans.Where(x => x.Durum == true).ToList()
-                                                  select new SelectListItem
-                                                  {
-                                                      Text = x.DepartmanAdi.ToString(),
-                                                      Value = x.ID.ToString()
-                                                  }).ToList();
-
-                ViewBag.departman = departman;
-
-                List<SelectListItem> yetkiler = (from x in c.YetkiTurlaris.Where(x => x.Durum == true).ToList()
-                                                 select new SelectListItem
-                                                 {
-                                                     Text = x.YetkiAdi.ToString(),
-                                                     Value = x.ID.ToString()
-                                                 }).ToList();
-
-                ViewBag.yetkiler = yetkiler;
-                ViewBag.id = id;
-                ViewBag.hata = ParametreHata.Icerik;
-                var kul = c.Kullanicis.FirstOrDefault(v => v.ID == id);
-                DtoKullanici model = new DtoKullanici();
-                model.AdSoyad = kul.AdSoyad;
-                model.KullaniciAdi = kul.KullaniciAdi;
-                model.DepartmanID = c.Departmans.FirstOrDefault(v => v.ID == kul.DepartmanID).DepartmanAdi.ToString();
-                model.Adres = kul.Adres;
-                model.EPosta = kul.EPosta;
-                model.Telefon = kul.Telefon;
-                return View(model);
-            }
-        }
-        public IActionResult Ozellik()
-        {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
-            {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
-                return RedirectToAction("Index", "Login");
-            }
-            else
-            {
-                ViewBag.hata = ParametreHata.Icerik;
+                ViewBag.hata = SiparisHata.Icerik;
                 return View();
             }
         }
-        public IActionResult OzellikDetay(int id)
+        public IActionResult Hafta()
         {
             HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
@@ -156,8 +106,35 @@ namespace VNNB2B.Controllers
             }
             else
             {
-                ViewBag.id = id;
-                ViewBag.hata = ParametreHata.Icerik;
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult Ay()
+        {
+            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult Yil()
+        {
+            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.hata = SiparisHata.Icerik;
                 return View();
             }
         }
