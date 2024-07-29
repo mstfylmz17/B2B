@@ -30,6 +30,7 @@ namespace VNNB2B.Controllers.Api
                 if (x.VergiNo != null) list.VergiNo = x.VergiNo.ToString(); else list.VergiNo = "Tanımlanmamış...";
                 if (x.VergiDairesi != null) list.VergiDairesi = x.VergiDairesi.ToString(); else list.VergiDairesi = "Tanımlanmamış...";
                 if (x.Yetkili != null) list.Yetkili = x.Yetkili.ToString(); else list.Yetkili = "Tanımlanmamış...";
+                if (x.TedarikciKodu != null) list.TedarikciKodu = x.TedarikciKodu.ToString(); else list.TedarikciKodu = "Tanımlanmamış...";
                 ham.Add(list);
             }
             return Json(ham);
@@ -52,6 +53,7 @@ namespace VNNB2B.Controllers.Api
                     de.Yetkili = d.Yetkili;
                     de.VergiNo = d.VergiNo;
                     de.VergiDairesi = d.VergiDairesi;
+                    de.TedarikciKodu = d.TedarikciKodu;
                     de.Durum = true;
                     c.Tedarikcilers.Add(de);
                     c.SaveChanges();
@@ -104,6 +106,7 @@ namespace VNNB2B.Controllers.Api
                 if (d.Yetkili != null) de.Yetkili = d.Yetkili;
                 if (d.VergiNo != null) de.VergiNo = d.VergiNo;
                 if (d.VergiDairesi != null) de.VergiDairesi = d.VergiDairesi;
+                if (d.TedarikciKodu != null) de.TedarikciKodu = d.TedarikciKodu;
                 c.SaveChanges();
                 result = new { status = "success", message = "Güncelleme Başarılı..." };
             }

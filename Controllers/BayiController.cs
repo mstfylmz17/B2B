@@ -14,7 +14,7 @@ namespace VNNB2B.Controllers
         }
         public IActionResult Index()
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
@@ -28,7 +28,7 @@ namespace VNNB2B.Controllers
         }
         public IActionResult Detay(int id)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
@@ -47,6 +47,7 @@ namespace VNNB2B.Controllers
                 if (bayi.Yetkili != null) veri.Yetkili = bayi.Yetkili; else veri.Yetkili = "Tanımlı Değil...";
                 if (bayi.IskontoOran != null) veri.IskontoOran = bayi.IskontoOran.ToString(); else veri.IskontoOran = "Tanımlı Değil...";
                 if (bayi.AlisVerisLimiti != null) veri.AlisVerisLimiti = bayi.AlisVerisLimiti.ToString(); else veri.AlisVerisLimiti = "Tanımlı Değil...";
+                if (bayi.BayiKodu != null) veri.BayiKodu = bayi.BayiKodu.ToString(); else veri.BayiKodu = "Tanımlı Değil...";
                 ViewBag.id = id;
                 ViewBag.hata = BayiHata.Icerik;
                 return View(veri);

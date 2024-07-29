@@ -32,6 +32,7 @@ namespace VNNB2B.Controllers.Api
                 if (x.Yetkili != null) list.Yetkili = x.Yetkili.ToString(); else list.Yetkili = "Tanımlanmamış...";
                 if (x.IskontoOran != null) list.IskontoOran = x.IskontoOran.ToString(); else list.IskontoOran = "Tanımlanmamış...";
                 if (x.AlisVerisLimiti != null) list.AlisVerisLimiti = x.AlisVerisLimiti.ToString(); else list.AlisVerisLimiti = "Tanımlanmamış...";
+                if (x.BayiKodu != null) list.BayiKodu = x.BayiKodu.ToString(); else list.BayiKodu = "Tanımlanmamış...";
                 ham.Add(list);
             }
             return Json(ham);
@@ -56,6 +57,7 @@ namespace VNNB2B.Controllers.Api
                     de.Yetkili = d.Yetkili;
                     de.IskontoOran = 0;
                     de.AlisVerisLimiti = 0;
+                    de.BayiKodu = d.BayiKodu;
                     de.Durum = true;
                     c.Bayilers.Add(de);
                     c.SaveChanges();
@@ -109,6 +111,7 @@ namespace VNNB2B.Controllers.Api
                 if (d.Yetkili != null) de.Yetkili = d.Yetkili;
                 if (d.IskontoOran != null) de.IskontoOran = d.IskontoOran;
                 if (d.AlisVerisLimiti != null) de.AlisVerisLimiti = d.AlisVerisLimiti;
+                if (d.BayiKodu != null) de.BayiKodu = d.BayiKodu;
                 c.SaveChanges();
                 result = new { status = "success", message = "Güncelleme Başarılı..." };
             }
