@@ -40,7 +40,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult BayiEkle(Bayiler d)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -77,7 +77,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult BayiSil(int id)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -97,7 +97,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult BayiDuzenle(Bayiler d)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -144,7 +144,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult BayiSifreDeğis(int id, string Yeni, string Yeni1, string Eski)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Bayilers.FirstOrDefault(v => v.ID == kulid);

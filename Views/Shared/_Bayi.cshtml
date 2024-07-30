@@ -19,163 +19,132 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bayi Panel</title>
-    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
-    <link href="/Template/assets/css/loader.css" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
-    <link href="/Template/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="/Template/assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="/Template/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="/Template/assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />
-    <link href="/Template/assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
-    <link href="/Template/assets/css/tables/table-basic.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="/Tema/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/Tema/dist/css/adminlte.min.css">
 </head>
-<body class="alt-menu sidebar-noneoverflow">
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+        <hr />
+        @*NavBar*@
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+            <div class="container">
+                <a href="#" class="navbar-brand">
+                    <img src="/Resimler/logo.jpg" alt="Logo" class="brand-image elevation-3" style="opacity: .8">
+                </a>
 
-    <div id="load_screen">
-        <div class="loader">
-            <div class="loader-content">
-                <div class="spinner-grow align-self-center"></div>
-            </div>
-        </div>
-    </div>
-    @*Nav Bar*@
-    <div class="header-container" style="background-color:white;">
-        <header class="header navbar navbar-expand-sm">
-            
-            <ul class="navbar-item flex-row mr-auto">
-                <center><h4 style="color:darkred">@bayi.Unvan | @bayi.BayiKodu</h4></center>
-            </ul>
+                <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <ul class="navbar-item flex-row nav-dropdowns" style="color:black">
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/BLogin/menu" class="nav-link">ANASAYFA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/BLogin/Urunler" class="nav-link">ÜRÜNLER</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/BLogin/Siparis" class="nav-link">SİPARİŞLERİM</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/BLogin/Odeme" class="nav-link">ÖDEMELERİM</a>
+                        </li>
+                    </ul>
 
-                <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1" style="color:black">
-                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="media" style="color:black">
-                            <div class="media-body align-self-center" style="color:black">
-                                <h6 style="color:black">Demo</h6>
-                                <p style="color:black">Yönetici</p>
-                            </div>
-                        </div>
-                    </a>
+                    @* <!-- SEARCH FORM -->
+                    <form class="form-inline ml-0 ml-md-3">
+                    <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                    </button>
+                    </div>
+                    </div>
+                    </form> *@
+                </div>
 
-                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
-                        <div class="dropdown-item">
-                            <a href="#">
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fas fa-user"></i>
+                            @bayi.Yetkili
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-header">@bayi.Unvan</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
                                 Hesap Bilgilerim
                             </a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a href="#">
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
                                 Siparişlerim
                             </a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a href="#">
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
                                 Ödeme Geçmişim
                             </a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a href="#">
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
                                 Ödeme Yap
                             </a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a href="#">
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
                                 Destek Merkezi
                             </a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a href="/BLogin/Cikis">
+                            <div class="dropdown-divider"></div>
+                            <a href="/BLogin/Cikis" class="dropdown-item">
                                 Çıkış Yap
                             </a>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </header>
-    </div>
-    @*Body*@
-    <div class="main-container" id="container">
-        <div class="overlay"></div>
-        <div class="search-overlay"></div>
-        <div class="topbar-nav header navbar" role="banner">
-            <nav id="topbar">
-                <ul class="navbar-nav theme-brand flex-row  text-center">
-                    <li class="nav-item theme-logo">
-                        <a href="#">
-                            <img src="~/Resimler/logo.jpg" class="navbar-logo" alt="logo">
-                        </a>
                     </li>
                 </ul>
-                <ul class="list-unstyled menu-categories" id="topAccordion">
-                    <li class="menu single-menu">
-                        <div class="" style="margin-right:50px;">
-                            <a class="navbar-brand" href="#">
-                                <img alt="logo" src="~/Resimler/logo.jpg" height="60" width="120">
-                            </a>
-                        </div>
-                    </li>
-                    <li class="menu single-menu">
-                        <a href="/BLogin" class="dropdown-toggle">
-                            <div class="">
-                                <span>AnaSayfa</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="menu single-menu">
-                        <a href="/Blogin/Urunler" class="dropdown-toggle">
-                            <div class="">
-                                <span>Ürünler</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="menu single-menu">
-                        <a href="/BLogin/Siapris" class="dropdown-toggle">
-                            <div class="">
-                                <span>Siparişlerim</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="menu single-menu">
-                        <a href="/BLogin/Odemeler" class="dropdown-toggle">
-                            <div class="">
-                                <span>Ödemelerim</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-    @*Footer*@
-    <div class="main-container" id="container">
-        <div id="content" class="main-content">
-            <div style="margin:75px;" class="card">
-                <div class="card-body">
+            </div>
+        </nav>
+        @*Main*@
+        <div class="content-wrapper">
+            <div class="content">
+                <div class="container">
+                    <br />
                     @RenderBody()
+                    <hr />
+                    <div class="card" style="background-color:transparent;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img src="/Resimler/logo.jpg" width="250" /><br /><br />
+                                    <p>
+                                        Ofis Mobilyası sektöründeki 20 yıllık tecrübemizle sizlere hizmet ediyoruz.
+                                    </p>
+                                </div>
+                                <div class="col-4">
+                                    <h5>Menü</h5>
+                                    <br />
+                                    <a href="/BLogin/menu" class="btn btn-light btn-sm">ANASAYFA</a><br />
+                                    <a href="/BLogin/Urunler" class="btn btn-light btn-sm">ÜRÜNLER</a><br />
+                                    <a href="/BLogin/Siparis" class="btn btn-light btn-sm">SİPARİŞLERİM</a><br />
+                                    <a href="/BLogin/Odeme" class="btn btn-light btn-sm">ÖDEMELERİM</a>
+                                </div>
+                                <div class="col-4">
+                                    <img src="/Resimler/Kart.jpg" width="350" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <footer class="main-footer">
+            <strong>@DateTime.Now.Year </strong> Vanna Ofis Mobilyaları - Bayi Paneli
+        </footer>
     </div>
-
-    <script src="/Template/assets/js/loader.js"></script>
-    <script src="/Template/assets/js/libs/jquery-3.1.1.min.js"></script>
-    <script src="/Template/bootstrap/js/popper.min.js"></script>
-    <script src="/Template/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/Template/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="/Template/assets/js/app.js"></script>
-    <script>
-        $(document).ready(function () {
-            App.init();
-        });
-    </script>
-    <script src="/Template/assets/js/custom.js"></script>
-    <script src="/Template/plugins/highlight/highlight.pack.js"></script>
-    <script src="/Template/plugins/bootstrap-maxlength/bootstrap-maxlength.js"></script>
-    <script src="/Template/plugins/bootstrap-maxlength/custom-bs-maxlength.js"></script>
+    <script src="/Tema/plugins/jquery/jquery.min.js"></script>
+    <script src="/Tema/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/Tema/dist/js/adminlte.min.js"></script>
+    <script src="/Tema/dist/js/demo.js"></script>
 </body>
 </html>

@@ -1,0 +1,58 @@
+﻿@using VNNB2B.Models.Hata
+@inject IHttpContextAccessor HttpContextAccessor
+@using DataAccessLayer.Concrate
+@inject Context c
+@{
+    ViewData["Title"] = "Hesap";
+    Layout = "~/Views/Shared/_Bayi.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    BLoginHata.Icerik = "";
+
+    string cerez;
+    HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out cerez);
+    int bayiid = Convert.ToInt32(cerez);
+    var bayi = c.Bayilers.FirstOrDefault(v => v.ID == bayiid);
+}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title m-0">Firma Bilgileri</h5>
+    </div>
+    <div class="card-body">
+        <i class="fas fa-user"> @bayi.Yetkili</i><br />
+        <i class="fas fa-envelope"> @bayi.EPosta</i><br />
+        <i class="fas fa-industry"> @bayi.BayiKodu - @bayi.Unvan</i><br />
+        <i class="fas fa-phone"> @bayi.Telefon</i><br />
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title m-0">Yetkileriniz</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li>Sipariş verdiğiniz zaman mail adresinize bilgi gelmemektedir.</li>
+            <li>Sipariş verdiğiniz zaman firmanızın mail adresinize bilgi gelmemektedir.</li>
+            <li>Kullanıcı hesabınızla oluşturduğunuz siparişleri görme yetkiniz var.</li>
+            <li>Kullanıcı hesabınızla oluşturduğunuz ödeme kayıtlarını görme yetkiniz var.</li>
+            <li>Firmanızın temel işletme bilgilerini görme yetkiniz var.</li>
+        </ul>
+    </div>
+</div>

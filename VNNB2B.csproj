@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Tema\.github\codeql\codeql-config.yml" />
+    <None Include="wwwroot\Tema\.github\CONTRIBUTING.md" />
+    <None Include="wwwroot\Tema\.github\dependabot.yml" />
+    <None Include="wwwroot\Tema\.github\ISSUE_TEMPLATE\bug-report-for-adminlte-v3.1-x.md" />
+    <None Include="wwwroot\Tema\.github\ISSUE_TEMPLATE\feature-request-for-adminlte-v4-x.md" />
+    <None Include="wwwroot\Tema\.github\workflows\ci.yml" />
+    <None Include="wwwroot\Tema\.github\workflows\codeql.yml" />
+    <None Include="wwwroot\Tema\.github\workflows\docs.yml" />
+    <None Include="wwwroot\Tema\.github\workflows\lint.yml" />
     <None Include="wwwroot\Template\assets\img\contact-us-map-pin.svg" />
     <None Include="wwwroot\Template\assets\img\faq.svg" />
     <None Include="wwwroot\Template\assets\img\flag-brl.svg" />

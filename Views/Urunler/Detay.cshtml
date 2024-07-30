@@ -79,6 +79,9 @@
                                 <form id="UrunForm">
                                     <input name="ID" value="@id" id="ID" type="hidden" />
                                     <div class="form-group mb-3">
+                                        @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Kategori : " + Model.UrunKategori, new { @class = "form-control basic", id = "UrunKategoriID" })
+                                    </div>
+                                    <div class="form-group mb-3">
                                         @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü : " + Model.UrunTuru, new { @class = "form-control basic", id = "UrunTuruID" })
                                     </div>
                                     <div class="form-group mb-3">
@@ -261,6 +264,7 @@
         var form = $('#UrunForm')[0];
         var formData = new FormData(form);
         formData.append("ID", $("#ID").val());
+        formData.append("UrunKategoriID", $("#UrunKategoriID").val());
         formData.append("UrunTuruID", $("#UrunTuruID").val());
         formData.append("UrunKodu", $("#UrunKodutxt").val());
         formData.append("UrunAdi", $("#UrunAditxt").val());
@@ -282,6 +286,7 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
+                $("#UrunKategoriID").val('');
                 $("#UrunTuruID").val('');
                 $("#UrunKodutxt").val('');
                 $("#UrunAditxt").val('');

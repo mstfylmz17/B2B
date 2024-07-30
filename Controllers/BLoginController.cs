@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Concrate;
 using EntityLayer.Concrate;
+using EntityLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using VNNB2B.Models.Hata;
 
@@ -60,6 +61,55 @@ namespace VNNB2B.Controllers
             {
                 ViewBag.hata = BLoginHata.Icerik;
                 return View();
+            }
+        }
+        public IActionResult Hesap()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "BLogin");
+            }
+            else
+            {
+                ViewBag.hata = BLoginHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult Urunler()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "BLogin");
+            }
+            else
+            {
+                ViewBag.hata = BLoginHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult UrunDetay(int id)
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "BLogin");
+            }
+            else
+            {
+                var kat = c.UrunKategoris.FirstOrDefault(v => v.ID == id);
+                DtoUrunKategori list = new DtoUrunKategori();
+                list.ID = Convert.ToInt32(kat.ID);
+                if (kat.Adi != null) list.Adi = kat.Adi.ToString(); else list.Adi = "Tanımlanmamış...";
+                list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(kat.Resim);
+                list.Kodu = kat.Kodu;
+                ViewBag.id = id;
+                ViewBag.hata = BLoginHata.Icerik;
+                return View(list);
             }
         }
     }

@@ -1,8 +1,97 @@
-﻿
+﻿@using VNNB2B.Models.Hata
+@inject IHttpContextAccessor HttpContextAccessor
+@using DataAccessLayer.Concrate
+@inject Context c
 @{
     ViewData["Title"] = "menu";
     Layout = "~/Views/Shared/_Bayi.cshtml";
 }
 
-<h1>menu</h1>
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    BLoginHata.Icerik = "";
 
+    string cerez;
+    HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out cerez);
+    int bayiid = Convert.ToInt32(cerez);
+    var bayi = c.Bayilers.FirstOrDefault(v => v.ID == bayiid);
+}
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title m-0">Bilgilendirme</h5>
+    </div>
+    <div class="card-body">
+        <h6 class="card-title">Vanna Ofis Mobilyaları Bayilik Sistemine Hoş Geldiniz...</h6>
+
+        <p class="card-text">
+            Bu sistemden hatasız şekilde sipariş oluşturabilir ve ödemelerinizi yapabilirsiniz. Ayrıca yapmış olduğunuz işlemlerin, her zaman geriye dönük kontrolllerini sağlayabilirsiniz. Ürünlerimizin 3D çizim ve diğer detaylarına ilgili ürünün detay sayfasında bulabilirsiniz.
+            En iyi ve daha fazlası için öneri ve görüşlerinizi info@vnn.com.tr adresinden bizlere ulaştırabilirsiniz.
+        </p>
+        <a href="#" class="btn btn-dark">Download Dosyaları</a>
+        <a href="#" class="btn btn-dark">Ürün Katalog (PDF)</a>
+        <a href="#" class="btn btn-dark">Fiyat Listesi (USD)</a>
+        <a href="#" class="btn btn-dark">Fiyat Listesi (TL)</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Siparişleriniz (Son 10)</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sipariş No</th>
+                            <th>Tarih</th>
+                            <th>Durumu</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SIP-0001</td>
+                            <td>
+                                07.05.2024 06.20.26
+                            </td>
+                            <td>
+                                Tamamı Teslim Edildi
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Kullanıcı Bilgileriniz</h3>
+            </div>
+            <div class="card-body">
+                <i class="fas fa-user"> @bayi.Yetkili</i>  <i class="fas fa-envelope" style="margin-left:5px;"> @bayi.EPosta</i>
+                <br />
+                <i class="fas fa-industry"> @bayi.BayiKodu - @bayi.Unvan</i>
+                <hr />
+                <a href="/BLogin/Hesap" class="btn btn-light btn-sm">Hesap Bilgileri</a>
+            </div>
+        </div>
+    </div>
+</div>
