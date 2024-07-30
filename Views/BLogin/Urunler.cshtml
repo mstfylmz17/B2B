@@ -1,0 +1,107 @@
+﻿@using VNNB2B.Models.Hata
+@{
+    ViewData["Title"] = "Urunler";
+    Layout = "~/Views/Shared/_Bayi.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    BLoginHata.Icerik = "";
+}
+
+<div class="card" style="background-color:white;">
+    <div class="card-body">
+        <h5>Ürünler Listesi</h5>
+        
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="input-group">
+                    <input type="search" class="form-control form-control-sm" placeholder="Ürün Adını Yazınız..." id="search">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-sm btn-default">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <div id="kategori-container" class="row" style="width:100%; color:transparent;"></div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var allData = [];
+        function renderItems(items) {
+            var container = $('#kategori-container');
+            container.empty();
+            var row;
+
+            $.each(items, function (index, item) {
+                if (index % 3 === 0) {
+                    row = $('<div class="row mb-4"></div>');
+                    container.append(row);
+                }
+
+                var col = $('<div class="col-md-4 text-center" style="width:100%; color:transparent; border:none;"></div>');
+                var img = $('<img src="' + item.resim + '" class="img-thumbnail" style="width: 100%; cursor: pointer; border:none;" />');
+                var name = $('<h5 style="color:goldenrod;">' + item.adi + '</h5>');
+
+                img.click(function () {
+                    window.location.href = '/BLogin/UrunDetay?id=' + item.id;
+                });
+
+                col.append(img);
+                col.append(name);
+                row.append(col);
+            });
+        }
+        $.ajax({
+            url: '/ParametreApi/KategoriList',
+            method: 'POST',
+            success: function (data) {
+                allData = data;
+                renderItems(allData);
+            },
+            error: function (xhr, error, thrown) {
+                if (xhr.status === 404) {
+                    Swal.fire({
+                        title: 'Veri alınamadı',
+                        animation: false,
+                        customClass: 'animated tada',
+                        padding: '2em'
+                    });
+                }
+            }
+        });
+        $('#search').on('input', function () {
+            var searchTerm = $(this).val().toLowerCase();
+            var filteredData = allData.filter(function (item) {
+                return item.adi.toLowerCase().includes(searchTerm);
+            });
+            renderItems(filteredData);
+        });
+    });
+</script>

@@ -71,6 +71,9 @@
                                 <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" placeholder="Ünvan : @Model.Unvan">
                             </div>
                             <div class="form-group mb-3">
+                                <input type="text" class="form-control" id="TedarikciKodu" aria-describedby="emailHelp1" placeholder="Tedarikçi Kodu : @Model.TedarikciKodu">
+                            </div>
+                            <div class="form-group mb-3">
                                 <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" placeholder="Telefon : @Model.Telefon">
                             </div>
                             <div class="form-group mb-3">
@@ -212,6 +215,7 @@
             Telefon: $("#Telefon").val(),
             EPosta: $("#EPosta").val(),
             Yetkili: $("#Yetkili").val(),
+            TedarikciKodu: $("#TedarikciKodu").val(),
         };
         $.ajax({
             type: "POST",
@@ -231,6 +235,7 @@
                 $("#Telefon").val('');
                 $("#EPosta").val('');
                 $("#Yetkili").val('');
+                $("#TedarikciKodu").val('');
                 tabloGuncelle();
             }
         });

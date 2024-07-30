@@ -73,6 +73,9 @@
                                         <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" placeholder="Ünvan : @Model.Unvan">
                                     </div>
                                     <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="BayiKodu" aria-describedby="emailHelp1" placeholder="Bayi Kodu : @Model.BayiKodu">
+                                    </div>
+                                    <div class="form-group mb-3">
                                         <input type="text" class="form-control" id="KullaniciAdi" aria-describedby="emailHelp1" placeholder="Kullanıcı Adı : @Model.KullaniciAdi">
                                     </div>
                                     <div class="form-group mb-3">
@@ -236,6 +239,7 @@
             Yetkili: $("#Yetkili").val(),
             IskontoOran: $("#IskontoOran").val(),
             AlisVerisLimiti: $("#AlisVerisLimiti").val(),
+            BayiKodu: $("#BayiKodu").val(),
         };
         $.ajax({
             type: "POST",
@@ -257,6 +261,7 @@
                 $("#Yetkili").val('');
                 $("#IskontoOran").val('');
                 $("#AlisVerisLimiti").val('');
+                $("#BayiKodu").val('');
                 tabloGuncelle();
             }
         });

@@ -1,0 +1,357 @@
+﻿@using VNNB2B.Models.Hata
+@model EntityLayer.Dto.DtoUrunler
+@{
+    ViewData["Title"] = "Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    UrunHata.Icerik = "";
+    int id = Convert.ToInt32(ViewBag.id);
+}
+
+<nav class="breadcrumb-one" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+        <li class="breadcrumb-item"><a href="/Urunler">Ürünler</a></li>
+        <li class="breadcrumb-item active"><a href="#">Ürün Detayları</a></li>
+    </ol>
+</nav>
+<br />
+<br />
+<div class="row">
+    <div class="col-lg-12 col-12 layout-spacing">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>Ürün Bilgileri</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area icon-pill">
+                <ul class="nav nav-pills mb-3 mt-3" id="icon-pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="icon-pills-home-tab" data-toggle="pill" href="#icon-pills-home" role="tab" aria-controls="icon-pills-home" aria-selected="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
+                                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z" />
+                            </svg>
+                            Ürün Kartı
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="icon-pills-ozellik-tab" data-toggle="pill" href="#icon-pills-ozellik" role="tab" aria-controls="icon-pills-ozellik" aria-selected="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-check" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0" />
+                            </svg>
+                            Ürün Özllikleri
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="icon-pills-contact-tab" data-toggle="pill" href="#icon-pills-contact" role="tab" aria-controls="icon-pills-contact" aria-selected="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                            </svg>
+                            Ürün Stokları
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="icon-pills-tabContent">
+                    <div class="tab-pane fade show active" id="icon-pills-home" role="tabpanel" aria-labelledby="icon-pills-home-tab">
+                        <div class="row">
+                            <div class="col-12">
+                                <form id="UrunForm">
+                                    <input name="ID" value="@id" id="ID" type="hidden" />
+                                    <div class="form-group mb-3">
+                                        @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Kategori : " + Model.UrunKategori, new { @class = "form-control basic", id = "UrunKategoriID" })
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü : " + Model.UrunTuru, new { @class = "form-control basic", id = "UrunTuruID" })
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="UrunKodutxt" placeholder="Ürün Kodu : @Model.UrunKodu">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="UrunAditxt" placeholder="Ürün Adı : @Model.UrunAdi">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="UrunAciklamatxt" placeholder="Ürün Açıklama : @Model.UrunAciklama">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="number" class="form-control" id="KritikStokMiktaritxt" placeholder="Kritik Stok Miktarı : @Model.KritikStokMiktari">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="number" class="form-control" id="StokMiktaritxt" placeholder="Güncel Stok Miktarı : @Model.StokMiktari" readonly>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim : " + Model.Birim, new { @class = "form-control basic", id = "BirimID" })
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label>Ürün Resmi</label>
+                                        <img src="@Model.Resim" height="250" width="250" />
+                                        <input type="file" class="form-control-file" id="imagee" name="imagee">
+                                    </div>
+                                    <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="icon-pills-contact" role="tabpanel" aria-labelledby="icon-pills-contact-tab1">
+                        <div class="statbox widget box box-shadow">
+                            <div class="widget-header">
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                        <h4>Ürün Stokları</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-content widget-content-area">
+                                <div class="table-responsive">
+                                    <table id="myTable" class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sipariş No</th>
+                                                <th>Stok Tarihi</th>
+                                                <th>Stok Miktarı</th>
+                                                <th>Ürün Özellikleri</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="icon-pills-ozellik" role="tabpanel" aria-labelledby="icon-pills-ozellik-tab1">
+                        <div class="statbox widget box box-shadow">
+                            <div class="widget-header">
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                        <h4>Ürün Özellikleri</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <form id="OzellikForm">
+                                        <div class="form-group mb-3">
+                                            @Html.DropDownList("UrunOzellikTurlariID", (List<SelectListItem>)ViewBag.urunozellikleri, "Ürün Özelliği Seç... : ", new { @class = "form-control basic", id = "UrunOzellikTurlariID" })
+                                        </div>
+                                        <button type="button" onclick="OzellikEkle()" class="btn btn-primary mt-3">Ekle</button>
+                                    </form>
+                                </div>
+                                <div class="col-8">
+                                    <div class="widget-content widget-content-area">
+                                        <div class="table-responsive">
+                                            <table id="urunozellik" class="table table-hover" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Özellik Tanımı</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    var myDataTable;
+    var myDataTable2;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#myTable', {
+            ajax: {
+                url: '/UrunApi/UrunStokList/@id',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                { data: 'siparisNo' },
+                { data: 'stokTarihi' },
+                { data: 'stokMiktari' },
+                { data: 'urunOzellikleriID' },
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            ordering: false,
+        });
+
+        myDataTable2 = new DataTable('#urunozellik', {
+            ajax: {
+                url: '/UrunApi/UrunOzellikList/@id',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                { data: 'urunOzellikTanimi' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">< path d = "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" /><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" /></svg></button>'
+                    }
+                }
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            ordering: false,
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        if (myDataTable2) {
+            myDataTable2.destroy();
+        }
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        initializeDataTable();
+    })
+    function AddForm() {
+        var form = $('#UrunForm')[0];
+        var formData = new FormData(form);
+        formData.append("ID", $("#ID").val());
+        formData.append("UrunKategoriID", $("#UrunKategoriID").val());
+        formData.append("UrunTuruID", $("#UrunTuruID").val());
+        formData.append("UrunKodu", $("#UrunKodutxt").val());
+        formData.append("UrunAdi", $("#UrunAditxt").val());
+        formData.append("UrunAciklama", $("#UrunAciklamatxt").val());
+        formData.append("KritikStokMiktari", $("#KritikStokMiktaritxt").val());
+        formData.append("BirimID", $("#BirimID").val());
+        formData.append("imagee", $("#imagee").val());
+        $.ajax({
+            type: "POST",
+            url: "/UrunApi/UrunDuzenle",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                $("#UrunKategoriID").val('');
+                $("#UrunTuruID").val('');
+                $("#UrunKodutxt").val('');
+                $("#UrunAditxt").val('');
+                $("#UrunAciklamatxt").val('');
+                $("#KritikStokMiktaritxt").val('');
+                $("#BirimID").val('');
+                $("#imagee").val('');
+                tabloGuncelle();
+            }
+        });
+    }
+    function sil(element) {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Kayıt Silinecek!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                submitForm(element);
+            }
+        })
+    }
+    function submitForm(element) {
+        $.ajax({
+            type: "POST",
+            url: "/UrunApi/OzellikSil/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
+    function OzellikEkle() {
+        var form = $('#OzellikForm')[0];
+        var formData = new FormData(form);
+        formData.append("UrunID", @id);
+        formData.append("UrunOzellikTurlariID", $("#UrunOzellikTurlariID").val());
+        $.ajax({
+            type: "POST",
+            url: "/UrunApi/UrunOzellikEkle",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                $("#UrunOzellikTurlariID").val('');
+                tabloGuncelle();
+            }
+        });
+    }
+</script>

@@ -31,7 +31,7 @@ namespace VNNB2B.Controllers
                     SameSite = SameSiteMode.Strict // Çerez sadece aynı site üzerinden gönderilsin
                 };
 
-                HttpContext.Response.Cookies.Append("EnvanterTakipCerez", kul.ID.ToString(), cookieOptions);
+                HttpContext.Response.Cookies.Append("VNNCerez", kul.ID.ToString(), cookieOptions);
                 AdminHata.Icerik = "Hos Geldin... " + kul.AdSoyad;
                 return RedirectToAction("Index", "Admin");
             }
@@ -43,7 +43,7 @@ namespace VNNB2B.Controllers
         }
         public IActionResult Cikis()
         {
-            HttpContext.Response.Cookies.Delete("EnvanterTakipCerez");
+            HttpContext.Response.Cookies.Delete("VNNCerez");
             return RedirectToAction("Index");
         }
     }

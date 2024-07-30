@@ -1,0 +1,150 @@
+﻿@using VNNB2B.Models.Hata
+@inject IHttpContextAccessor HttpContextAccessor
+@using DataAccessLayer.Concrate
+@inject Context c
+
+@{
+    Layout = null;
+}
+@{
+    string cerez;
+    HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out cerez);
+
+    int bayiid = Convert.ToInt32(cerez);
+
+    var bayi = c.Bayilers.FirstOrDefault(v => v.ID == bayiid);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bayi Panel</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="/Tema/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/Tema/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+        <hr />
+        @*NavBar*@
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+            <div class="container">
+                <a href="#" class="navbar-brand">
+                    <img src="/Resimler/logo.jpg" alt="Logo" class="brand-image elevation-3" style="opacity: .8">
+                </a>
+
+                <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/BLogin/menu" class="nav-link">ANASAYFA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/BLogin/Urunler" class="nav-link">ÜRÜNLER</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/BLogin/Siparis" class="nav-link">SİPARİŞLERİM</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/BLogin/Odeme" class="nav-link">ÖDEMELERİM</a>
+                        </li>
+                    </ul>
+
+                    @* <!-- SEARCH FORM -->
+                    <form class="form-inline ml-0 ml-md-3">
+                    <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                    </button>
+                    </div>
+                    </div>
+                    </form> *@
+                </div>
+
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fas fa-user"></i>
+                            @bayi.Yetkili
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-header">@bayi.Unvan</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                Hesap Bilgilerim
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                Siparişlerim
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                Ödeme Geçmişim
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                Ödeme Yap
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                Destek Merkezi
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/BLogin/Cikis" class="dropdown-item">
+                                Çıkış Yap
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        @*Main*@
+        <div class="content-wrapper">
+            <div class="content">
+                <div class="container">
+                    <br />
+                    @RenderBody()
+                    <hr />
+                    <div class="card" style="background-color:transparent;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img src="/Resimler/logo.jpg" width="250" /><br /><br />
+                                    <p>
+                                        Ofis Mobilyası sektöründeki 20 yıllık tecrübemizle sizlere hizmet ediyoruz.
+                                    </p>
+                                </div>
+                                <div class="col-4">
+                                    <h5>Menü</h5>
+                                    <br />
+                                    <a href="/BLogin/menu" class="btn btn-light btn-sm">ANASAYFA</a><br />
+                                    <a href="/BLogin/Urunler" class="btn btn-light btn-sm">ÜRÜNLER</a><br />
+                                    <a href="/BLogin/Siparis" class="btn btn-light btn-sm">SİPARİŞLERİM</a><br />
+                                    <a href="/BLogin/Odeme" class="btn btn-light btn-sm">ÖDEMELERİM</a>
+                                </div>
+                                <div class="col-4">
+                                    <img src="/Resimler/Kart.jpg" width="350" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="main-footer">
+            <strong>@DateTime.Now.Year </strong> Vanna Ofis Mobilyaları - Bayi Paneli
+        </footer>
+    </div>
+    <script src="/Tema/plugins/jquery/jquery.min.js"></script>
+    <script src="/Tema/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/Tema/dist/js/adminlte.min.js"></script>
+    <script src="/Tema/dist/js/demo.js"></script>
+</body>
+</html>

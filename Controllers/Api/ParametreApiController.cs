@@ -30,7 +30,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult DepartmanEkle(Departman d)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -59,7 +59,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult DepartmanSil(int id)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -94,7 +94,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult BirimEkle(Birimler d)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -123,7 +123,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult BirimSil(int id)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -158,7 +158,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult YetkiEkle(YetkiTurlari d)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -187,7 +187,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult YetkiSil(int id)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -224,7 +224,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public async Task<IActionResult> KategoriEkle(UrunKategori d, IFormFile imagee)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -268,7 +268,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult KategoriSil(int id)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -323,7 +323,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult KullaniciYetkiSil(int id)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -343,7 +343,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult KullaniciYetkiEkle(YetkiTanimlari d)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -373,7 +373,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult KullaniciEkle(Kullanici d)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -408,7 +408,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult KullaniciSil(int id)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -428,7 +428,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult KullaniciSifreDeğis(int id, string Yeni, string Yeni1, string Eski)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -481,7 +481,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public async Task<IActionResult> UrunOzellikTurlariEkle(UrunOzelikTurlari d)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
@@ -511,7 +511,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult UrunOzellikTurlariSil(int id)
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);

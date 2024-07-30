@@ -49,8 +49,8 @@
                             <input type="text" class="form-control" id="Adi" aria-describedby="emailHelp1" placeholder="Kategori Adı">
                         </div>
                         <div class="form-group mb-3">
-                           <label>Resim</label>
-                           <input type="file" class="form-control-file" id="exampleInputFile" name="imagee">
+                            <label>Resim</label>
+                            <input type="file" class="form-control-file" id="exampleInputFile" name="imagee">
                         </div>
                         <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
                     </form>
@@ -113,11 +113,11 @@
                 }
             },
             columns: [
-                { 
+                {
                     data: 'resim',
-                    render: function(data, type, full, meta) {
-                    return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
-        }
+                    render: function (data, type, full, meta) {
+                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                    }
                 },
                 { data: 'kodu' },
                 { data: 'adi' },
@@ -130,7 +130,8 @@
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
-            }
+            },
+            ordering: false,
         });
     }
     function tabloGuncelle() {

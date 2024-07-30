@@ -1,0 +1,278 @@
+﻿@using VNNB2B.Models.Hata
+@model EntityLayer.Dto.DtoUrunKategori
+@{
+    ViewData["Title"] = "UrunDetay";
+    Layout = "~/Views/Shared/_Bayi.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    BLoginHata.Icerik = "";
+    int id = Convert.ToInt32(ViewBag.id);
+}
+
+<style>
+    table.dataTable td, table.dataTable th {
+        text-align: center; /* Yatayda ortala */
+        vertical-align: middle; /* Dikeyde ortala */
+    }
+
+    table.dataTable img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    table.dataTable.no-footer {
+        border: none;
+    }
+
+    table.dataTable thead th, table.dataTable tfoot th {
+        border: none;
+    }
+
+    table.dataTable thead th {
+        border-bottom: none;
+    }
+
+    table.dataTable tfoot th {
+        border-top: none;
+    }
+
+    table.dataTable tbody tr {
+        border: none;
+    }
+
+    table.dataTable tbody td {
+        border: none;
+    }
+</style>
+
+<div class="card card-solid">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3 class="display">@Model.Kodu - @Model.Adi</h3>
+                <div class="col-12">
+                    <img src="@Model.Resim" class="product-image" alt="Ürün Resmi">
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <h3 class="my-3">Ürün Kodu : @Model.Kodu</h3>
+                <p>@Model.Adi</p>
+                <hr>
+                <table id="myTable" class="table table-hover" style="width:100%">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Ürün Özellikleri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <center><img class="product-image" id="UrunResmi" width="350" /></center>
+                    </div>
+                    <div class="col-6">
+                        <form id="productForm">
+                        </form>
+                        <button type="button" class="btn btn-dark" onclick="Sepet()" style="float:right;">Sepete Ekle</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var myDataTable;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#myTable', {
+            ajax: {
+                url: '/UrunApi/KatUrunList/@id',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                { data: 'urunKodu' },
+                { data: 'urunAdi' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" onclick="openProductModal(' + data + ')" class="btn btn-light mb-2 mr-2 btn-rounded">Sepete Ekle</button>'
+                    }
+                }
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            ordering: false,
+            dom: 'rtp',
+            dom: 'rt'
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        initializeDataTable();
+    })
+    function openProductModal(productId) {
+        $.ajax({
+            url: '/UrunApi/UrunDetay/' + productId,
+            method: 'POST',
+            success: function (data) {
+                // Modali göster
+                $('#productModal').modal('show');
+
+                // Modal başlığını ürün adını ayarla
+                $('#productModalLabel').text(data.urunAdi);
+
+                //Ürün Resmi
+                $("#UrunResmi").attr("src", data.resim);
+
+                // Formu temizle
+                $('#productForm').empty();
+
+                //Açıklama Ve Miktar Nesneleri
+                $('#productForm').append(`
+                                                    <div class="form-group">
+                                                        <label for="Aciklama">Açıklama :</label>
+                                                        <textarea rows="3" class="form-control" id="Aciklama" placeholder="Notlar :"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Miktar">Miktar :</label>
+                                                        <input id="Miktar" class="form-control" type="number" maxlength="2" />
+                                                    </div>
+                                                `);
+
+                // Dinamik olarak özellikleri ekle
+                data.urunOzellikleri.forEach(function (ozellik) {
+                    $('#productForm').append(`
+                                                           <div class="form-group">
+                                                             <label for="${ozellik.id}">${ozellik.urunOzellikTanimi}</label>
+                                                             <select class="form-control" id="${ozellik.id}">
+                                                                <option>Yükleniyor...</option>
+                                                             </select>
+                                                           </div>`);
+
+                    // Özellikler için API sorgulaması yap
+                    fetchOzellikDegerleri(ozellik.id);
+                });
+            },
+            error: function () {
+                alert('Ürün bilgileri alınamadı.');
+            }
+        });
+    }
+    function fetchOzellikDegerleri(ozellikId) {
+        $.ajax({
+            url: '/UrunApi/UrunAltOzellikleri/' + ozellikId,
+            method: 'POST',
+            success: function (data) {
+                var $select = $('#' + ozellikId);
+                $select.empty();
+                data.forEach(function (deger) {
+                    $select.append(`<option value="${deger.id}">${deger.ozellikAdi}</option>`);
+                });
+            },
+            error: function () {
+                alert('Özellik değerleri alınamadı.');
+            }
+        });
+    }
+    document.getElementById('Miktar').addEventListener('input', function (e) {
+        if (this.value.length > 2) {
+            this.value = this.value.slice(0, 3);
+        }
+    });
+    function Sepet() {
+
+        // Form verilerini topla
+        var formDataa = {
+            Aciklama: $('#Aciklama').val(),
+            Miktar: $('#Miktar').val(),
+            ID: @id,
+            ozellikler: []
+        };
+
+        // Dinamik olarak eklenen select elemanlarının değerlerini topla
+        $('#productForm select').each(function () {
+            var ozellikId = $(this).attr('id');
+            var ozellikDeger = $(this).val();
+            formDataa.ozellikler.push({
+                UrunOzellikTurlariID: ozellikId,
+                OzellikAdi: ozellikDeger,
+            });
+        });
+
+        console.log(formDataa);
+
+        // POST isteği gönder
+        $.ajax({
+            type: "POST",
+            url: '/UrunApi/SepetEkle',
+            data: formDataa,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                $('#productModal').modal('hide');
+            },
+            error: function () {
+                alert('Veriler kaydedilemedi.');
+            }
+        });
+    }
+</script>
