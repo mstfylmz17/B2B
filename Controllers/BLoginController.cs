@@ -112,5 +112,33 @@ namespace VNNB2B.Controllers
                 return View(list);
             }
         }
+        public IActionResult Odeme()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "BLogin");
+            }
+            else
+            {
+                ViewBag.hata = BLoginHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult Siparis()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "BLogin");
+            }
+            else
+            {
+                ViewBag.hata = BLoginHata.Icerik;
+                return View();
+            }
+        }
     }
 }

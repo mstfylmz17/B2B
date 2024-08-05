@@ -196,7 +196,7 @@
                     $('#productForm').append(`
                                                            <div class="form-group">
                                                              <label for="${ozellik.id}">${ozellik.urunOzellikTanimi}</label>
-                                                             <select class="form-control" id="${ozellik.id}">
+                                                             <select class="form-control" id="${ozellik.id}">x
                                                                 <option>Yükleniyor...</option>
                                                              </select>
                                                            </div>`);
@@ -232,7 +232,6 @@
         }
     });
     function Sepet() {
-
         // Form verilerini topla
         var formDataa = {
             Aciklama: $('#Aciklama').val(),
@@ -257,9 +256,8 @@
         $.ajax({
             type: "POST",
             url: '/UrunApi/SepetEkle',
-            data: formDataa,
-            contentType: false,
-            processData: false,
+            data: JSON.stringify(formDataa),
+            contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
                 swal.fire({

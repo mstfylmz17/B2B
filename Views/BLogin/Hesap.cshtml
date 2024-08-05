@@ -30,29 +30,44 @@
     int bayiid = Convert.ToInt32(cerez);
     var bayi = c.Bayilers.FirstOrDefault(v => v.ID == bayiid);
 }
-
-<div class="card">
-    <div class="card-header">
-        <h5 class="card-title m-0">Firma Bilgileri</h5>
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title m-0">Kullanıcı Bilgileri</h5>
+            </div>
+            <div class="card-body">
+                <i class="fas fa-user"></i> @bayi.Yetkili<br />
+                <i class="fas fa-envelope"></i> @bayi.EPosta<br />
+                <i class="fas fa-phone"></i> @bayi.Telefon<br />
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title m-0">Yetkileriniz</h5>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>Sipariş verdiğiniz zaman mail adresinize bilgi gelmemektedir.</li>
+                    <li>Sipariş verdiğiniz zaman firmanızın mail adresinize bilgi gelmemektedir.</li>
+                    <li>Kullanıcı hesabınızla oluşturduğunuz siparişleri görme yetkiniz var.</li>
+                    <li>Kullanıcı hesabınızla oluşturduğunuz ödeme kayıtlarını görme yetkiniz var.</li>
+                    <li>Firmanızın temel işletme bilgilerini görme yetkiniz var.</li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <i class="fas fa-user"> @bayi.Yetkili</i><br />
-        <i class="fas fa-envelope"> @bayi.EPosta</i><br />
-        <i class="fas fa-industry"> @bayi.BayiKodu - @bayi.Unvan</i><br />
-        <i class="fas fa-phone"> @bayi.Telefon</i><br />
-    </div>
-</div>
-<div class="card">
-    <div class="card-header">
-        <h5 class="card-title m-0">Yetkileriniz</h5>
-    </div>
-    <div class="card-body">
-        <ul>
-            <li>Sipariş verdiğiniz zaman mail adresinize bilgi gelmemektedir.</li>
-            <li>Sipariş verdiğiniz zaman firmanızın mail adresinize bilgi gelmemektedir.</li>
-            <li>Kullanıcı hesabınızla oluşturduğunuz siparişleri görme yetkiniz var.</li>
-            <li>Kullanıcı hesabınızla oluşturduğunuz ödeme kayıtlarını görme yetkiniz var.</li>
-            <li>Firmanızın temel işletme bilgilerini görme yetkiniz var.</li>
-        </ul>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title m-0">Firma Bilgileri</h5>
+            </div>
+            <div class="card-body">
+                <i class="fas fa-industry"></i> @bayi.BayiKodu - @bayi.Unvan<br />
+                <i class="fas fa-envelope"></i> @bayi.EPosta<br />
+                <i class="fas fa-phone"></i> @bayi.Telefon<br />
+                <i class="fas fa-home"></i> @bayi.Adres<br />
+            </div>
+        </div>
     </div>
 </div>

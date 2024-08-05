@@ -323,7 +323,7 @@ namespace VNNB2B.Controllers.Api
             return Json(ham.OrderBy(v => v.ID));
         }
         [HttpPost]
-        public IActionResult SepetEkle(int ID, string? Aciklama, int? Miktar, List<DtoUrunAltOzellikleri> ozellikler)
+        public IActionResult SepetEkle([FromBody] SepetEkleModel model)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
@@ -359,26 +359,141 @@ namespace VNNB2B.Controllers.Api
                     sipno = sip.ID;
                 }
 
-                var varmi = c.SiparisIceriks.FirstOrDefault(v => v.UrunID == ID && v.SiparisID == sipno && v.Durum == true);
+                var varmi = c.SiparisIceriks.FirstOrDefault(v => v.UrunID == model.ID && v.SiparisID == sipno && v.Durum == true);
                 if (varmi == null)
                 {
                     SiparisIcerik i = new SiparisIcerik();
                     i.SiparisID = sipno;
-                    i.UrunID = ID;
-                    i.Miktar = Miktar;
-                    i.Aciklama = Aciklama;
+                    i.UrunID = model.ID;
+                    i.Miktar = model.Miktar;
+                    i.Aciklama = model.Aciklama;
                     i.Durum = true;
                     c.SiparisIceriks.Add(i);
+                    var sipicid = c.SiparisIceriks.OrderByDescending(v => v.ID).FirstOrDefault(v => v.SiparisID == sipno && v.Durum == true);
+
+                    bool stokdurum = false;
+                    int? stokid = 0;
+                    foreach (var v in model.Ozellikler)
+                    {
+                        if (v.OzellikAdi != null)
+                        {
+                            int ozellikid = Convert.ToInt32(v.OzellikAdi);
+                            var ozellik = c.UrunAltOzellikleris.FirstOrDefault(x => x.ID == ozellikid);
+                            var stoktavarmi = c.UrunStoklaris.Where(x => x.Durum == true && x.UrunID == model.ID).ToList();
+                            foreach (var x in stoktavarmi)
+                            {
+                                var ozellikler = c.UrunOzellikleris.Where(b => b.UrunStokID == x.ID && b.Durum == true).ToList();
+                                foreach (var b in ozellikler)
+                                {
+                                    if (b.UrunAltOzellikleriID == ozellikid) { stokdurum = true; stokid = b.UrunStokID; } else { stokdurum = false; break; }
+                                }
+                            }
+
+                        }
+                    }
+
+                    foreach (var x in model.Ozellikler)
+                    {
+                        int ozellikid = Convert.ToInt32(x.OzellikAdi);
+                        SiparisIcerikUrunOzellikleri so = new SiparisIcerikUrunOzellikleri();
+                        so.SiaprisIcerikID = sipicid.ID;
+                        so.UrunID = model.ID;
+                        if (stokdurum == true)
+                        {
+                            so.UrunStoklariID = stokid;
+                        }
+                        so.UrunAltOzellikID = ozellikid;
+                        so.Durum = true;
+                        c.SiparisIcerikUrunOzellikleris.Add(so);
+                        c.SaveChanges();
+                    }
                 }
                 else
                 {
-                    varmi.Miktar += Miktar;
+                    bool aynisi = false;
+                    var sipoz = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == varmi.ID && v.Durum == true).ToList();
+                    foreach (var x in sipoz)
+                    {
+                        foreach (var v in model.Ozellikler)
+                        {
+                            int ozid = Convert.ToInt32(v.OzellikAdi);
+                            if (ozid == x.UrunAltOzellikID)
+                            {
+                                aynisi = true;
+                            }
+                            else
+                            {
+                                aynisi = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (aynisi == true)
+                    {
+                        varmi.Miktar += model.Miktar;
+                    }
+                    else
+                    {
+                        SiparisIcerik i = new SiparisIcerik();
+                        i.SiparisID = sipno;
+                        i.UrunID = model.ID;
+                        i.Miktar = model.Miktar;
+                        i.Aciklama = model.Aciklama;
+                        i.Durum = true;
+                        c.SiparisIceriks.Add(i);
+                        var sipicid = c.SiparisIceriks.OrderByDescending(v => v.ID).FirstOrDefault(v => v.SiparisID == sipno && v.Durum == true);
+
+                        bool stokdurum = false;
+                        int? stokid = 0;
+                        foreach (var v in model.Ozellikler)
+                        {
+                            if (v.OzellikAdi != null)
+                            {
+                                int ozellikid = Convert.ToInt32(v.OzellikAdi);
+                                var ozellik = c.UrunAltOzellikleris.FirstOrDefault(x => x.ID == ozellikid);
+                                var stoktavarmi = c.UrunStoklaris.Where(x => x.Durum == true && x.UrunID == model.ID).ToList();
+                                foreach (var x in stoktavarmi)
+                                {
+                                    var ozellikler = c.UrunOzellikleris.Where(b => b.UrunStokID == x.ID && b.Durum == true).ToList();
+                                    foreach (var b in ozellikler)
+                                    {
+                                        if (b.UrunAltOzellikleriID == ozellikid) { stokdurum = true; stokid = b.UrunStokID; } else { stokdurum = false; break; }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        foreach (var x in model.Ozellikler)
+                        {
+                            int ozellikid = Convert.ToInt32(x.OzellikAdi);
+                            SiparisIcerikUrunOzellikleri so = new SiparisIcerikUrunOzellikleri();
+                            so.SiaprisIcerikID = sipicid.ID;
+                            so.UrunID = model.ID;
+                            if (stokdurum == true)
+                            {
+                                so.UrunStoklariID = stokid;
+                            }
+                            so.UrunAltOzellikID = ozellikid;
+                            so.Durum = true;
+                            c.SiparisIcerikUrunOzellikleris.Add(so);
+                            c.SaveChanges();
+                        }
+                    }
                 }
 
                 c.SaveChanges();
                 result = new { status = "success", message = "Kayıt Başarılı..." };
             }
             return Json(result);
+        }
+
+        public class SepetEkleModel
+        {
+            public int ID { get; set; }
+            public string? Aciklama { get; set; }
+            public int? Miktar { get; set; }
+            public List<DtoUrunAltOzellikleri> Ozellikler { get; set; }
         }
     }
 }
