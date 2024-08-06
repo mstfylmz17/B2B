@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Gecmis";
+    ViewData["Title"] = "YH";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -30,7 +30,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Geçmiş Siparişler</h4>
+                            <h4>Yüklemeye Hazır Siparişler</h4>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/SiparisApi/GecmisList',
+                url: '/SiparisApi/YHList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {

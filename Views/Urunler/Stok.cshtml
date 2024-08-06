@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Gecmis";
+    ViewData["Title"] = "Stok";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,8 +20,9 @@
             });
         </script>
     }
-    SiparisHata.Icerik = "";
+    UrunHata.Icerik = "";
 }
+
 <br />
 <div class="card">
     <div class="card-header border-transparent">
@@ -30,7 +31,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Geçmiş Siparişler</h4>
+                            <h4>Stok Listesi</h4>
                         </div>
                     </div>
                 </div>
@@ -39,10 +40,13 @@
                         <table id="myTable" class="table table-hover" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Sipariş Tarihi</th>
-                                    <th>Sipariş No</th>
-                                    <th>Toplam Sipariş Miktarı</th>
-                                    <th>Sipariş Durumu</th>
+                                    <th>Resim</th>
+                                    <th>Ürün Türü</th>
+                                    <th>Ürün Kodu</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Ürün Açıklama</th>
+                                    <th>Kritik Stok Miktarı</th>
+                                    <th>Güncel Stok</th>
                                 </tr>
                             </thead>
                         </table>
@@ -63,7 +67,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/SiparisApi/GecmisList',
+                url: '/UrunApi/UrunList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -79,13 +83,26 @@
                 }
             },
             columns: [
-                { data: 'siparisTarihi' },
-                { data: 'siparisNo' },
-                { data: 'toplamAdet' },
-                { data: 'siparisDurum' }
+                {
+                    data: 'resim',
+                    render: function (data, type, full, meta) {
+                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                    }
+                },
+                { data: 'urunTuru' },
+                { data: 'urunKodu' },
+                { data: 'urunAdi' },
+                { data: 'urunAciklama' },
+                { data: 'kritikStokMiktari' },
+                { data: 'stokMiktari' }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            rowCallback: function (row, data, index) {
+                if (data.kritikStokMiktari >= data.stokMiktari) {
+                    $(row).addClass('table-dark');
+                }
             },
             ordering: false,
         });

@@ -528,5 +528,72 @@ namespace VNNB2B.Controllers.Api
             }
             return Json(result);
         }
+        //Ürün Alt Özellik Türleri İşlemleri
+        [HttpPost]
+        public IActionResult UrunAltOzellikTurlariList(int id)
+        {
+            var veri = c.UrunAltOzellikleris.Where(v => v.Durum == true && v.UrunOzellikTurlariID == id).OrderByDescending(v => v.ID).ToList();
+            List<DtoUrunAltOzellikleri> ham = new List<DtoUrunAltOzellikleri>();
+            foreach (var x in veri)
+            {
+                DtoUrunAltOzellikleri list = new DtoUrunAltOzellikleri();
+                list.ID = Convert.ToInt32(x.ID);
+                if (x.OzellikAdi != null) list.OzellikAdi = x.OzellikAdi.ToString(); else list.OzellikAdi = "Tanımlanmamış...";
+                list.UrunOzellikTurlariID = c.UrunOzelikTurlaris.FirstOrDefault(v => v.ID == x.UrunOzellikTurlariID).OzellikAdi.ToString();
+                ham.Add(list);
+            }
+            return Json(ham);
+        }
+        [HttpPost]
+        public IActionResult UrunAltOzellikTurlariEkle(UrunAltOzellikleri d)
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            int kulid = Convert.ToInt32(Cerez);
+            var result = new { status = "error", message = "İşlem Başarısız..." };
+            var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
+            if (kul != null)
+            {
+                if (d.OzellikAdi != null)
+                {
+                    UrunAltOzellikleri kat = new UrunAltOzellikleri();
+                    kat.UrunOzellikTurlariID = d.UrunOzellikTurlariID;
+                    kat.OzellikAdi = d.OzellikAdi;
+                    kat.Durum = true;
+                    c.UrunAltOzellikleris.Add(kat);
+                    c.SaveChanges();
+                    c.SaveChanges();
+                    result = new { status = "success", message = "Kayıt Başarılı..." };
+                }
+                else
+                {
+                    result = new { status = "error", message = "Lütfen Boş Alan Bırakmayınız..." };
+                }
+            }
+            else
+            {
+                result = new { status = "error", message = "Yetkiniz Yok Lütfen Yöneticinize Başvurunuz..." };
+            }
+            return Json(result);
+        }
+        [HttpPost]
+        public IActionResult UrunAltOzellikTurlariSil(int id)
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            int kulid = Convert.ToInt32(Cerez);
+            var result = new { status = "error", message = "İşlem Başarısız..." };
+            var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
+            if (kul != null)
+            {
+                UrunAltOzellikleri de = c.UrunAltOzellikleris.FirstOrDefault(v => v.ID == id);
+                de.Durum = false;
+                c.SaveChanges();
+                result = new { status = "success", message = "Kayıt Silindi..." };
+            }
+            else
+            {
+                result = new { status = "error", message = "Yetkiniz Yok Lütfen Yöneticinize Başvurunuz..." };
+            }
+            return Json(result);
+        }
     }
 }

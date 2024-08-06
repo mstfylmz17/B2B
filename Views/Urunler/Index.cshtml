@@ -22,84 +22,97 @@
     }
     UrunHata.Icerik = "";
 }
-
-<nav class="breadcrumb-one" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
-        <li class="breadcrumb-item"><a href="#">Ürünler</a></li>
-    </ol>
-</nav>
-
+<br />
 <div class="row">
     <div class="col-4">
-        <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-header">
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Ürün Ekle</h4>
+        <div class="card">
+            <div class="card-header border-transparent">
+                <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Ürün Ekle</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <form id="UrunForm">
+                                <div class="form-group mb-3">
+                                    @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Seçiniz...", new { @class = "form-control basic", id = "UrunKategoriID" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Seçiniz...", new { @class = "form-control basic", id = "UrunTuruID" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="UrunKodu" placeholder="Ürün Kodu">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="UrunAdi" placeholder="Ürün Adı">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="UrunAciklama" placeholder="Ürün Açıklama">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="BirimKG" placeholder="Birim KG">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="BirimM3" placeholder="Birim M3">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="Boyut" placeholder="Boyut">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="PaketAdet" placeholder="Paket Adedi">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="number" class="form-control" id="KritikStokMiktari" placeholder="Kritik Stok Miktarı">
+                                </div>
+                                <div class="form-group mb-3">
+                                    @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control basic", id = "BirimID" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label>Ürün Resmi</label>
+                                    <input type="file" class="form-control-file" id="imagee" name="imagee">
+                                </div>
+                                <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
+                            </form>
                         </div>
                     </div>
-                </div>
-                <div class="widget-content widget-content-area">
-                    <form id="UrunForm">
-                        <div class="form-group mb-3">
-                            @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Seçiniz...", new { @class = "form-control basic", id = "UrunKategoriID" })
-                        </div>
-                        <div class="form-group mb-3">
-                            @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Seçiniz...", new { @class = "form-control basic", id = "UrunTuruID" })
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="UrunKodu" placeholder="Ürün Kodu">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="UrunAdi" placeholder="Ürün Adı">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="UrunAciklama" placeholder="Ürün Açıklama">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="number" class="form-control" id="KritikStokMiktari" placeholder="Kritik Stok Miktarı">
-                        </div>
-                        <div class="form-group mb-3">
-                            @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control basic", id = "BirimID" })
-                        </div>
-                        <div class="form-group mb-3">
-                            <label>Ürün Resmi</label>
-                            <input type="file" class="form-control-file" id="imagee" name="imagee">
-                        </div>
-                        <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-8">
-        <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-header">
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Ürünler</h4>
+        <div class="card">
+            <div class="card-header border-transparent">
+                <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Ürünler</h4>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="widget-content widget-content-area">
-                    <div class="table-responsive">
-                        <table id="myTable" class="table table-hover" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Resim</th>
-                                    <th>Ürün Türü</th>
-                                    <th>Ürün Kodu</th>
-                                    <th>Ürün Adı</th>
-                                    <th>Ürün Açıklama</th>
-                                    <th>Kritik Stok Miktarı</th>
-                                    <th>Güncel Stok</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="widget-content widget-content-area">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Resim</th>
+                                            <th>Ürün Türü</th>
+                                            <th>Ürün Kodu</th>
+                                            <th>Ürün Adı</th>
+                                            <th>Ürün Açıklama</th>
+                                            <th>Kritik Stok Miktarı</th>
+                                            <th>Güncel Stok</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -210,6 +223,10 @@
         formData.append("KritikStokMiktari", $("#KritikStokMiktari").val());
         formData.append("BirimID", $("#BirimID").val());
         formData.append("imagee", $("#imagee").val());
+        formData.append("BirimKG", $("#BirimKG").val());
+        formData.append("BirimM3", $("#BirimM3").val());
+        formData.append("Boyut", $("#Boyut").val());
+        formData.append("PaketAdet", $("#PaketAdet").val());
         $.ajax({
             type: "POST",
             url: "/UrunApi/UrunEkle",
@@ -232,6 +249,10 @@
                 $("#KritikStokMiktari").val('');
                 $("#BirimID").val('');
                 $("#imagee").val('');
+                $("#BirimKG").val('');
+                $("#BirimM3").val('');
+                $("#Boyut").val('');
+                $("#PaketAdet").val('');
                 tabloGuncelle();
             }
         });

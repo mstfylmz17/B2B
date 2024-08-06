@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Birim";
+    ViewData["Title"] = "OzellikDetay";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,6 +20,8 @@
             });
         </script>
     }
+
+    int id = Convert.ToInt32(ViewBag.id);
     ParametreHata.Icerik = "";
 }
 <br />
@@ -32,14 +34,15 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Birim Ekle</h4>
+                                    <h4>Ürün Alt Özelliği Ekle</h4>
                                 </div>
                             </div>
                         </div>
                         <div class="widget-content widget-content-area">
                             <form>
+                                <input id="UrunOzellikTurlariID" type="hidden" value="@id" />
                                 <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="BirimAdi" aria-describedby="emailHelp1" placeholder="Birim Adı">
+                                    <input type="text" class="form-control" id="OzellikAdi" aria-describedby="emailHelp1" placeholder="Üzellik Tanımı">
                                 </div>
                                 <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
                             </form>
@@ -57,7 +60,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Birimler</h4>
+                                    <h4>Ürün Alt Özellik Tanımları</h4>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +69,8 @@
                                 <table id="myTable" class="table table-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Birim</th>
+                                            <th>Özellik Türü</th>
+                                            <th>Özellik Tanımı</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -90,7 +94,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/ParametreApi/BirimList',
+                url: '/ParametreApi/UrunAltOzellikTurlariList/@id',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -106,7 +110,8 @@
                 }
             },
             columns: [
-                { data: 'birimAdi' },
+                { data: 'urunOzellikTurlariID' },
+                { data: 'ozellikAdi' },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
@@ -147,7 +152,7 @@
     function submitForm(element) {
         $.ajax({
             type: "POST",
-            url: "/ParametreApi/BirimSil/" + element,
+            url: "/ParametreApi/UrunAltOzellikTurlariSil/" + element,
             dataType: "json",
             success: function (result) {
                 swal.fire({
@@ -162,11 +167,12 @@
     }
     function AddForm() {
         var formData = {
-            BirimAdi: $("#BirimAdi").val(),
+            UrunOzellikTurlariID: $("#UrunOzellikTurlariID").val(),
+            OzellikAdi: $("#OzellikAdi").val(),
         };
         $.ajax({
             type: "POST",
-            url: "/ParametreApi/BirimEkle",
+            url: "/ParametreApi/UrunAltOzellikTurlariEkle",
             data: formData,
             dataType: "json",
             success: function (result) {
@@ -176,7 +182,7 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
-                $("#BirimAdi").val('');
+                $("#OzellikAdi").val('');
                 tabloGuncelle();
             }
         });

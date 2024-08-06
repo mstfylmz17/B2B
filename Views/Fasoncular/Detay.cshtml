@@ -1,5 +1,5 @@
 ﻿@using VNNB2B.Models.Hata
-@model EntityLayer.Dto.DtoTedarikciler
+@model EntityLayer.Dto.DtoFasoncular
 @{
     ViewData["Title"] = "Detay";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,7 +21,7 @@
             });
         </script>
     }
-    BayiHata.Icerik = "";
+    FasoncularHata.Icerik = "";
     int id = Convert.ToInt32(ViewBag.id);
 }
 <br />
@@ -33,7 +33,7 @@
                     <div class="widget-header">
                         <div class="row">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                <h4>Tedarikçi Bilgileri</h4>
+                                <h4>Fasoncu Bilgileri</h4>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
                                         <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z" />
                                     </svg>
-                                    Tedarikçi Kartı
+                                    Fasoncu Kartı
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -53,7 +53,7 @@
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
                                     </svg>
-                                    Tedarikçi Satın Alma Siparişleri
+                                    Fasoncu Sevkiyatları
                                 </a>
                             </li>
                         </ul>
@@ -65,7 +65,7 @@
                                         <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" placeholder="Ünvan : @Model.Unvan">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <input type="text" class="form-control" id="TedarikciKodu" aria-describedby="emailHelp1" placeholder="Tedarikçi Kodu : @Model.TedarikciKodu">
+                                        <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1" placeholder="Adres : @Model.Adres">
                                     </div>
                                     <div class="form-group mb-3">
                                         <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" placeholder="Telefon : @Model.Telefon">
@@ -86,30 +86,30 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="icon-pills-contact" role="tabpanel" aria-labelledby="icon-pills-contact-tab1">
-                                <div class="statbox widget box box-shadow">
-                                    <div class="widget-header">
-                                        <div class="row">
-                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                                <h4>Tedarikçinin Satın Alma Siparişleri</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="widget-content widget-content-area">
-                                        <div class="table-responsive">
-                                            <table id="myTable" class="table table-hover" style="width:100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Sipariş No</th>
-                                                        <th>Sipariş Tarihi</th>
-                                                        <th>Telefon</th>
-                                                        <th>Durum</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
-                                    </div>
+                                @* <div class="statbox widget box box-shadow">
+                                <div class="widget-header">
+                                <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <h4>Bayinin Siparişleri</h4>
                                 </div>
+                                </div>
+                                </div>
+                                <div class="widget-content widget-content-area">
+                                <div class="table-responsive">
+                                <table id="myTable" class="table table-hover" style="width:100%">
+                                <thead>
+                                <tr>
+                                <th>Sipariş No</th>
+                                <th>Sipariş Tarihi</th>
+                                <th>Telefon</th>
+                                <th>Durum</th>
+                                <th></th>
+                                </tr>
+                                </thead>
+                                </table>
+                                </div>
+                                </div>
+                                </div> *@
                             </div>
                         </div>
                     </div>
@@ -125,51 +125,6 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
-    var myDataTable;
-    function initializeDataTable() {
-        myDataTable = new DataTable('#myTable', {
-            ajax: {
-                url: '/TedarikciApi/TedarikciSiparisList/@id',
-                method: 'POST',
-                dataSrc: '',
-                error: function (xhr, error, thrown) {
-                    if (xhr.status === 404) {
-                        Swal.fire({
-                            title: 'Veri alınamadı',
-                            animation: false,
-                            customClass: 'animated tada',
-                            padding: '2em'
-                        });
-                    }
-                    return false;
-                }
-            },
-            columns: [
-                { data: 'siparisNo' },
-                { data: 'siparisTarihi' },
-                { data: 'telefon' },
-                { data: 'siparisDurumu' },
-                {
-                    data: 'id',
-                    render: function (data, type, full, meta) {
-                        return '<a href="/Bayi/Detay/' + data + '" class="btn btn-primary mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d = "M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" /></svg></a>' + '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">< path d = "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" /><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" /></svg></button>'
-                    }
-                }
-            ],
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
-            }
-        });
-    }
-    function tabloGuncelle() {
-        if (myDataTable) {
-            myDataTable.destroy();
-        }
-        initializeDataTable();
-    }
-    $(document).ready(function () {
-        initializeDataTable();
-    })
     function sil(element) {
         swal.fire({
             title: 'Emin Misin?',
@@ -189,7 +144,7 @@
     function submitForm(element) {
         $.ajax({
             type: "POST",
-            url: "/TedarikciApi/TedarikciSil/" + element,
+            url: "/FasoncuApi/FasoncuSil/" + element,
             dataType: "json",
             success: function (result) {
                 swal.fire({
@@ -206,16 +161,17 @@
         var formData = {
             ID: $("#ID").val(),
             Unvan: $("#Unvan").val(),
-            VergiDairesi: $("#VergiDairesi").val(),
-            VergiNo: $("#VergiNo").val(),
+            Adres: $("#Adres").val(),
             Telefon: $("#Telefon").val(),
             EPosta: $("#EPosta").val(),
             Yetkili: $("#Yetkili").val(),
-            TedarikciKodu: $("#TedarikciKodu").val(),
+            VergiDairesi: $("#VergiDairesi").val(),
+            VergiNo: $("#VergiNo").val(),
+            FasoncuKodu: $("#FasoncuKodu").val(),
         };
         $.ajax({
             type: "POST",
-            url: "/TedarikciApi/TedarikciDuzenle",
+            url: "/FasoncuApi/FasoncuDuzenle",
             data: formData,
             dataType: "json",
             success: function (result) {
@@ -226,11 +182,12 @@
                     confirmButtonText: 'Tamam'
                 });
                 $("#Unvan").val('');
-                $("#VergiDairesi").val('');
-                $("#VergiNo").val('');
+                $("#Adres").val('');
                 $("#Telefon").val('');
                 $("#EPosta").val('');
                 $("#Yetkili").val('');
+                $("#VergiDairesi").val('');
+                $("#VergiNo").val('');
                 $("#TedarikciKodu").val('');
                 tabloGuncelle();
             }

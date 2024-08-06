@@ -13,6 +13,12 @@
     int bayiid = Convert.ToInt32(cerez);
 
     var bayi = c.Bayilers.FirstOrDefault(v => v.ID == bayiid);
+    int sepetsayi = 0;
+    var sepet = c.Siparis.FirstOrDefault(v => v.BayiID == bayiid && v.BayiOnay == false);
+    if (sepet != null)
+    {
+        sepetsayi = c.SiparisIceriks.Where(v => v.SiparisID == sepet.ID).Count();
+    }
 }
 
 <!DOCTYPE html>
@@ -33,7 +39,7 @@
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
                 <a href="#" class="navbar-brand">
-                    <img src="/Resimler/logosvg.svg" alt="Logo" style="opacity: .8">
+                    <img src="/Resimler/logosvg.svg" alt="Logo" width="150">
                 </a>
 
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,20 +49,23 @@
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="/BLogin/menu" class="nav-link">ANASAYFA</a>
+                            <a href="/BLogin/menu" style="font-weight:400; color:black" class="nav-link">ANASAYFA</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/BLogin/Urunler" class="nav-link">ÜRÜNLER</a>
+                            <a href="/BLogin/Urunler" style="font-weight:400; color:black" class="nav-link">ÜRÜNLER</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/BLogin/Siparis" class="nav-link">SİPARİŞLERİM</a>
+                            <a href="/BLogin/Siparis" style="font-weight:400; color:black" class="nav-link">SİPARİŞLERİM</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/BLogin/Odeme" class="nav-link">ÖDEMELERİM</a>
+                            <a href="/BLogin/Odeme" style="font-weight:400; color:black" class="nav-link">ÖDEMELERİM</a>
                         </li>
                     </ul>
                 </div>
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                    <li class="nav-item">
+                        <a href="/BLogin/Sepet" class="nav-link"><img src="~/Resimler/sepet.svg" style="height:25px; width:25px;" /><span style="color:darkred;"> @sepetsayi</span></a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="fas fa-user"></i>
@@ -65,15 +74,15 @@
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <span class="dropdown-header">@bayi.Unvan</span>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
+                            <a href="/BLogin/Hesap" class="dropdown-item">
                                 Hesap Bilgilerim
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
+                            <a href="/BLogin/Siparis" class="dropdown-item">
                                 Siparişlerim
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
+                            <a href="/BLogin/Odeme" class="dropdown-item">
                                 Ödeme Geçmişim
                             </a>
                             <div class="dropdown-divider"></div>
@@ -133,6 +142,5 @@
     <script src="/Tema/plugins/jquery/jquery.min.js"></script>
     <script src="/Tema/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/Tema/dist/js/adminlte.min.js"></script>
-    <script src="/Tema/dist/js/demo.js"></script>
 </body>
 </html>

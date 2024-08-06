@@ -43,11 +43,11 @@ namespace VNNB2B.Controllers
                 ViewBag.birim = birim;
 
                 List<SelectListItem> kat = (from x in c.UrunKategoris.Where(x => x.Durum == true).ToList()
-                                              select new SelectListItem
-                                              {
-                                                  Text = x.Adi.ToString(),
-                                                  Value = x.ID.ToString()
-                                              }).ToList();
+                                            select new SelectListItem
+                                            {
+                                                Text = x.Adi.ToString(),
+                                                Value = x.ID.ToString()
+                                            }).ToList();
 
                 ViewBag.kat = kat;
 
@@ -84,11 +84,11 @@ namespace VNNB2B.Controllers
                 ViewBag.birim = birim;
 
                 List<SelectListItem> kat = (from v in c.UrunKategoris.Where(v => v.Durum == true).ToList()
-                                              select new SelectListItem
-                                              {
-                                                  Text = v.Adi.ToString(),
-                                                  Value = v.ID.ToString()
-                                              }).ToList();
+                                            select new SelectListItem
+                                            {
+                                                Text = v.Adi.ToString(),
+                                                Value = v.ID.ToString()
+                                            }).ToList();
 
                 ViewBag.kat = kat;
 
@@ -117,6 +117,20 @@ namespace VNNB2B.Controllers
                 if (x.Resim != null) list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(x.Resim);
                 ViewBag.hata = UrunHata.Icerik;
                 return View(list);
+            }
+        }
+        public IActionResult Stok()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.hata = UrunHata.Icerik;
+                return View();
             }
         }
     }

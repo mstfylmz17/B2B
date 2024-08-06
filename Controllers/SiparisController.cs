@@ -26,21 +26,7 @@ namespace VNNB2B.Controllers
                 return View();
             }
         }
-        public IActionResult Aktif()
-        {
-            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
-            {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
-                return RedirectToAction("Index", "Login");
-            }
-            else
-            {
-                ViewBag.hata = SiparisHata.Icerik;
-                return View();
-            }
-        }
-        public IActionResult Gecmis()
+        public IActionResult Devam()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
@@ -68,7 +54,21 @@ namespace VNNB2B.Controllers
                 return View();
             }
         }
-        public IActionResult TesBek()
+        public IActionResult YH()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult Gecmis()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             if (Cerez == null && Cerez == "")

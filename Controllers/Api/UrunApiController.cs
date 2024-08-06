@@ -61,6 +61,10 @@ namespace VNNB2B.Controllers.Api
                         kat.UrunAciklama = d.UrunAciklama;
                         kat.UrunTuruID = d.UrunTuruID;
                         kat.KritikStokMiktari = d.KritikStokMiktari;
+                        kat.BirimKG = d.BirimKG;
+                        kat.BirimM3 = d.BirimM3;
+                        kat.Boyut = d.Boyut;
+                        kat.PaketAdet = d.PaketAdet;
                         kat.BirimID = d.BirimID;
                         if (imagee != null)
                         {
@@ -172,6 +176,14 @@ namespace VNNB2B.Controllers.Api
                         kat.BirimID = d.BirimID;
                     if (d.UrunKategoriID != null)
                         kat.UrunKategoriID = d.UrunKategoriID;
+                    if (d.PaketAdet != null)
+                        kat.PaketAdet = d.PaketAdet;
+                    if (d.Boyut != null)
+                        kat.Boyut = d.Boyut;
+                    if (d.BirimM3 != null)
+                        kat.BirimM3 = d.BirimM3;
+                    if (d.BirimKG != null)
+                        kat.BirimKG = d.BirimKG;
                     if (imagee != null)
                     {
                         using (MemoryStream memoryStream = new MemoryStream())
@@ -208,7 +220,7 @@ namespace VNNB2B.Controllers.Api
             return Json(ham.OrderBy(v => v.ID));
         }
         [HttpPost]
-        public async Task<IActionResult> UrunOzellikEkle(UrunOzellikTanimlari d)
+        public IActionResult UrunOzellikEkle(UrunOzellikTanimlari d)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
@@ -277,7 +289,7 @@ namespace VNNB2B.Controllers.Api
             foreach (var a in veri)
             {
                 DtoUrunOzellikTanimlari l = new DtoUrunOzellikTanimlari();
-                l.ID = Convert.ToInt32(a.ID);
+                l.ID = Convert.ToInt32(a.UrunOzellikTurlariID);
                 if (a.UrunOzellikTurlariID != null) l.UrunOzellikTanimi = c.UrunOzelikTurlaris.FirstOrDefault(v => v.ID == a.UrunOzellikTurlariID).OzellikAdi.ToString(); else l.UrunOzellikTanimi = "";
                 ham.Add(l);
             }
@@ -347,6 +359,7 @@ namespace VNNB2B.Controllers.Api
                     s.OnayDurum = false;
                     s.OnayAciklama = "";
                     s.Durum = true;
+                    s.SiparisDurum = "Sipariş Bayi Onay Bekliyor...";
                     s.SiparisNo = kul.BayiKodu + " " + c.Siparis.Count().ToString() + 1;
                     s.BayiOnay = false;
                     c.Siparis.Add(s);
@@ -493,7 +506,7 @@ namespace VNNB2B.Controllers.Api
             public int ID { get; set; }
             public string? Aciklama { get; set; }
             public int? Miktar { get; set; }
-            public List<DtoUrunAltOzellikleri> Ozellikler { get; set; }
+            public List<DtoUrunAltOzellikleri>? Ozellikler { get; set; }
         }
     }
 }

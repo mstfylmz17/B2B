@@ -1,7 +1,173 @@
-﻿
+﻿@using VNNB2B.Models.Hata
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    SiparisHata.Icerik = "";
+}
+<br />
+<div class="card">
+    <div class="card-header border-transparent">
+        <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                            <h4>Onay Bekleyen Siparişler</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-content widget-content-area">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Sipariş Tarihi</th>
+                                    <th>Sipariş No</th>
+                                    <th>Toplam Sipariş Miktarı</th>
+                                    <th>Sipariş Durumu</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    var myDataTable;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#myTable', {
+            ajax: {
+                url: '/SiparisApi/OnayBekleyenList',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                { data: 'siparisTarihi' },
+                { data: 'siparisNo' },
+                { data: 'toplamAdet' },
+                { data: 'siparisDurum' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<button type="button" onclick="onayla(' + data + ')" class="btn btn-primary btn-sm"><i class="fas fa-check"></i></button>' + ' <button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>'
+                    }
+                }
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            ordering: false,
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        initializeDataTable();
+    })
+    function sil(element) {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Kayıt Silinecek!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                submitForm(element);
+            }
+        })
+    }
+    function submitForm(element) {
+        $.ajax({
+            type: "POST",
+            url: "/SiparisApi/SiparisSil/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
+    function onayla(element) {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Sipariş Onaylanacak!",
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Onayla!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                onaylaform(element);
+            }
+        })
+    }
+    function onaylaform(element) {
+        $.ajax({
+            type: "POST",
+            url: "/SiparisApi/SiparisOnayla/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
+</script>

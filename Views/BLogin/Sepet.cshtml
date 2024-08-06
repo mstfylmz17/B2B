@@ -2,7 +2,7 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @using DataAccessLayer.Concrate
 @{
-    ViewData["Title"] = "Siparis";
+    ViewData["Title"] = "Sepet";
     Layout = "~/Views/Shared/_Bayi.cshtml";
 }
 
@@ -33,7 +33,7 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0"><small>Siparişlerim</small></h1>
+                <h1 class="m-0"><small>Sepet</small></h1>
             </div>
         </div>
     </div>
@@ -41,21 +41,26 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
-            <center><h6 id="sepetyok" style="display:none;">Geçmiş Sipariş Bulunamadı!</h6></center>
+            <center><h6 id="sepetyok" style="display:none;">Sepetinizde Ürün Bulunamadı!</h6></center>
             <div id="sepet">
+                <div class="card-header">
+                    <h3 class="card-title">Sepet İçeriğiniz</h3>
+                </div>
                 <div class="card-body">
                     <table class="table table-bordered" id="sepettable">
                         <thead>
                             <tr>
-                                <th>Sipariş Tarihi</th>
-                                <th>Sipariş No</th>
-                                <th>Toplam Sipariş Miktarı</th>
-                                <th>Sipariş Durumu</th>
-                                <th>Teslimat Bilgileri</th>
+                                <th>Ürün Kodu</th>
+                                <th>Ürün Açıklama</th>
+                                <th>Miktar</th>
+                                <th>Açıklama</th>
                                 <th></th>
                             </tr>
                         </thead>
                     </table>
+                    <div class="footer" style="margin-top:10px;">
+                        <button onclick="SepetOnay()" class="btn btn-success btn-sm" style="float:right;"><i class="fas fa-check"></i> Sepeti Onayla</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,7 +78,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#sepettable', {
             ajax: {
-                url: '/SiparisApi/SiparisList/@bayiid',
+                url: '/SiparisApi/SepetList/@bayiid',
                 method: 'POST',
                 dataSrc: function (json) {
                     let dataCount = 0;
@@ -106,15 +111,19 @@
                 }
             },
             columns: [
-                { data: 'siparisTarihi' },
-                { data: 'siparisNo' },
-                { data: 'toplamAdet' },
-                { data: 'siparisDurum' },
-                { data: 'teslimTarihi' },
+                { data: 'urunKodu' },
+                { data: 'urunAciklama' },
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        return '<input type="number" class="form-control miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
+                    }
+                },
+                { data: 'aciklama' },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>'
+                        return '<button class="btn btn-info btn-sm" style="margin-right:2px;" type="button" onclick="SatirNo(' + data + ')"><i class="fas fa-edit"></i></a>' + '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>'
                     }
                 }
             ],
@@ -127,6 +136,10 @@
             paging: false,
             info: false,
         });
+    }
+    function SatirNo(element) {
+        satirid = element;
+        AddForm();
     }
     function tabloGuncelle() {
         if (myDataTable) {
@@ -156,7 +169,65 @@
     function submitForm(element) {
         $.ajax({
             type: "POST",
-            url: "/SiparisApi/SiparisSil/" + element,
+            url: "/SiparisApi/SepetSil/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
+    function AddForm() {
+        var element = satirid;
+        var formData = {
+            ID: element,
+            Miktar: $("#mik-" + element).val(),
+        };
+        $.ajax({
+            type: "POST",
+            url: '/SiparisApi/SepetGuncelle',
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
+    function SepetOnay() {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Sipariş Onaylanacak!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Onayla!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                SepetOnayPost();
+            }
+        })
+    }
+    function SepetOnayPost() {
+        var formData = {
+            id: @bayiid,
+        };
+        $.ajax({
+            type: "POST",
+            url: '/SiparisApi/SiparisOnay',
+            data: formData,
             dataType: "json",
             success: function (result) {
                 swal.fire({

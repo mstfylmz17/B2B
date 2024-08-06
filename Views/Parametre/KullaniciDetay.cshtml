@@ -24,121 +24,131 @@
     }
     ParametreHata.Icerik = "";
 }
-
-<nav class="breadcrumb-one" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
-        <li class="breadcrumb-item"><a href="#">Kullanıcılar</a></li>
-    </ol>
-</nav>
+<br />
 <div class="row">
     <div class="col-6">
-        <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-header">
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Kullanıcı Düzenle</h4>
+        <div class="card">
+            <div class="card-header border-transparent">
+                <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Kullanıcı Düzenle</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <form id="KullaniciForm">
+                                <input name="ID" id="ID" value="@id" type="hidden" />
+                                <div class="form-group mb-3">
+                                    @Html.DropDownList("DepartmanID", (List<SelectListItem>)ViewBag.departman, "Tanımlı Departman : " + @Model.DepartmanID, new { @class = "form-control basic", id = "DepartmanID" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="AdSoyad" aria-describedby="emailHelp1" placeholder="@Model.AdSoyad">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="KullaniciAdi" aria-describedby="emailHelp1" placeholder="@Model.KullaniciAdi">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" placeholder="@Model.Telefon">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1" placeholder="@Model.Adres">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="email" class="form-control" id="EPosta" aria-describedby="emailHelp1" placeholder="@Model.EPosta">
+                                </div>
+                                <button type="button" onclick="AddForm()" class="btn btn-info mt-3">Güncelle</button>
+                            </form>
                         </div>
                     </div>
-                </div>
-                <div class="widget-content widget-content-area">
-                    <form id="KullaniciForm">
-                        <input name="ID" id="ID" value="@id" type="hidden"/>
-                        <div class="form-group mb-3">
-                           @Html.DropDownList("DepartmanID", (List<SelectListItem>)ViewBag.departman,"Tanımlı Departman : "+ @Model.DepartmanID, new { @class = "form-control basic", id = "DepartmanID" })
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="AdSoyad" aria-describedby="emailHelp1" placeholder="@Model.AdSoyad">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="KullaniciAdi" aria-describedby="emailHelp1" placeholder="@Model.KullaniciAdi">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" placeholder="@Model.Telefon">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1" placeholder="@Model.Adres">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="email" class="form-control" id="EPosta" aria-describedby="emailHelp1" placeholder="@Model.EPosta">
-                        </div>
-                        <button type="button" onclick="AddForm()" class="btn btn-info mt-3">Güncelle</button>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-6">
-        <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-header">
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Şifre Değiştir</h4>
+        <div class="card">
+            <div class="card-header border-transparent">
+                <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Şifre Değiştir</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <form id="KullaniciForm">
+                                <input name="ID" id="ID" value="@id" type="hidden" />
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="Eski" aria-describedby="emailHelp1" placeholder="Eski Şifre">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="Yeni" aria-describedby="emailHelp1" placeholder="Yeni Şifre">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="Yeni1" aria-describedby="emailHelp1" placeholder="Yeni Şifre Tekrar">
+                                </div>
+                                <button type="button" onclick="Sifre()" class="btn btn-info mt-3">Güncelle</button>
+                            </form>
                         </div>
                     </div>
-                </div>
-                <div class="widget-content widget-content-area">
-                    <form id="KullaniciForm">
-                        <input name="ID" id="ID" value="@id" type="hidden"/>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="Eski" aria-describedby="emailHelp1" placeholder="Eski Şifre">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="Yeni" aria-describedby="emailHelp1" placeholder="Yeni Şifre">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" id="Yeni1" aria-describedby="emailHelp1" placeholder="Yeni Şifre Tekrar">
-                        </div>
-                        <button type="button" onclick="Sifre()" class="btn btn-info mt-3">Güncelle</button>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-4">
-        <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-header">
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Kullanıcı Yetki Ekle</h4>
+        <div class="card">
+            <div class="card-header border-transparent">
+                <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Kullanıcı Yetki Ekle</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <form id="YetkiForm">
+                                <input name="KullaniciID" id="KullaniciID" value="@id" type="hidden" />
+                                <div class="form-group mb-3">
+                                    @Html.DropDownList("YetkiTurlariID", (List<SelectListItem>)ViewBag.yetkiler, "Yetki Seçiniz...", new { @class = "form-control basic", id = "YetkiTurlariID" })
+                                </div>
+                                <button type="button" onclick="YetkiEkle()" class="btn btn-primary mt-3">Kaydet</button>
+                            </form>
                         </div>
                     </div>
-                </div>
-                <div class="widget-content widget-content-area">
-                    <form id="YetkiForm">
-                        <input name="KullaniciID" id="KullaniciID" value="@id" type="hidden"/>
-                        <div class="form-group mb-3">
-                           @Html.DropDownList("YetkiTurlariID", (List<SelectListItem>)ViewBag.yetkiler, "Yetki Seçiniz...", new { @class = "form-control basic", id = "YetkiTurlariID" })
-                        </div>
-                        <button type="button" onclick="YetkiEkle()" class="btn btn-primary mt-3">Kaydet</button>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-8">
-        <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-header">
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Kullanıcıya Ait Yetiler</h4>
+        <div class="card">
+            <div class="card-header border-transparent">
+                <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Kullanıcıya Ait Yetiler</h4>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="widget-content widget-content-area">
-                    <div class="table-responsive">
-                        <table id="myTable" class="table table-hover" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Yetki Tanımı</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="widget-content widget-content-area">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Yetki Tanımı</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -253,7 +263,7 @@
                 tabloGuncelle();
             }
         });
-    }    
+    }
     function Sifre() {
         var form = $('#YetkiForm')[0];
         var formData = new FormData(form);

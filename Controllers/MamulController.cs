@@ -13,7 +13,7 @@ namespace VNNB2B.Controllers
         }
         public IActionResult Index()
         {
-            HttpContext.Request.Cookies.TryGetValue("EnvanterTakipCerez", out var Cerez);
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";

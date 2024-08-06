@@ -181,28 +181,29 @@
 
                 //Açıklama Ve Miktar Nesneleri
                 $('#productForm').append(`
-                                                    <div class="form-group">
-                                                        <label for="Aciklama">Açıklama :</label>
-                                                        <textarea rows="3" class="form-control" id="Aciklama" placeholder="Notlar :"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="Miktar">Miktar :</label>
-                                                        <input id="Miktar" class="form-control" type="number" maxlength="2" />
-                                                    </div>
-                                                `);
+                                                        <div class="form-group">
+                                                            <label for="Aciklama">Açıklama :</label>
+                                                            <textarea rows="3" class="form-control" id="Aciklama" placeholder="Notlar :"></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="Miktar">Miktar :</label>
+                                                            <input id="Miktar" class="form-control" type="number" maxlength="2" />
+                                                        </div>
+                                                    `);
 
                 // Dinamik olarak özellikleri ekle
                 data.urunOzellikleri.forEach(function (ozellik) {
                     $('#productForm').append(`
-                                                           <div class="form-group">
-                                                             <label for="${ozellik.id}">${ozellik.urunOzellikTanimi}</label>
-                                                             <select class="form-control" id="${ozellik.id}">x
-                                                                <option>Yükleniyor...</option>
-                                                             </select>
-                                                           </div>`);
+                                                               <div class="form-group">
+                                                                 <label for="${ozellik.id}">${ozellik.urunOzellikTanimi}</label>
+                                                                 <select class="form-control" id="${ozellik.id}">x
+                                                                    <option>Yükleniyor...</option>
+                                                                 </select>
+                                                               </div>`);
 
                     // Özellikler için API sorgulaması yap
                     fetchOzellikDegerleri(ozellik.id);
+                    console.log(ozellik.id);
                 });
             },
             error: function () {
