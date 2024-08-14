@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Concrate;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using VNNB2B.Models.Hata;
 
 namespace VNNB2B.Controllers
@@ -21,6 +22,38 @@ namespace VNNB2B.Controllers
             }
             else
             {
+                ViewBag.hata = SatinAlmaHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult Talepler()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                List<SelectListItem> birim = (from v in c.Birimlers.Where(v => v.Durum == true).ToList()
+                                              select new SelectListItem
+                                              {
+                                                  Text = v.BirimAdi.ToString(),
+                                                  Value = v.ID.ToString()
+                                              }).ToList();
+
+                ViewBag.birim = birim;
+
+                List<SelectListItem> urunler = (from v in c.Urunlers.Where(v => v.Durum == true && v.UrunTuruID != 3).ToList()
+                                                select new SelectListItem
+                                                {
+                                                    Text = v.UrunKodu.ToString() + " - " + v.UrunAdi.ToString(),
+                                                    Value = v.ID.ToString()
+                                                }).ToList();
+
+                ViewBag.urunler = urunler;
+
                 ViewBag.hata = SatinAlmaHata.Icerik;
                 return View();
             }

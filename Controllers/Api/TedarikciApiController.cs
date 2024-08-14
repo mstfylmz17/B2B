@@ -119,7 +119,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult TedarikciSiparisList(int id)
         {
-            var veri = c.SatinAlmas.Where(v => v.Durum == true && v.TedarikciID == id).OrderByDescending(v => v.ID).ToList();
+            var veri = c.SatinAlmas.Where(v => v.Durum == true).OrderByDescending(v => v.ID).ToList();
             var tedarikci = c.Tedarikcilers.FirstOrDefault(v => v.ID == id);
             List<DtoSatinAlma> ham = new List<DtoSatinAlma>();
             foreach (var x in veri)

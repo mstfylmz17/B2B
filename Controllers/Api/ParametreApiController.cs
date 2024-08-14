@@ -215,7 +215,7 @@ namespace VNNB2B.Controllers.Api
                 DtoUrunKategori list = new DtoUrunKategori();
                 list.ID = Convert.ToInt32(x.ID);
                 if (x.Adi != null) list.Adi = x.Adi.ToString(); else list.Adi = "Tanımlanmamış...";
-                list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(x.Resim);
+                if (x.Resim != null) list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(x.Resim); else list.Resim = "";
                 list.Kodu = x.Kodu;
                 list.SiraNo = x.SiraNo;
                 ham.Add(list);
