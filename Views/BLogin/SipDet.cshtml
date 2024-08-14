@@ -1,0 +1,46 @@
+﻿@using VNNB2B.Models.Hata
+@inject IHttpContextAccessor HttpContextAccessor
+@using DataAccessLayer.Concrate
+
+@{
+    ViewData["Title"] = "SipDet";
+    Layout = "~/Views/Shared/_Bayi.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    string cerez;
+    HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out cerez);
+
+    int bayiid = Convert.ToInt32(cerez);
+    int id = Convert.ToInt32(ViewBag.id);
+    BLoginHata.Icerik = "";
+}
+
+<div class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">
+                    <small>
+                        Sipariş Detayları / Order Details
+                    </small>
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>

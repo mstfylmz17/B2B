@@ -154,5 +154,20 @@ namespace VNNB2B.Controllers
                 return View();
             }
         }
+        public IActionResult SipDet(int id)
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "BLogin");
+            }
+            else
+            {
+                ViewBag.id = id;
+                ViewBag.hata = BLoginHata.Icerik;
+                return View();
+            }
+        }
     }
 }

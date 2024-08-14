@@ -33,7 +33,11 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0"><small>Siparişlerim</small></h1>
+                <h1 class="m-0">
+                    <small>
+                        Siparişlerim / My Orders
+                    </small>
+                </h1>
             </div>
         </div>
     </div>
@@ -41,9 +45,9 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
-            <center><h6 id="sepetyok" style="display:none;">Geçmiş Sipariş Bulunamadı!</h6></center>
+            <center><h6 id="sepetyok" style="display:none;">Geçmiş Sipariş Bulunamadı! / No Past Order Found!</h6></center>
             <div id="sepet">
-                <div class="card-body">
+                <div style="font-size:12px;">
                     <table class="table table-bordered" id="sepettable">
                         <thead>
                             <tr>
@@ -114,7 +118,7 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>'
+                        return '<a href="/BLogin/SipDet/' + data + '" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a> <button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button>'
                     }
                 }
             ],
@@ -126,6 +130,23 @@
             lengthChange: false,
             paging: false,
             info: false,
+            rowCallback: function (row, data, index) {
+                if (data.siparisDurum == "Sipariş Onaylandı...") {
+                    $(row).addClass('table-primary');
+                }
+                else if (data.siparisDurum == "Onay Bekliyor...") {
+                    $(row).addClass('table-secondary');
+                }
+                else if (data.siparisDurum == "Reddedildi...") {
+                    $(row).addClass('table-danger');
+                }
+                else if (data.siparisDurum == "Kısmi Teslim Edildi...") {
+                    $(row).addClass('table-warning');
+                }
+                else if (data.siparisDurum == "Tamamı Teslim Edildi...") {
+                    $(row).addClass('table-secondary');
+                }
+            },
         });
     }
     function tabloGuncelle() {

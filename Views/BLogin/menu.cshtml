@@ -30,68 +30,150 @@
     int bayiid = Convert.ToInt32(cerez);
     var bayi = c.Bayilers.FirstOrDefault(v => v.ID == bayiid);
 }
+
 <div class="card">
     <div class="card-header">
-        <h5 class="card-title m-0">Bilgilendirme</h5>
+        <h5 class="card-title m-0">BİLGİ / INFO</h5>
     </div>
     <div class="card-body">
-        <h6 class="card-title">Vanna Ofis Mobilyaları Bayilik Sistemine Hoş Geldiniz...</h6>
-
-        <p class="card-text">
+        <h6>Vanna Ofis Mobilyaları Bayilik Sistemine Hoş Geldiniz...</h6>
+        @* <p class="card-title">
+        VNN Ofis mobilyalar olarak 40 yılı aşkın süresir; ofis mobilyaları, makam ve personel çalışma alanları koltuk/kanepe grupları ve birçok farklı kategoride üretim, satış, toptan ve perakende faaliyetlerimiz ile sizlere hizmet vermekteyiz.
+        Usta eller ve profesyonel ekibimizce titizlikle hazırlanan el işçiliği ürünlerimiz geçmişin ve günümüzün izlerini son derece dikkatle işleyerek Türkiye, Avrupa ve Ortadoğu olmak üzere Dünya'nın birçok bölgesine ihracat sağlamaktayız. Ürünlerimizin üretiminde insan sağlığına ve dünyamızın geleceğine etki edecek herhangi bir zararlı kimyasal kullanmadan, Türk Standartları Enstitüsü (TSE) formlarında ve Forest Stewardship Council (FSC) sertifikasından hareketle endüstriyel sanayi ormanlarından elde ettiğimiz ham maddeler ile üretimimizi sağlamaktayız. Ankara’da bulunan 12.000m² kapalı ve 4.500m² açık alana sahip fabrikamız ile "Yeni bir ofis hayal et" mottosundan yola çıkarak sektörümüze öncülük etmeye devam edeceğiz.
+        </p> *@
+        <p class="card-title" style="margin-top:15px;">
             Bu sistemden hatasız şekilde sipariş oluşturabilir ve ödemelerinizi yapabilirsiniz. Ayrıca yapmış olduğunuz işlemlerin, her zaman geriye dönük kontrolllerini sağlayabilirsiniz. Ürünlerimizin 3D çizim ve diğer detaylarına ilgili ürünün detay sayfasında bulabilirsiniz.
             En iyi ve daha fazlası için öneri ve görüşlerinizi info@vnn.com.tr adresinden bizlere ulaştırabilirsiniz.
+            <br /><br />
         </p>
-        <a href="#" class="btn btn-dark">Download Dosyaları</a>
-        <a href="#" class="btn btn-dark">Ürün Katalog (PDF)</a>
-        <a href="#" class="btn btn-dark">Fiyat Listesi (USD)</a>
-        <a href="#" class="btn btn-dark">Fiyat Listesi (TL)</a>
+        <h6>Welcome to Vanna Office Furniture Dealership System...</h6>
+        <p class="card-title" style="margin-top:15px;">
+            You can create orders and make payments without any errors from this system. In addition, you can always perform retrospective checks on the transactions you have made. You can find 3D drawings and other details of our products on the detail page of the relevant product.
+
+            <br /><br />
+        </p>
+        <a href="/Dosyalar/Katalog.pdf" target="_blank" class="btn" style="color:#B17F2C; border:double;">Ürün Katalog (PDF)</a>
+        <a href="/Dosyalar/DolarFiyatListesi.pdf" target="_blank" class="btn" style="color:#B17F2C; border:double;">Fiyat Listesi (USD)</a>
+        <a href="/Dosyalar/TLFiyatListesi.pdf" target="_blank" class="btn" style="color:#B17F2C; border:double;">Fiyat Listesi (TL)</a>
     </div>
 </div>
 <div class="row">
-    <div class="col-6">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Siparişleriniz (Son 10)</h3>
+                <h3 class="card-title">
+                    Siparişleriniz (Son 10) / Your Orders (Last 10)
+                </h3>
             </div>
-            <div class="card-body">
-                <table class="table table-bordered">
+            <div class="card-body" style="font-size:12px;">
+                <table id="SipTable" class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Sipariş No</th>
-                            <th>Tarih</th>
-                            <th>Durumu</th>
-                            <th></th>
+                            <th>Sipariş No / Order No</th>
+                            <th>
+                                Sipariş Tarihi / Order Date
+                            </th>
+                            <th>
+                                Sipariş Durumu /
+                                Order Status
+                            </th>
+                            <th>Sipariş Detay / Order Detail</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>SIP-0001</td>
-                            <td>
-                                07.05.2024 06.20.26
-                            </td>
-                            <td>
-                                Tamamı Teslim Edildi
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Kullanıcı Bilgileriniz</h3>
+                <h3 class="card-title">
+                    Kullanıcı Bilgileriniz / Your User Information
+                </h3>
             </div>
             <div class="card-body">
-                <i class="fas fa-user"> @bayi.Yetkili</i>  <i class="fas fa-envelope" style="margin-left:5px;"> @bayi.EPosta</i>
+                <span><i class="fas fa-user"></i> @bayi.Yetkili</span>  <br />
+                <span><i class="fas fa-envelope"> </i> @bayi.EPosta</span>
                 <br />
-                <i class="fas fa-industry"> @bayi.BayiKodu - @bayi.Unvan</i>
+                <span><i class="fas fa-industry"></i> @bayi.BayiKodu - @bayi.Unvan</span>
                 <hr />
-                <a href="/BLogin/Hesap" class="btn btn-light btn-sm">Hesap Bilgileri</a>
+                <a href="/BLogin/Hesap" class="btn" style="color:#B17F2C; border:double;">Hesap Bilgileri</a>
             </div>
         </div>
     </div>
 </div>
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    var satirid = 0;
+    var myDataTable;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#SipTable', {
+            ajax: {
+                url: '/SiparisApi/SiparisList/@bayiid',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                { data: 'siparisNo' },
+                { data: 'siparisTarihi' },
+                { data: 'siparisDurum' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="/BLogin/SipDet/' + data + '" class=" btn-xs"style="color:#B17F2C; display: flex; align-items: center;"> Detay --> </a>'
+                    }
+                }
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            ordering: false,
+            searching: false,
+            lengthChange: false,
+            paging: false,
+            info: false,
+            rowCallback: function (row, data, index) {
+                if (data.siparisDurum == "Sipariş Onaylandı...") {
+                    $(row).addClass('table-primary');
+                }
+                else if (data.siparisDurum == "Onay Bekliyor...") {
+                    $(row).addClass('table-secondary');
+                }
+                else if (data.siparisDurum == "Reddedildi...") {
+                    $(row).addClass('table-danger');
+                }
+                else if (data.siparisDurum == "Kısmi Teslim Edildi...") {
+                    $(row).addClass('table-warning');
+                }
+                else if (data.siparisDurum == "Tamamı Teslim Edildi...") {
+                    $(row).addClass('table-secondary');
+                }
+            },
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        initializeDataTable();
+    })
+</script>

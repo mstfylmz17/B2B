@@ -25,17 +25,12 @@
 
 <div class="card" style="background-color:white;">
     <div class="card-body">
-        <h5>Ürünler Listesi</h5>
-        
+        <h5>Ürün Listesi / List Of Products</h5>
+
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="input-group">
-                    <input type="search" class="form-control form-control-sm" placeholder="Ürün Adını Yazınız..." id="search">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-sm btn-default">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
+                    <input type="search" class="form-control form-control-sm" placeholder="Aramak İstediğiniz Ürün Adını Yazınız... / Type in the name you want to search for products..." id="search">
                 </div>
             </div>
         </div>
@@ -66,8 +61,8 @@
                 }
 
                 var col = $('<div class="col-md-4 text-center" style="width:100%; color:transparent; border:none;"></div>');
-                var img = $('<img src="' + item.resim + '" class="img-thumbnail" style="width: 100%; cursor: pointer; border:none;" />');
-                var name = $('<h5 style="color:goldenrod;">' + item.adi + '</h5>');
+                var img = $('<img src="' + item.resim + '" class="img-thumbnail" style="width: 100%; cursor: pointer;  border:groove; border-radius:15px;" />');
+                var name = $('<h5 style="color:#B17F2C;">' + item.adi + '</h5>');
 
                 img.click(function () {
                     window.location.href = '/BLogin/UrunDetay?id=' + item.id;

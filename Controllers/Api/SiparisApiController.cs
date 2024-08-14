@@ -3,6 +3,7 @@ using EntityLayer.Concrate;
 using EntityLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
 
 namespace VNNB2B.Controllers.Api
 {
@@ -13,7 +14,6 @@ namespace VNNB2B.Controllers.Api
         {
             c = context;
         }
-
 
         //Bayi Panel İşlemleri
         [HttpPost]
@@ -62,7 +62,9 @@ namespace VNNB2B.Controllers.Api
             var result = new { status = "error", message = "İşlem Başarısız..." };
             SiparisIcerik de = c.SiparisIceriks.FirstOrDefault(v => v.ID == s.ID);
             de.Miktar = s.Miktar;
+            de.SatirToplam = de.BirimFiyat * s.Miktar;
             c.SaveChanges();
+            siphesapla(Convert.ToInt32(de.SiparisID));
             result = new { status = "success", message = "Miktar Güncellendi..." };
             return Json(result);
         }
@@ -74,7 +76,7 @@ namespace VNNB2B.Controllers.Api
             var result = new { status = "error", message = "İşlem Başarısız..." };
             var sip = c.Siparis.FirstOrDefault(v => v.BayiID == id && v.BayiOnay == false);
             sip.BayiOnay = true;
-            sip.SiparisDurum = "Bayi Onayladı...";
+            sip.SiparisDurum = "Onay Bekliyor...";
             c.SaveChanges();
             result = new { status = "success", message = "Sepet Onaylandı... Sipariş Durumunu Siparişlerim Sekmesinden Kontrol Edebilirsiniz..." };
             return Json(result);
@@ -101,6 +103,34 @@ namespace VNNB2B.Controllers.Api
             return Json(ham);
         }
         [HttpPost]
+        public IActionResult SepetIcerik(int id)
+        {
+            var x = c.Siparis.FirstOrDefault(v => v.Durum == true && v.BayiID == id && v.BayiOnay == false);
+            if (x != null)
+            {
+                string para = "";
+                if (x.ParaBirimiID == 2) para = " $"; else para = " ₺";
+                DtoSiparis list = new DtoSiparis();
+                list.ID = Convert.ToInt32(x.ID);
+                if (x.SiparisTarihi != null) list.SiparisTarihi = Convert.ToDateTime(x.SiparisTarihi).ToString("d");
+                if (x.SiparisBayiAciklama != null) list.SiparisBayiAciklama = x.SiparisBayiAciklama; else list.SiparisBayiAciklama = "";
+                var kismivarmi = c.Teslimats.FirstOrDefault(v => v.SiparisID == x.ID && v.Durum == true);
+                if (x.TeslimTarihi != null && kismivarmi != null) list.TeslimTarihi = Convert.ToDateTime(x.TeslimTarihi).ToString("d"); else if (x.TeslimTarihi == null && kismivarmi == null) list.TeslimTarihi = "Teslim Edilmedi..."; else list.TeslimTarihi = "Kısmi Teslimatlar Var...";
+                list.ToplamTeslimEdilen = Convert.ToInt32(c.TeslimatIceriks.Where(v => v.SiparisID == x.ID && v.Durum == true).Sum(v => v.Miktar)).ToString();
+                list.SiparisNo = x.SiparisNo.ToString();
+                if (x.SiparisDurum != null) list.SiparisDurum = x.SiparisDurum.ToString(); else list.SiparisDurum = "";
+                list.ToplamAdet = Convert.ToInt32(x.ToplamAdet).ToString();
+                list.ToplamTutar = Convert.ToDecimal(x.ToplamTutar).ToString("N2") + para;
+                list.AraToplam = Convert.ToDecimal(x.AraToplam).ToString("N2") + para;
+                list.IstoktoToplam = Convert.ToDecimal(x.IstoktoToplam).ToString("N2") + para;
+                return Json(list);
+            }
+            else
+            {
+                return Json(2);
+            }
+        }
+        [HttpPost]
         public IActionResult SiparisSil(int id)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
@@ -113,12 +143,30 @@ namespace VNNB2B.Controllers.Api
             return Json(result);
         }
 
+        public void siphesapla(int id)
+        {
+            var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
+            decimal? bayioran = sip.IskontoOran;
+            decimal toplamtutar = 0;
+            decimal toplamadet = 0;
+            decimal iskontotoplam = 0;
+
+            toplamtutar = Convert.ToDecimal(c.SiparisIceriks.Where(v => v.SiparisID == id && v.Durum == true).Sum(v => v.SatirToplam));
+            toplamadet = Convert.ToDecimal(c.SiparisIceriks.Where(v => v.SiparisID == id && v.Durum == true).Sum(v => v.Miktar));
+            iskontotoplam = Convert.ToDecimal((toplamtutar * bayioran) / 100);
+
+            sip.ToplamAdet = toplamadet;
+            sip.IstoktoToplam = iskontotoplam;
+            sip.ToplamTutar = toplamtutar - iskontotoplam;
+            sip.AraToplam = toplamtutar;
+            c.SaveChanges();
+        }
 
         //Admin Panel İşlemleri
         [HttpPost]
         public IActionResult OnayBekleyenList()
         {
-            var veri = c.Siparis.Where(v => v.Durum == true && v.OnayDurum != true).OrderByDescending(v => v.ID).ToList();
+            var veri = c.Siparis.Where(v => v.Durum == true && v.OnayDurum != true && v.BayiOnay == true).OrderByDescending(v => v.ID).ToList();
             List<DtoSiparis> ham = new List<DtoSiparis>();
             foreach (var x in veri)
             {

@@ -1,5 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @model EntityLayer.Dto.DtoBayiler
+
 @{
     ViewData["Title"] = "Detay";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -86,6 +87,9 @@
                                             </div>
                                             <div class="form-group mb-3">
                                                 <input type="text" class="form-control" id="AlisVerisLimiti" aria-describedby="emailHelp1" placeholder="Alış-Veriş Limiti : @Model.AlisVerisLimiti">
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                @Html.DropDownList("ParaBirimi", (List<SelectListItem>)ViewBag.parabirimleri, "Para Birimi : " + Model.ParaBirimi, new { @class = "form-control basic", id = "ParaBirimi" })
                                             </div>
                                             <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
                                         </form>
@@ -236,6 +240,7 @@
             IskontoOran: $("#IskontoOran").val(),
             AlisVerisLimiti: $("#AlisVerisLimiti").val(),
             BayiKodu: $("#BayiKodu").val(),
+            ParaBirimi: $("#ParaBirimi").val(),
         };
         $.ajax({
             type: "POST",
@@ -258,6 +263,7 @@
                 $("#IskontoOran").val('');
                 $("#AlisVerisLimiti").val('');
                 $("#BayiKodu").val('');
+                $("#ParaBirimi").val('');
                 tabloGuncelle();
             }
         });

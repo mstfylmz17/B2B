@@ -33,7 +33,11 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0"><small>Sepet</small></h1>
+                <h1 class="m-0">
+                    <small>
+                        Sepet / Shopping Cart
+                    </small>
+                </h1>
             </div>
         </div>
     </div>
@@ -41,25 +45,63 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
-            <center><h6 id="sepetyok" style="display:none;">Sepetinizde Ürün Bulunamadı!</h6></center>
+            <center><h6 id="sepetyok" style="display:none;">Sepetinizde Ürün Bulunamadı! / No Products Found in Your Cart!</h6></center>
             <div id="sepet">
-                <div class="card-header">
-                    <h3 class="card-title">Sepet İçeriğiniz</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered" id="sepettable">
-                        <thead>
-                            <tr>
-                                <th>Ürün Kodu</th>
-                                <th>Ürün Açıklama</th>
-                                <th>Miktar</th>
-                                <th>Açıklama</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="footer" style="margin-top:10px;">
-                        <button onclick="SepetOnay()" class="btn btn-success btn-sm" style="float:right;"><i class="fas fa-check"></i> Sepeti Onayla</button>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Sepet İçeriğiniz / Your Cart Content
+                            </h3>
+                        </div>
+                        <div style="font-size:12px;">
+                            <table class="table table-bordered" id="sepettable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Ürün Kodu /
+                                            Product Code
+                                        </th>
+                                        <th>
+                                            Ürün Açıklama /
+                                            Product Description
+                                        </th>
+                                        <th>Adet / Piece</th>
+                                        <th>Açıklama / Explanation</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="card-body" style="font-size:10px; float:right;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Toplam Sipariş Adedi / Total Order Number</th>
+                                        <th id="txttoplamadet"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Ara Toplam / Subtotal</th>
+                                        <th id="txtaratoplam"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Iskonto Toplam / Discount Total</th>
+                                        <th id="txtiskontotoplam"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Genel Toplam / Grand Total</th>
+                                        <th id="txtgeneltoplam"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="footer" style="margin-top:10px;">
+                                <button onclick="SepetOnay()" class="btn btn-success btn-xs" style="float:right;"><i class="fas fa-check"></i> Sepeti Onayla / Confirm Cart</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,14 +158,14 @@
                 {
                     data: 'id',
                     render: function (data, type, row, meta) {
-                        return '<input type="number" class="form-control miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
+                        return '<input type="number"  style="font-size:12px;" class="miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
                     }
                 },
                 { data: 'aciklama' },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<button class="btn btn-info btn-sm" style="margin-right:2px;" type="button" onclick="SatirNo(' + data + ')"><i class="fas fa-edit"></i></a>' + '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>'
+                        return '<div class="row"><div class="col-6"><button class="btn btn-info btn-xs" style="margin-right:2px; float:left;" type="button" onclick="SatirNo(' + data + ')"><i class="fas fa-edit"></i></a></div>' + '<div class="col-6"><button type="button" onclick="sil(' + data + ')" style="float:right;" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button></div></div>'
                     }
                 }
             ],
@@ -145,9 +187,11 @@
         if (myDataTable) {
             myDataTable.destroy();
         }
+        Bilgiler();
         initializeDataTable();
     }
     $(document).ready(function () {
+        Bilgiler();
         initializeDataTable();
     })
     function sil(element) {
@@ -237,6 +281,20 @@
                     confirmButtonText: 'Tamam'
                 });
                 tabloGuncelle();
+            }
+        });
+    }
+    function Bilgiler() {
+        $.ajax({
+            type: "POST",
+            url: "/SiparisApi/SepetIcerik",
+            data: { id: @cerez },
+            success: function (x) {
+                console.log(x);
+                $("#txttoplamadet").text(x.toplamAdet);
+                $("#txtaratoplam").text(x.araToplam);
+                $("#txtgeneltoplam").text(x.toplamTutar);
+                $("#txtiskontotoplam").text(x.istoktoToplam);
             }
         });
     }

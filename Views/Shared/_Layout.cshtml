@@ -10,33 +10,20 @@
     <link rel="stylesheet" href="/Tema/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="/Tema/dist/css/adminlte.min.css">
 </head>
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition dark-mode layout-top-nav">
     <div class="wrapper">
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <img src="/Resimler/logosvg.svg" />
-        </div>
-        <nav class="main-header navbar navbar-expand navbar-dark">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
+        <nav class="main-header navbar navbar-expand-md navbar-dark navbar-dark">
+            <div class="container" style="margin-left:0px;">
+                <a href="#" class="navbar-brand">
+                    <img src="/Resimler/logosvg.svg" width="100">
+                </a>
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="#" class="brand-link">
-                <center><h5 class="label">VNN MOBİLYA ADMİN</h5></center>
-            </a>
-            <div class="sidebar">
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
                             <a href="/Admin" class="nav-link">
                                 <p>
@@ -51,26 +38,26 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/Bayi" class="nav-link">
-                                <p>
-                                    Bayiler
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Tedarikci" class="nav-link">
-                                <p>
-                                    Tedarikçiler
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Fasoncular" class="nav-link">
-                                <p>
-                                    Fasoncular
-                                </p>
-                            </a>
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Cari</a>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="width:250px;">
+                                <li class="nav-item">
+                                    <a href="/Bayi" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon"></i>
+                                            Bayiler
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Tedarikci" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon"></i>
+                                            Tedarikçiler
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="/Odemeler" class="nav-link">
@@ -79,470 +66,551 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Sipariş
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Sipariş</a>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Yeni Sipariş Aç</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Yeni Sipariş Aç
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Siparis" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Onay Bekleyen Siparişler</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Onay Bekleyen Siparişler
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Siparis/Devam" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Devam Eden Siparişler</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Devam Eden Siparişler
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Siparis/KT" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Kısmi Teslim Siparişler</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Kısmi Teslim Siparişler
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Siparis/YH" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Yüklemeye Hazır Siparişler</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Yüklemeye Hazır Siparişler
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkblue"></i>
-                                        <p>Teklif Hazırla</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkblue"></i>
+                                            Teklif Hazırla
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkblue"></i>
-                                        <p>Check List Hazırla</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkblue"></i>
+                                            Check List Hazırla
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Teslimat Oluştur</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Teslimat Oluştur
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Urunler/Stok" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Stok Durumu</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Stok Durumu
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Siparis/Gecmis" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Geçmiş Siparişler</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Geçmiş Siparişler
+                                        </p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Satın Alma
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Satın Alma</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Yeni Satın Alma Aç</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Yeni Satın Alma Aç
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Satın Alma Talepleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Satın Alma Talepleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Devam Eden Satın Almalar</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Devam Eden Satın Almalar
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Kısmi Kabul Satın Almalar</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Kısmi Kabul Satın Almalar
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Mal Kabul Oluştur</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Mal Kabul Oluştur
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkred"></i>
-                                        <p>Sayım Yap</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkred"></i>
+                                            Sayım Yap
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Urunler/Stok" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Stok Durumu</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Stok Durumu
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Geçmiş Satın Almalar</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Üretim
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Yeni İş Emirleri</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Devam Eden İş Emirleri</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Kısmi Tamamlanan İş Emirleri</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Ürünü Üretime Al</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkred"></i>
-                                        <p>Ürünü Üretimden Çıkar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Geçmiş İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Geçmiş Satın Almalar
+                                        </p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Depo
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu3" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Üretim</a>
+                            <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Yeni İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Yeni İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Devam Eden İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Devam Eden İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Kısmi Sevk Edilen İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Kısmi Tamamlanan İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkred"></i>
-                                        <p>Ürünü Boyaya Çıkar</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Ürünü Üretime Al
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkred"></i>
-                                        <p>Hammadde & Hırdavat Çıkar</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkred"></i>
+                                            Ürünü Üretimden Çıkar
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Geçmiş İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu4" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Depo</a>
+                            <ul aria-labelledby="dropdownSubMenu4" class="dropdown-menu border-0 shadow" style="width:250px;">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Yeni İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Devam Eden İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Kısmi Sevk Edilen İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkred"></i>
+                                            Ürünü Boyaya Çıkar
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkred"></i>
+                                            Hammadde & Hırdavat Çıkar
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Urunler/Stok" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Stok Durumu</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Stok Durumu
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Geçmiş İş Emirleri</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Boya
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Yeni İş Emirleri</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Devam Eden İş Emirleri</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Kısmi Boyanan İş Emirleri</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Ürünü Boyaya Al</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkred"></i>
-                                        <p>Ürünü Boyadan Çıkar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Geçmiş İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Geçmiş İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Döşeme
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu5" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Boya</a>
+                            <ul aria-labelledby="dropdownSubMenu5" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Yeni İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Yeni İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Devam Eden İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Devam Eden İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Kısmi Boyanan İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Kısmi Boyanan İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Ürünü Döşemeye Al</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Ürünü Boyaya Al
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkred"></i>
-                                        <p>Ürünü Döşemeden Çıkar</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkred"></i>
+                                            Ürünü Boyadan Çıkar
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Geçmiş İş Emirleri</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Ambalaj
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Yeni İş Emirleri</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Devam Eden İş Emirleri</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Kısmi Ambalaj İş Emirleri</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkblue"></i>
-                                        <p>Ürün Etiketi Yazdır</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Ürünü Ambalaja Al</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkred"></i>
-                                        <p>Ürünü Ambalajdan Çıkar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Geçmiş İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Geçmiş İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Sevkiyat
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu6" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Döşeme</a>
+                            <ul aria-labelledby="dropdownSubMenu6" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:green"></i>
-                                        <p>Yeni İş Emirleri</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Yeni İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Devam Eden Siparişler</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Devam Eden İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Kısmi Teslim Siparişler</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Kısmi Boyanan İş Emirleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Yüklemeye Hazır Siparişler</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Ürünü Döşemeye Al
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:darkred"></i>
-                                        <p>Hammadde & Hırdavat Sevk Et</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkred"></i>
+                                            Ürünü Döşemeden Çıkar
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Geçmiş İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu7" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Ambalaj</a>
+                            <ul aria-labelledby="dropdownSubMenu7" class="dropdown-menu border-0 shadow" style="width:250px;">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Yeni İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Devam Eden İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Kısmi Ambalaj İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkblue"></i>
+                                            Ürün Etiketi Yazdır
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Ürünü Ambalaja Al
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkred"></i>
+                                            Ürünü Ambalajdan Çıkar
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Geçmiş İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu8" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Sevkiyat</a>
+                            <ul aria-labelledby="dropdownSubMenu8" class="dropdown-menu border-0 shadow" style="width:260px;">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Yeni İş Emirleri
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Devam Eden Siparişler
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Kısmi Teslim Siparişler
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Yüklemeye Hazır Siparişler
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:darkred"></i>
+                                            Hammadde & Hırdavat Sevk Et
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Urunler/Stok" class="nav-link">
-                                        <i class="fa fa-circle nav-icon" style="color:black"></i>
-                                        <p>Stok Durumu</p>
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Stok Durumu
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Geçmiş Sevkiyatlar</p>
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Geçmiş Sevkiyatlar
+                                        </p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Parametreler
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu9" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Parametreler</a>
+                            <ul aria-labelledby="dropdownSubMenu9" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
                                     <a href="/Parametre/Birim" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Birimler</p>
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Birimler
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Parametre/Departman" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Departmanlar</p>
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Departmanlar
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Parametre/Kategori" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Kategoriler</p>
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Kategoriler
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Parametre/Kullanici" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Kullanıcılar</p>
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Kullanıcılar
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Parametre/YetkiTurlari" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Yetki Türleri</p>
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Yetki Türleri
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Parametre/Ozellik" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Ürün Özellikleri</p>
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Ürün Özellikleri
+                                        </p>
                                     </a>
                                 </li>
                             </ul>
@@ -555,9 +623,13 @@
                             </a>
                         </li>
                     </ul>
-                </nav>
+
+                </div>
+
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                </ul>
             </div>
-        </aside>
+        </nav>
         <div class="content-wrapper">
             <section class="content">
                 <div class="container-fluid">
@@ -578,7 +650,6 @@
     <script src="/Tema/plugins/jquery-mapael/jquery.mapael.min.js"></script>
     <script src="/Tema/plugins/jquery-mapael/maps/usa_states.min.js"></script>
     <script src="/Tema/plugins/chart.js/Chart.min.js"></script>
-    <script src="/Tema/dist/js/demo.js"></script>
     <script src="/Tema/dist/js/pages/dashboard2.js"></script>
 </body>
 </html>

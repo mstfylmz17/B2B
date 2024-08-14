@@ -112,9 +112,24 @@ namespace VNNB2B.Controllers
                 if (x.KritikStokMiktari != null) list.KritikStokMiktari = x.KritikStokMiktari.ToString(); else list.KritikStokMiktari = "Tanımlanmamış...";
                 if (x.BirimID != null) list.Birim = c.Birimlers.FirstOrDefault(v => v.ID == x.BirimID).BirimAdi.ToString(); else list.Birim = "Tanımlanmamış...";
                 list.UrunTuru = c.UrunTurlaris.FirstOrDefault(v => v.ID == x.UrunTuruID).UrunGrubuAdi.ToString();
+                list.UrunKategori = c.UrunKategoris.FirstOrDefault(v => v.ID == x.UrunKategoriID).Adi.ToString();
                 list.StokMiktari = c.UrunStoklaris.Where(v => v.ID == x.ID && v.Durum == true && v.StokMiktari > 0).Sum(v => v.StokMiktari).ToString();
                 if (guncel < x.KritikStokMiktari) list.Durum = "Red";
                 if (x.Resim != null) list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(x.Resim);
+                if (x.BirimM3 != null) list.BirimM3 = x.BirimM3.ToString(); else list.BirimM3 = "Belirtilmedi...";
+                if (x.Boyut != null) list.Boyut = x.Boyut.ToString(); else list.Boyut = "Belirtilmedi...";
+                if (x.PaketAdet != null) list.PaketAdet = x.PaketAdet.ToString(); else list.PaketAdet = "Belirtilmedi...";
+                var fiyatlar = c.UrunFiyatlaris.FirstOrDefault(v => v.UrunID == id && v.Durum == true);
+                if (fiyatlar != null)
+                {
+                    list.FiyatTl = Convert.ToDecimal(fiyatlar.FiyatTL).ToString("N2") + " ₺";
+                    list.FiyatUSD = Convert.ToDecimal(fiyatlar.FiyatUSD).ToString("N2") + " $";
+                }
+                else
+                {
+                    list.FiyatTl = "0,00 ₺";
+                    list.FiyatUSD = "0,00 $";
+                }
                 ViewBag.hata = UrunHata.Icerik;
                 return View(list);
             }

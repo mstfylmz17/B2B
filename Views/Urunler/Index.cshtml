@@ -227,6 +227,8 @@
         formData.append("BirimM3", $("#BirimM3").val());
         formData.append("Boyut", $("#Boyut").val());
         formData.append("PaketAdet", $("#PaketAdet").val());
+        formData.append("FiyatTL", $("#FiyatTL").val());
+        formData.append("FiyatUSD", $("#FiyatUSD").val());
         $.ajax({
             type: "POST",
             url: "/UrunApi/UrunEkle",
@@ -253,6 +255,8 @@
                 $("#BirimM3").val('');
                 $("#Boyut").val('');
                 $("#PaketAdet").val('');
+                $("#FiyatTL").val('');
+                $("#FiyatUSD").val('');
                 tabloGuncelle();
             }
         });

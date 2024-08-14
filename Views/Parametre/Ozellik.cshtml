@@ -147,7 +147,7 @@
     function submitForm(element) {
         $.ajax({
             type: "POST",
-            url: "/ParametreApi/UzunOzellikTanimlariSil/" + element,
+            url: "/ParametreApi/UrunOzellikTurlariSil/" + element,
             dataType: "json",
             success: function (result) {
                 swal.fire({

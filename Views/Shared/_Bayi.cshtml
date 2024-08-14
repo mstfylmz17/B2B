@@ -6,6 +6,7 @@
 @{
     Layout = null;
 }
+
 @{
     string cerez;
     HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out cerez);
@@ -14,10 +15,10 @@
 
     var bayi = c.Bayilers.FirstOrDefault(v => v.ID == bayiid);
     int sepetsayi = 0;
-    var sepet = c.Siparis.FirstOrDefault(v => v.BayiID == bayiid && v.BayiOnay == false);
+    var sepet = c.Siparis.FirstOrDefault(v => v.BayiID == bayiid && v.BayiOnay == false && v.Durum == true);
     if (sepet != null)
     {
-        sepetsayi = c.SiparisIceriks.Where(v => v.SiparisID == sepet.ID).Count();
+        sepetsayi = c.SiparisIceriks.Where(v => v.SiparisID == sepet.ID && v.Durum == true).Count();
     }
 }
 
@@ -37,7 +38,7 @@
         <hr />
         @*NavBar*@
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-            <div class="container">
+            <div class="container" style="margin-top:-25px; margin-bottom:15px;">
                 <a href="#" class="navbar-brand">
                     <img src="/Resimler/logosvg.svg" alt="Logo" width="150">
                 </a>
@@ -46,58 +47,69 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a href="/BLogin/menu" style="font-weight:400; color:black" class="nav-link">ANASAYFA</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/BLogin/Urunler" style="font-weight:400; color:black" class="nav-link">ÜRÜNLER</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/BLogin/Siparis" style="font-weight:400; color:black" class="nav-link">SİPARİŞLERİM</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/BLogin/Odeme" style="font-weight:400; color:black" class="nav-link">ÖDEMELERİM</a>
-                        </li>
-                    </ul>
-                </div>
+                <center>
+                    <div class="collapse navbar-collapse order-3" id="navbarCollapse" style="margin-left:25px;">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="/BLogin/menu" style="font-weight:400; color:black" class="nav-link"><center>ANASAYFA<br /> <span style="font-weight: 100; color: gray;">HOME</span></center></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/BLogin/Urunler" style="font-weight:400; color:black" class="nav-link"><center>ÜRÜNLER<br /> <span style="font-weight: 100; color: gray;">PRODUCTS</span></center></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/BLogin/Siparis" style="font-weight:400; color:black" class="nav-link"><center>SİPARİŞLERİM<br /> <span style="font-weight: 100; color: gray;">MY ORDERS</span></center></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/BLogin/Odeme" style="font-weight:400; color:black" class="nav-link">
+                                    <center>ÖDEMELERİM<br /> <span style="font-weight: 100; color: gray;">MY PAYMENTS</span></center>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </center>
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                     <li class="nav-item">
                         <a href="/BLogin/Sepet" class="nav-link"><img src="~/Resimler/sepet.svg" style="height:25px; width:25px;" /><span style="color:darkred;"> @sepetsayi</span></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
+                        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" style="color:#B17F2C; border:double; display: flex; align-items: center;">
                             <i class="fas fa-user"></i>
-                            @bayi.Yetkili
+                            <span style="margin-left: 5px; flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                                @bayi.Yetkili
+                            </span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <span class="dropdown-header">@bayi.Unvan</span>
-                            <div class="dropdown-divider"></div>
-                            <a href="/BLogin/Hesap" class="dropdown-item">
-                                Hesap Bilgilerim
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="/BLogin/Siparis" class="dropdown-item">
-                                Siparişlerim
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="/BLogin/Odeme" class="dropdown-item">
-                                Ödeme Geçmişim
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                Ödeme Yap
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                Destek Merkezi
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="/BLogin/Cikis" class="dropdown-item">
-                                Çıkış Yap
-                            </a>
-                        </div>
+                        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                            <li class="nav-item">
+                                <a href="/BLogin/Hesap" class="nav-link">
+                                    Hesap Bilgilerim
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/BLogin/Siparis" class="nav-link">
+                                    Siparişlerim
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/BLogin/Odeme" class="nav-link">
+                                    Ödeme Geçmişim
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/#" class="nav-link">
+                                    Ödeme Yap
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    Destek Merkezi
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/BLogin/Cikis" class="nav-link">
+                                    Çıkış Yap
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -116,9 +128,10 @@
                                     <img src="/Resimler/logosvg.svg" alt="Logo" style="opacity: .8">
                                 </div>
                                 <div class="col-6">
-                                    <p>
-                                        Ofis Mobilyası sektöründeki 20 yıllık tecrübemizle sizlere hizmet ediyoruz.
+                                    <p style="font-size:15px;">
+                                        Ofis Mobilyası sektöründeki 42 yıllık tecrübemizle sizlere hizmet ediyoruz...
                                     </p>
+                                    <p style="font-size:15px;">We serve you with our 42 years of experience in the Office Furniture industry...</p>
                                     @*  <h5>Menü</h5>
                                     <br />
                                     <a href="/BLogin/menu" class="btn btn-light btn-sm">ANASAYFA</a><br />

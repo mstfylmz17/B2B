@@ -58,6 +58,7 @@ namespace VNNB2B.Controllers.Api
                     de.IskontoOran = 0;
                     de.AlisVerisLimiti = 0;
                     de.BayiKodu = d.BayiKodu;
+                    de.ParaBirimi = 1;
                     de.Durum = true;
                     c.Bayilers.Add(de);
                     c.SaveChanges();
@@ -112,6 +113,7 @@ namespace VNNB2B.Controllers.Api
                 if (d.IskontoOran != null) de.IskontoOran = d.IskontoOran;
                 if (d.AlisVerisLimiti != null) de.AlisVerisLimiti = d.AlisVerisLimiti;
                 if (d.BayiKodu != null) de.BayiKodu = d.BayiKodu;
+                if (d.ParaBirimi != null) de.ParaBirimi = d.ParaBirimi;
                 c.SaveChanges();
                 result = new { status = "success", message = "Güncelleme Başarılı..." };
             }

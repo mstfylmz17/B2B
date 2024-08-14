@@ -217,9 +217,10 @@ namespace VNNB2B.Controllers.Api
                 if (x.Adi != null) list.Adi = x.Adi.ToString(); else list.Adi = "Tanımlanmamış...";
                 list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(x.Resim);
                 list.Kodu = x.Kodu;
+                list.SiraNo = x.SiraNo;
                 ham.Add(list);
             }
-            return Json(ham);
+            return Json(ham.OrderBy(v => v.SiraNo));
         }
         [HttpPost]
         public async Task<IActionResult> KategoriEkle(UrunKategori d, IFormFile imagee)
@@ -236,7 +237,7 @@ namespace VNNB2B.Controllers.Api
                     return Json(result);
                 }
 
-                if (d.Adi != null && d.Kodu != null)
+                if (d.Adi != null && d.SiraNo != null)
                 {
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
@@ -247,6 +248,7 @@ namespace VNNB2B.Controllers.Api
                         kat.Adi = d.Adi;
                         kat.Kodu = d.Kodu;
                         kat.Resim = bytes;
+                        kat.SiraNo = d.SiraNo;
                         kat.Durum = true;
                         c.UrunKategoris.Add(kat);
                         c.SaveChanges();
@@ -517,7 +519,7 @@ namespace VNNB2B.Controllers.Api
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
             if (kul != null)
             {
-                UrunOzellikleri de = c.UrunOzellikleris.FirstOrDefault(v => v.ID == id);
+                UrunOzelikTurlari de = c.UrunOzelikTurlaris.FirstOrDefault(v => v.ID == id);
                 de.Durum = false;
                 c.SaveChanges();
                 result = new { status = "success", message = "Kayıt Silindi..." };

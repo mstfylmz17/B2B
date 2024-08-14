@@ -52,7 +52,7 @@ namespace VNNB2B.Controllers.Api
                 }
                 else
                 {
-                    if (d.UrunKodu != null && d.UrunAdi != null && d.UrunAciklama != null && d.UrunTuruID != null && d.BirimID != null)
+                    if (d.UrunKodu != null && d.UrunAdi != null && d.UrunTuruID != null && d.BirimID != null)
                     {
                         Urunler kat = new Urunler();
                         kat.UrunKodu = d.UrunKodu;
@@ -146,7 +146,7 @@ namespace VNNB2B.Controllers.Api
             return Json(ham.OrderBy(v => v.ID));
         }
         [HttpPost]
-        public async Task<IActionResult> UrunDuzenle(Urunler d, IFormFile imagee)
+        public async Task<IActionResult> UrunDuzenle(Urunler d, IFormFile imagee, string FiyatTL, string FiyatUSD)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
@@ -193,6 +193,28 @@ namespace VNNB2B.Controllers.Api
 
                             kat.Resim = bytes;
                         }
+                    }
+                    try
+                    {
+                        var fiyat = c.UrunFiyatlaris.FirstOrDefault(v => v.UrunID == d.ID && v.Durum == true);
+                        decimal? tlfiat = Convert.ToDecimal(FiyatTL);
+                        decimal? usdfiyat = Convert.ToDecimal(FiyatUSD);
+
+                        UrunFiyatlari f = new UrunFiyatlari();
+                        f.FiyatTL = tlfiat;
+                        f.FiyatUSD = usdfiyat;
+                        f.UrunID = d.ID;
+                        f.FiyatTarihi = DateTime.Now;
+                        f.Durum = true;
+                        c.UrunFiyatlaris.Add(f);
+                        c.SaveChanges();
+
+                        fiyat.Durum = false;
+                        c.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+
                     }
                     c.SaveChanges();
                     result = new { status = "success", message = "Kayıt Başarılı..." };
@@ -284,7 +306,7 @@ namespace VNNB2B.Controllers.Api
             list.StokMiktari = c.UrunStoklaris.Where(v => v.ID == x.ID && v.Durum == true && v.StokMiktari > 0).Sum(v => v.StokMiktari).ToString();
             if (guncel < x.KritikStokMiktari) list.Durum = "Red";
             if (x.Resim != null) list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(x.Resim);
-            var veri = c.UrunOzellikTanimlaris.Where(v => v.Durum == true && v.UrunID == id).OrderByDescending(v => v.ID).ToList();
+            var veri = c.UrunOzellikTanimlaris.Where(v => v.Durum == true && v.UrunID == id).OrderBy(v => v.ID).ToList();
             List<DtoUrunOzellikTanimlari> ham = new List<DtoUrunOzellikTanimlari>();
             foreach (var a in veri)
             {
@@ -356,6 +378,7 @@ namespace VNNB2B.Controllers.Api
                     s.ToplamTutar = 0;
                     s.IskontoOran = 0;
                     s.IstoktoToplam = 0;
+                    s.AraToplam = 0;
                     s.OnayDurum = false;
                     s.OnayAciklama = "";
                     s.Durum = true;
@@ -371,7 +394,11 @@ namespace VNNB2B.Controllers.Api
                 {
                     sipno = sip.ID;
                 }
-
+                var fiyat = c.UrunFiyatlaris.FirstOrDefault(v => v.UrunID == model.ID && v.Durum == true);
+                var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+                decimal? birimfiyat = 0;
+                if (fiyat != null) if (bayi.ParaBirimi == 1) { birimfiyat = fiyat.FiyatTL; sip.ParaBirimiID = 1; } else { birimfiyat = fiyat.FiyatUSD; sip.ParaBirimiID = 2; }
+                else { birimfiyat = 0; sip.ParaBirimiID = 1; }
                 var varmi = c.SiparisIceriks.FirstOrDefault(v => v.UrunID == model.ID && v.SiparisID == sipno && v.Durum == true);
                 if (varmi == null)
                 {
@@ -380,8 +407,11 @@ namespace VNNB2B.Controllers.Api
                     i.UrunID = model.ID;
                     i.Miktar = model.Miktar;
                     i.Aciklama = model.Aciklama;
+                    i.BirimFiyat = birimfiyat;
+                    i.SatirToplam = birimfiyat * model.Miktar;
                     i.Durum = true;
                     c.SiparisIceriks.Add(i);
+                    c.SaveChanges();
                     var sipicid = c.SiparisIceriks.OrderByDescending(v => v.ID).FirstOrDefault(v => v.SiparisID == sipno && v.Durum == true);
 
                     bool stokdurum = false;
@@ -444,6 +474,8 @@ namespace VNNB2B.Controllers.Api
                     if (aynisi == true)
                     {
                         varmi.Miktar += model.Miktar;
+                        varmi.BirimFiyat = birimfiyat;
+                        varmi.SatirToplam = birimfiyat * varmi.Miktar;
                     }
                     else
                     {
@@ -452,8 +484,11 @@ namespace VNNB2B.Controllers.Api
                         i.UrunID = model.ID;
                         i.Miktar = model.Miktar;
                         i.Aciklama = model.Aciklama;
+                        i.BirimFiyat = birimfiyat;
+                        i.SatirToplam = birimfiyat * model.Miktar;
                         i.Durum = true;
                         c.SiparisIceriks.Add(i);
+                        c.SaveChanges();
                         var sipicid = c.SiparisIceriks.OrderByDescending(v => v.ID).FirstOrDefault(v => v.SiparisID == sipno && v.Durum == true);
 
                         bool stokdurum = false;
@@ -494,11 +529,30 @@ namespace VNNB2B.Controllers.Api
                         }
                     }
                 }
-
+                if (bayi.IskontoOran != null) sip.IskontoOran = bayi.IskontoOran; else sip.IskontoOran = 0;
                 c.SaveChanges();
+                siphesapla(sip.ID);
                 result = new { status = "success", message = "Kayıt Başarılı..." };
             }
             return Json(result);
+        }
+        public void siphesapla(int id)
+        {
+            var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
+            decimal? bayioran = sip.IskontoOran;
+            decimal toplamtutar = 0;
+            decimal toplamadet = 0;
+            decimal iskontotoplam = 0;
+
+            toplamtutar = Convert.ToDecimal(c.SiparisIceriks.Where(v => v.SiparisID == id && v.Durum == true).Sum(v => v.SatirToplam));
+            toplamadet = Convert.ToDecimal(c.SiparisIceriks.Where(v => v.SiparisID == id && v.Durum == true).Sum(v => v.Miktar));
+            iskontotoplam = Convert.ToDecimal((toplamtutar * bayioran) / 100);
+
+            sip.ToplamAdet = toplamadet;
+            sip.IstoktoToplam = iskontotoplam;
+            sip.ToplamTutar = toplamtutar - iskontotoplam;
+            sip.AraToplam = toplamtutar;
+            c.SaveChanges();
         }
 
         public class SepetEkleModel
