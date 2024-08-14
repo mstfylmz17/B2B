@@ -144,7 +144,7 @@ namespace VNNB2B.Controllers.Api
             return Json(ham);
         }
         [HttpPost]
-        public IActionResult BayiSifreDeğis(int id, string Yeni, string Yeni1, string Eski)
+        public IActionResult BayiSifreDegis(int id, string Yeni, string Yeni1, string Eski)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
