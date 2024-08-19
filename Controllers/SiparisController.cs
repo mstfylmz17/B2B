@@ -82,6 +82,20 @@ namespace VNNB2B.Controllers
                 return View();
             }
         }
+        public IActionResult Teslimat()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
         public IActionResult Gun()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);

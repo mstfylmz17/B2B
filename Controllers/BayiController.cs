@@ -46,6 +46,22 @@ namespace VNNB2B.Controllers
 
                 ViewBag.parabirimleri = parabirimleri;
 
+                List<SelectListItem> kdvdurumlari = new List<SelectListItem>
+                {
+                    new SelectListItem
+                    {
+                        Text = "KDV Dahil Satış",
+                        Value = true.ToString()
+                    },
+                    new SelectListItem
+                    {
+                        Text = "KDV Hariç Satış",
+                        Value = false.ToString()
+                    }
+                };
+
+                ViewBag.kdvdurumlari = kdvdurumlari;
+
                 var bayi = c.Bayilers.FirstOrDefault(v => v.ID == id);
                 DtoBayiler veri = new DtoBayiler();
                 if (bayi.Unvan != null) veri.Unvan = bayi.Unvan; else veri.Unvan = "Tanımlı Değil...";
@@ -64,6 +80,7 @@ namespace VNNB2B.Controllers
                     if (para != null) veri.ParaBirimi = para.ParaBirimAdi.ToString();
                 }
                 else veri.ParaBirimi = "TL";
+                if (bayi.KDVDurum == true) veri.KDVDurumu = "KDV Dahil Satış"; else veri.KDVDurumu = "KDV Hariç Satış";
                 ViewBag.id = id;
                 ViewBag.hata = BayiHata.Icerik;
                 return View(veri);

@@ -24,6 +24,7 @@
 }
 
 <br />
+
 <div class="row">
     <div class="col-4">
         <div class="card">
@@ -56,6 +57,9 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1" placeholder="E-Posta Adresi">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1" placeholder="Adres">
                                 </div>
                                 <div class="form-group mb-3">
                                     <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1" placeholder="Yetkili">
@@ -193,6 +197,7 @@
             Sifre: $("#Sifre").val(),
             Telefon: $("#Telefon").val(),
             EPosta: $("#EPosta").val(),
+            Adres: $("#Adres").val(),
             Yetkili: $("#Yetkili").val(),
             BayiKodu: $("#BayiKodu").val(),
         };
@@ -213,6 +218,7 @@
                 $("#Sifre").val('');
                 $("#Telefon").val('');
                 $("#EPosta").val('');
+                $("#Adres").val('');
                 $("#Yetkili").val('');
                 $("#BayiKodu").val('');
                 tabloGuncelle();

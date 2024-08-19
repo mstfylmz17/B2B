@@ -24,7 +24,6 @@
     }
     string cerez;
     HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out cerez);
-
     int bayiid = Convert.ToInt32(cerez);
     BLoginHata.Icerik = "";
 }
@@ -54,7 +53,7 @@
                                 Sepet İçeriğiniz / Your Cart Content
                             </h3>
                         </div>
-                        <div style="font-size:12px;">
+                        <div style="font-size:14px;">
                             <table class="table table-bordered" id="sepettable">
                                 <thead>
                                     <tr>
@@ -77,7 +76,7 @@
                     <div class="col-12 col-sm-6">
                     </div>
                     <div class="col-12 col-sm-6">
-                        <div class="card-body" style="font-size:10px; float:right;">
+                        <div class="card-body" style="font-size:12px; float:right;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -89,8 +88,12 @@
                                         <th id="txtaratoplam"></th>
                                     </tr>
                                     <tr>
-                                        <th>Iskonto Toplam / Discount Total</th>
+                                        <th>Iskonto Toplam / Discount Total %@ViewBag.iskonto</th>
                                         <th id="txtiskontotoplam"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>KDV Toplam / VAT Total %@ViewBag.kdv</th>
+                                        <th id="txtkdvtoplam"></th>
                                     </tr>
                                     <tr>
                                         <th>Genel Toplam / Grand Total</th>
@@ -98,7 +101,7 @@
                                     </tr>
                                 </thead>
                             </table>
-                            <div class="footer" style="margin-top:10px;">
+                            <div class="footer" style="margin-top:14px;">
                                 <button onclick="SepetOnay()" class="btn btn-success btn-xs" style="float:right;"><i class="fas fa-check"></i> Sepeti Onayla / Confirm Cart</button>
                             </div>
                         </div>
@@ -158,7 +161,7 @@
                 {
                     data: 'id',
                     render: function (data, type, row, meta) {
-                        return '<input type="number"  style="font-size:12px;" class="miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
+                        return '<input type="number"  style="font-size:14px; text-align:center;" class="miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
                     }
                 },
                 { data: 'aciklama' },
@@ -295,6 +298,7 @@
                 $("#txtaratoplam").text(x.araToplam);
                 $("#txtgeneltoplam").text(x.toplamTutar);
                 $("#txtiskontotoplam").text(x.istoktoToplam);
+                $("#txtkdvtoplam").text(x.kdvToplam);
             }
         });
     }

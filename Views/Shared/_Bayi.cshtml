@@ -10,16 +10,8 @@
 @{
     string cerez;
     HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out cerez);
-
     int bayiid = Convert.ToInt32(cerez);
-
     var bayi = c.Bayilers.FirstOrDefault(v => v.ID == bayiid);
-    int sepetsayi = 0;
-    var sepet = c.Siparis.FirstOrDefault(v => v.BayiID == bayiid && v.BayiOnay == false && v.Durum == true);
-    if (sepet != null)
-    {
-        sepetsayi = c.SiparisIceriks.Where(v => v.SiparisID == sepet.ID && v.Durum == true).Count();
-    }
 }
 
 <!DOCTYPE html>
@@ -31,16 +23,35 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800">
     <link rel="stylesheet" href="/Tema/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="/Tema/dist/css/adminlte.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
 </head>
 <body class="hold-transition layout-top-nav">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            sepetsayigetir();
+        })
+        function sepetsayigetir() {
+            $.ajax({
+                type: "POST",
+                url: "/SiparisApi/SepetBilgi",
+                data: { id: @cerez },
+                success: function (x) {
+                    console.log(x);
+                    $("#txtsepetadet").text(" " + x.sepetAdet);
+                }
+            });
+        }
+    </script>
     <style type="text/css" href="https://fonts.googleapis.com/css?family=Lato&display=swap"></style>
     <div class="wrapper">
         <hr />
         @*NavBar*@
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-            <div class="container" style="margin-top:-25px; margin-bottom:15px;">
+            <div class="container" style="margin-top:-20px; margin-bottom:15px;">
                 <a href="#" class="navbar-brand">
-                    <img src="/Resimler/logosvg.svg" alt="Logo" width="150">
+                    <img src="/Resimler/vnnlogotrans.png" alt="Logo" width="190" height="60">
                 </a>
 
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +80,7 @@
                 </center>
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                     <li class="nav-item">
-                        <a href="/BLogin/Sepet" class="nav-link"><img src="~/Resimler/sepet.svg" style="height:25px; width:25px;" /><span style="color:darkred;"> @sepetsayi</span></a>
+                        <a href="/BLogin/Sepet" class="nav-link"><img src="~/Resimler/sepet.svg" style="height:25px; width:25px;" /><span style="color:darkred;" id="txtsepetadet"></span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle" style="color:#B17F2C; border:double; display: flex; align-items: center;">
@@ -125,7 +136,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-3">
-                                    <img src="/Resimler/logosvg.svg" alt="Logo" style="opacity: .8">
+                                    <img src="/Resimler/vnnlogotrans.png" alt="Logo" style=" width:190px; height:60px;">
                                 </div>
                                 <div class="col-6">
                                     <p style="font-size:15px;">

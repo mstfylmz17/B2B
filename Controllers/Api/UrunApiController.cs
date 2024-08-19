@@ -12,6 +12,7 @@ namespace VNNB2B.Controllers.Api
         {
             c = context;
         }
+
         [HttpPost]
         public IActionResult UrunList()
         {
@@ -354,7 +355,7 @@ namespace VNNB2B.Controllers.Api
                 if (x.OzellikAdi != null) list.OzellikAdi = x.OzellikAdi.ToString(); else list.OzellikAdi = "";
                 ham.Add(list);
             }
-            return Json(ham.OrderBy(v => v.ID));
+            return Json(ham.OrderBy(v => v.OzellikAdi));
         }
         [HttpPost]
         public IActionResult SepetEkle([FromBody] SepetEkleModel model)
@@ -379,6 +380,7 @@ namespace VNNB2B.Controllers.Api
                     s.IskontoOran = 0;
                     s.IstoktoToplam = 0;
                     s.AraToplam = 0;
+                    s.KDVToplam = 0;
                     s.OnayDurum = false;
                     s.OnayAciklama = "";
                     s.Durum = true;
@@ -410,6 +412,13 @@ namespace VNNB2B.Controllers.Api
                     i.BirimFiyat = birimfiyat;
                     i.SatirToplam = birimfiyat * model.Miktar;
                     i.Durum = true;
+                    if (bayi.KDVDurum == true)
+                    {
+                        decimal kdv = Convert.ToDecimal((i.SatirToplam * 10) / 100);
+                        i.KDVTutari = kdv;
+                        i.SatirToplam = i.SatirToplam + kdv;
+                    }
+                    else i.KDVTutari = 0;
                     c.SiparisIceriks.Add(i);
                     c.SaveChanges();
                     var sipicid = c.SiparisIceriks.OrderByDescending(v => v.ID).FirstOrDefault(v => v.SiparisID == sipno && v.Durum == true);
@@ -474,8 +483,16 @@ namespace VNNB2B.Controllers.Api
                     if (aynisi == true)
                     {
                         varmi.Miktar += model.Miktar;
+                        varmi.Aciklama = model.Aciklama;
                         varmi.BirimFiyat = birimfiyat;
                         varmi.SatirToplam = birimfiyat * varmi.Miktar;
+                        if (bayi.KDVDurum == true)
+                        {
+                            decimal kdv = Convert.ToDecimal((varmi.SatirToplam * 10) / 100);
+                            varmi.KDVTutari = kdv;
+                            varmi.SatirToplam = varmi.SatirToplam + kdv;
+                        }
+                        else varmi.KDVTutari = 0;
                     }
                     else
                     {
@@ -487,6 +504,13 @@ namespace VNNB2B.Controllers.Api
                         i.BirimFiyat = birimfiyat;
                         i.SatirToplam = birimfiyat * model.Miktar;
                         i.Durum = true;
+                        if (bayi.KDVDurum == true)
+                        {
+                            decimal kdv = Convert.ToDecimal((i.SatirToplam * 10) / 100);
+                            i.KDVTutari = kdv;
+                            i.SatirToplam = i.SatirToplam + kdv;
+                        }
+                        else i.KDVTutari = 0;
                         c.SiparisIceriks.Add(i);
                         c.SaveChanges();
                         var sipicid = c.SiparisIceriks.OrderByDescending(v => v.ID).FirstOrDefault(v => v.SiparisID == sipno && v.Durum == true);
@@ -539,6 +563,7 @@ namespace VNNB2B.Controllers.Api
         public void siphesapla(int id)
         {
             var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
+            var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
             decimal? bayioran = sip.IskontoOran;
             decimal toplamtutar = 0;
             decimal toplamadet = 0;
@@ -552,6 +577,16 @@ namespace VNNB2B.Controllers.Api
             sip.IstoktoToplam = iskontotoplam;
             sip.ToplamTutar = toplamtutar - iskontotoplam;
             sip.AraToplam = toplamtutar;
+            if (bayi.KDVDurum == true)
+            {
+                decimal kdv = (toplamtutar * 10) / 100;
+                sip.KDVToplam = kdv;
+                sip.ToplamTutar = sip.ToplamTutar + kdv;
+            }
+            else
+            {
+                sip.KDVToplam = 0;
+            }
             c.SaveChanges();
         }
 

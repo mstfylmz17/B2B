@@ -22,10 +22,11 @@ namespace VNNB2B.Controllers.Api
             foreach (var x in veri)
             {
                 var urun = c.Urunlers.FirstOrDefault(v => v.ID == x.UrunID);
+                var grup = c.UrunKategoris.FirstOrDefault(v => v.ID == urun.UrunKategoriID);
                 var birim = c.Birimlers.FirstOrDefault(v => v.ID == x.Birim);
                 DtoSatinAlmaTalepler list = new DtoSatinAlmaTalepler();
                 list.ID = Convert.ToInt32(x.ID);
-                list.UrunID = urun.UrunKodu.ToString() + " - " + urun.UrunAdi.ToString();
+                list.UrunID = grup.Adi + " - " + urun.UrunKodu.ToString() + " - " + urun.UrunAdi.ToString();
                 list.Birim = birim.BirimAdi.ToString();
                 list.Tarih = Convert.ToDateTime(x.Tarih).ToString("d");
                 list.Miktar = Convert.ToDecimal(x.Miktar).ToString("N2");

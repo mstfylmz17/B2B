@@ -51,9 +51,6 @@
                                     <input type="text" class="form-control" id="UrunAdi" placeholder="Ürün Adı">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="UrunAciklama" placeholder="Ürün Açıklama">
-                                </div>
-                                <div class="form-group mb-3">
                                     <input type="text" class="form-control" id="BirimKG" placeholder="Birim KG">
                                 </div>
                                 <div class="form-group mb-3">
@@ -104,7 +101,6 @@
                                             <th>Ürün Türü</th>
                                             <th>Ürün Kodu</th>
                                             <th>Ürün Adı</th>
-                                            <th>Ürün Açıklama</th>
                                             <th>Kritik Stok Miktarı</th>
                                             <th>Güncel Stok</th>
                                             <th></th>
@@ -155,7 +151,6 @@
                 { data: 'urunTuru' },
                 { data: 'urunKodu' },
                 { data: 'urunAdi' },
-                { data: 'urunAciklama' },
                 { data: 'kritikStokMiktari' },
                 { data: 'stokMiktari' },
                 {
@@ -219,7 +214,6 @@
         formData.append("UrunTuruID", $("#UrunTuruID").val());
         formData.append("UrunKodu", $("#UrunKodu").val());
         formData.append("UrunAdi", $("#UrunAdi").val());
-        formData.append("UrunAciklama", $("#UrunAciklama").val());
         formData.append("KritikStokMiktari", $("#KritikStokMiktari").val());
         formData.append("BirimID", $("#BirimID").val());
         formData.append("imagee", $("#imagee").val());
@@ -247,7 +241,6 @@
                 $("#UrunTuruID").val('');
                 $("#UrunKodu").val('');
                 $("#UrunAdi").val('');
-                $("#UrunAciklama").val('');
                 $("#KritikStokMiktari").val('');
                 $("#BirimID").val('');
                 $("#imagee").val('');

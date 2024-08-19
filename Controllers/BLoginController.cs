@@ -136,6 +136,10 @@ namespace VNNB2B.Controllers
             }
             else
             {
+                int bayiid = Convert.ToInt32(Cerez);
+                var bayi = c.Bayilers.FirstOrDefault(b => b.ID == bayiid);
+                if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";                
+                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString();
                 ViewBag.hata = BLoginHata.Icerik;
                 return View();
             }

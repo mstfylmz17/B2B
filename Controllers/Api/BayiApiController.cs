@@ -33,6 +33,7 @@ namespace VNNB2B.Controllers.Api
                 if (x.IskontoOran != null) list.IskontoOran = x.IskontoOran.ToString(); else list.IskontoOran = "Tanımlanmamış...";
                 if (x.AlisVerisLimiti != null) list.AlisVerisLimiti = x.AlisVerisLimiti.ToString(); else list.AlisVerisLimiti = "Tanımlanmamış...";
                 if (x.BayiKodu != null) list.BayiKodu = x.BayiKodu.ToString(); else list.BayiKodu = "Tanımlanmamış...";
+                if (x.KDVDurum == true) list.KDVDurumu = "KDV Dahil Satış"; else list.KDVDurumu = "KDV Hariç Satış";
                 ham.Add(list);
             }
             return Json(ham);
@@ -54,11 +55,13 @@ namespace VNNB2B.Controllers.Api
                     de.Sifre = d.Sifre;
                     de.Telefon = d.Telefon;
                     de.EPosta = d.EPosta;
+                    de.Adres = d.Adres;
                     de.Yetkili = d.Yetkili;
                     de.IskontoOran = 0;
                     de.AlisVerisLimiti = 0;
                     de.BayiKodu = d.BayiKodu;
                     de.ParaBirimi = 1;
+                    de.KDVDurum = false;
                     de.Durum = true;
                     c.Bayilers.Add(de);
                     c.SaveChanges();
@@ -109,11 +112,13 @@ namespace VNNB2B.Controllers.Api
                 if (d.KullaniciAdi != null) de.KullaniciAdi = d.KullaniciAdi;
                 if (d.Telefon != null) de.Telefon = d.Telefon;
                 if (d.EPosta != null) de.EPosta = d.EPosta;
+                if (d.Adres != null) de.Adres = d.Adres;
                 if (d.Yetkili != null) de.Yetkili = d.Yetkili;
                 if (d.IskontoOran != null) de.IskontoOran = d.IskontoOran;
                 if (d.AlisVerisLimiti != null) de.AlisVerisLimiti = d.AlisVerisLimiti;
                 if (d.BayiKodu != null) de.BayiKodu = d.BayiKodu;
                 if (d.ParaBirimi != null) de.ParaBirimi = d.ParaBirimi;
+                if (d.KDVDurum != null) de.KDVDurum = d.KDVDurum;
                 c.SaveChanges();
                 result = new { status = "success", message = "Güncelleme Başarılı..." };
             }

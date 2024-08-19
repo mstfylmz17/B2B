@@ -39,10 +39,13 @@
                         <table id="myTable" class="table table-hover" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Bayi Adı</th>
                                     <th>Sipariş Tarihi</th>
                                     <th>Sipariş No</th>
                                     <th>Toplam Sipariş Miktarı</th>
+                                    <th>Sipariş Tutarı</th>
                                     <th>Sipariş Durumu</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -79,10 +82,18 @@
                 }
             },
             columns: [
+                { data: 'bayiID' },
                 { data: 'siparisTarihi' },
                 { data: 'siparisNo' },
                 { data: 'toplamAdet' },
-                { data: 'siparisDurum' }
+                { data: 'toplamTutar' },
+                { data: 'siparisDurum' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<button type="button" onclick="onayla(' + data + ')" class="btn btn-primary btn-sm"><i class="fas fa-check"></i></button>' + ' <button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>'
+                    }
+                }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
