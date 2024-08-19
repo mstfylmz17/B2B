@@ -20,6 +20,9 @@ namespace VNNB2B.Controllers.Api
         public IActionResult SepetList(int id)
         {
             var sip = c.Siparis.FirstOrDefault(v => v.Durum == true && v.BayiID == id && v.BayiOnay == false);
+            var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+            string para = "";
+            if (bayi.ParaBirimi == 2) para = " $"; else para = " ₺";
             if (sip != null)
             {
                 var veri = c.SiparisIceriks.Where(v => v.SiparisID == sip.ID && v.Durum == true).OrderByDescending(v => v.ID).ToList();
@@ -33,6 +36,8 @@ namespace VNNB2B.Controllers.Api
                     if (urun.UrunAdi != null) list.UrunAciklama = urun.UrunAdi.ToString(); else list.UrunAciklama = "Tanımlanmamış...";
                     if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = x.Aciklama.ToString();
                     if (x.Miktar != null) list.Miktar = Convert.ToInt32(x.Miktar).ToString(); else list.Miktar = "1";
+                    if (x.SatirToplam != null && x.SatirToplam > 0) list.SatirToplam = Convert.ToDecimal(x.SatirToplam).ToString("N2") + para; else list.SatirToplam = "0,00" + para;
+
                     ham.Add(list);
                 }
                 return Json(ham);
