@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "..\DataA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityLayer", "..\EntityLayer\EntityLayer.csproj", "{4C0C9DF0-F768-41F6-B826-10C48E7C85D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VNNReport", "..\VNNReport\VNNReport.csproj", "{6FD687C5-9DEE-4AAD-B761-ADF1B87DABDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4C0C9DF0-F768-41F6-B826-10C48E7C85D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C0C9DF0-F768-41F6-B826-10C48E7C85D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C0C9DF0-F768-41F6-B826-10C48E7C85D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FD687C5-9DEE-4AAD-B761-ADF1B87DABDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FD687C5-9DEE-4AAD-B761-ADF1B87DABDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FD687C5-9DEE-4AAD-B761-ADF1B87DABDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FD687C5-9DEE-4AAD-B761-ADF1B87DABDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

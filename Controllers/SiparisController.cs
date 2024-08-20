@@ -1,4 +1,7 @@
 ﻿using DataAccessLayer.Concrate;
+using EntityLayer.Dto;
+using FastReport.Export.PdfSimple;
+using FastReport.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using VNNB2B.Models.Hata;
@@ -7,9 +10,11 @@ namespace VNNB2B.Controllers
 {
     public class SiparisController : Controller
     {
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly Context c;
-        public SiparisController(Context context)
+        public SiparisController(Context context, IWebHostEnvironment hostingEnvironment)
         {
+            _hostingEnvironment = hostingEnvironment;
             c = context;
         }
         public IActionResult Index()
@@ -150,6 +155,66 @@ namespace VNNB2B.Controllers
             {
                 ViewBag.hata = SiparisHata.Icerik;
                 return View();
+            }
+        }
+        public JsonResult FormYazdir(long id)
+        {
+            DtoSiparis list = new DtoSiparis();
+            List<DtoSiparisIcerik>? icerik = new List<DtoSiparisIcerik>();
+
+            var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
+            var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+            var sipicerik = c.SiparisIceriks.Where(v => v.SiparisID == id && v.Durum == true).ToList();
+            string para = "";
+            if (sip.ParaBirimiID == 1) para = "₺"; else para = "$";
+            list.BayiID = bayi.BayiKodu.ToString() + " " + bayi.Unvan.ToString();
+            list.Telefon = bayi.Telefon.ToString();
+            list.Adres = bayi.Adres.ToString();
+            list.ToplamAdet = Convert.ToInt32(sip.ToplamAdet).ToString();
+            list.KDVToplam = Convert.ToDecimal(sip.KDVToplam).ToString("N2") + para;
+            list.AraToplam = Convert.ToDecimal(sip.AraToplam).ToString("N2") + para;
+            list.ToplamTutar = Convert.ToDecimal(sip.ToplamTutar).ToString("N2") + para;
+            list.IskontoOran = Convert.ToInt32(bayi.IskontoOran).ToString();
+            list.IstoktoToplam = Convert.ToDecimal(sip.IstoktoToplam).ToString("N2") + para;
+            list.TeslimTarihi = Convert.ToDateTime(sip.TeslimTarihi).ToString("d");
+            list.SiparisNo = sip.SiparisNo.ToString();
+            list.Yetkili = bayi.Yetkili.ToString() + " - " + bayi.Telefon.ToString();
+            list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("d");
+            if (c.Teslimats.FirstOrDefault(v => v.SiparisID == id) != null) list.TeslimDurum = "Parçalı Teslimat."; else if (sip.TeslimDurum == true) list.TeslimDurum = "Tam Teslim"; else list.TeslimDurum = "Henüz Teslim Edilmedi...";
+
+
+            //İçerik
+
+            //Personel 
+
+            using (var stream = new MemoryStream())
+            {
+                string dosyayolu = "";
+                string reportFileName = "zimmet.frx";
+                string reportFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "Report");
+                string reportFilePath = Path.Combine(reportFolderPath, reportFileName);
+
+                if (System.IO.File.Exists(reportFilePath))
+                {
+                    dosyayolu = reportFilePath;
+                }
+
+                var webReport = new WebReport();
+                webReport.Report.Load(dosyayolu);
+
+                webReport.Report.RegisterData(new List<DtoSiparis> { list }, "Data");
+
+                webReport.Report.RegisterData(icerik, "Icerik");
+
+                webReport.Report.Prepare();
+                var export = new PDFSimpleExport();
+                webReport.Report.Export(export, stream);
+
+                return Json(new
+                {
+                    pdfArray = Convert.ToBase64String(stream.ToArray()),
+                    fileName = "zimmet.pdf"
+                });
             }
         }
     }

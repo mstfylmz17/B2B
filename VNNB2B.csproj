@@ -582,7 +582,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FastReport.Compat" Version="2024.2.1" />
+    <PackageReference Include="FastReport.Data.MsSql" Version="2024.2.1" />
+    <PackageReference Include="FastReport.DataVisualization" Version="2024.2.1" />
+    <PackageReference Include="FastReport.OpenSource" Version="2024.2.1" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2024.2.1" />
+    <PackageReference Include="FastReport.OpenSource.Web" Version="2024.2.1" />
     <PackageReference Include="jQuery" Version="3.7.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
@@ -601,6 +608,31 @@
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\EntityLayer\EntityLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Evraklar\" />
+    <Folder Include="wwwroot\Evraklar\TeslimatEvraklar\" />
+    <Folder Include="wwwroot\Evraklar\SatinAlmaOnayEvraklar\" />
+    <Folder Include="wwwroot\Evraklar\SiparisOnayEvraklar\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FastReport">
+      <HintPath>..\..\..\FastReport .Net Core Full\FastReport.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.Bars">
+      <HintPath>..\..\..\FastReport .Net Core Full\FastReport.Bars.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.Compat">
+      <HintPath>..\..\..\FastReport .Net Core Full\FastReport.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.DataVisualization">
+      <HintPath>..\..\..\FastReport .Net Core Full\FastReport.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.Editor">
+      <HintPath>..\..\..\FastReport .Net Core Full\FastReport.Editor.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

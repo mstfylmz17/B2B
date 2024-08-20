@@ -349,21 +349,23 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult TeslimEdilebilirList()
         {
-            var veri = c.Siparis.Where(v => v.Durum == true && v.OnayDurum == true && v.TeslimDurum == false && v.SiparisDurum == "Sipariş İşelmde...").OrderByDescending(v => v.ID).ToList();
-            List<DtoSiparis> ham = new List<DtoSiparis>();
             List<DtoSiparisIcerik> icerik = new List<DtoSiparisIcerik>();
-            foreach (var x in veri)
+            var hazir = c.SevkiyatIsEmirleris.Where(v => v.BitirmeDurum == true && v.Durum == true).ToList();
+            foreach (var x in hazir)
             {
-                var i = c.SiparisIceriks.Where(v => v.SiparisID == x.ID && v.Durum == true);
-                foreach (var v in i)
-                {
-                    if (v.Miktar - v.TeslimAdet > 0)
-                    {
+                var sip = c.Siparis.FirstOrDefault(v => v.ID == x.SiparisID && v.TeslimDurum != true);
+                var sipic = c.SiparisIceriks.FirstOrDefault(v => v.ID == x.SiparisIcerikID);
+                var urun = c.Urunlers.FirstOrDefault(v => v.ID == x.UrunID);
+                DtoSiparisIcerik list = new DtoSiparisIcerik();
+                list.ID = Convert.ToInt32(x.SiparisIcerikID);
+                list.UrunKodu = urun.UrunKodu.ToString();
+                list.UrunAciklama = urun.UrunAdi.ToString();
+                list.Miktar = Convert.ToInt32(sipic.Miktar).ToString();
+                list.Durum = sip.SiparisDurum.ToString();
+                icerik.Add(list);
 
-                    }
-                }
             }
-            return Json(ham);
+            return Json(icerik);
         }
     }
 }
