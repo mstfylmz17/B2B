@@ -45,6 +45,26 @@ namespace VNNB2B.Controllers
                 return View();
             }
         }
+        public IActionResult Detay(int id)
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
+                int bayiid = Convert.ToInt32(sip.BayiID);
+                var bayi = c.Bayilers.FirstOrDefault(b => b.ID == bayiid);
+                if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";
+                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString();
+                ViewBag.id = id;
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
         public IActionResult KT()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
@@ -160,7 +180,7 @@ namespace VNNB2B.Controllers
         public JsonResult FormYazdir(long id)
         {
             DtoSiparis list = new DtoSiparis();
-            List<DtoSiparisIcerik>? icerik = new List<DtoSiparisIcerik>();
+            List<DtoSiparisIcerik> icerik = new List<DtoSiparisIcerik>();
 
             var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
             var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
@@ -182,15 +202,20 @@ namespace VNNB2B.Controllers
             list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("d");
             if (c.Teslimats.FirstOrDefault(v => v.SiparisID == id) != null) list.TeslimDurum = "Parçalı Teslimat."; else if (sip.TeslimDurum == true) list.TeslimDurum = "Tam Teslim"; else list.TeslimDurum = "Henüz Teslim Edilmedi...";
 
-
             //İçerik
 
-            //Personel 
+            foreach (var x in sipicerik)
+            {
+                DtoSiparisIcerik i = new DtoSiparisIcerik();
+                var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.ID).ToList();
+            }
+
+            list.Icerik = icerik;
 
             using (var stream = new MemoryStream())
             {
                 string dosyayolu = "";
-                string reportFileName = "zimmet.frx";
+                string reportFileName = "siparis.frx";
                 string reportFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "Report");
                 string reportFilePath = Path.Combine(reportFolderPath, reportFileName);
 
@@ -213,7 +238,7 @@ namespace VNNB2B.Controllers
                 return Json(new
                 {
                     pdfArray = Convert.ToBase64String(stream.ToArray()),
-                    fileName = "zimmet.pdf"
+                    fileName = "siparis.pdf"
                 });
             }
         }

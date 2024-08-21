@@ -138,7 +138,7 @@ namespace VNNB2B.Controllers
             {
                 int bayiid = Convert.ToInt32(Cerez);
                 var bayi = c.Bayilers.FirstOrDefault(b => b.ID == bayiid);
-                if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";                
+                if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";
                 ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString();
                 ViewBag.hata = BLoginHata.Icerik;
                 return View();
@@ -168,6 +168,11 @@ namespace VNNB2B.Controllers
             }
             else
             {
+                var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
+                int bayiid = Convert.ToInt32(sip.BayiID);
+                var bayi = c.Bayilers.FirstOrDefault(b => b.ID == bayiid);
+                if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";
+                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString();
                 ViewBag.id = id;
                 ViewBag.hata = BLoginHata.Icerik;
                 return View();
