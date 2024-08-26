@@ -28,6 +28,41 @@
     BLoginHata.Icerik = "";
 }
 
+<style>
+    table.table-tab {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        table.table-tab th, table.table-tab td {
+            border: 2px double #B17F2C;
+        }
+
+        table.table-tab th {
+            background-color: #f8f9fa;
+            color: #B17F2C;
+            border-top: 2px solid #B17F2C;
+        }
+
+        table.table-tab td {
+            background-color: white;
+            color: #B17F2C;
+        }
+
+        table.table-tab thead th {
+            border-top: 2px solid #B17F2C;
+        }
+
+    table.dataTable tbody tr {
+        height: 25px;
+    }
+
+    table.dataTable tbody td {
+        line-height: 25px;
+        vertical-align: middle;
+    }
+</style>
+
 <div class="content-header">
     <div class="container">
         <div class="row mb-2">
@@ -41,70 +76,118 @@
         </div>
     </div>
 </div>
+
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
-            <center><h6 id="sepetyok" style="display:none;">Sepetinizde Ürün Bulunamadı! / No Products Found in Your Cart!</h6></center>
-            <div id="sepet">
-                <div class="row">
-                    <div class="col-12 col-sm-12">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                Sepet İçeriğiniz / Your Cart Content
-                            </h3>
-                        </div>
-                        <div style="font-size:14px;">
-                            <table class="table table-bordered" id="sepettable">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Ürün Kodu /
-                                            Product Code
-                                        </th>
-                                        <th>
-                                            Ürün Açıklama /
-                                            Product Description
-                                        </th>
-                                        <th>Adet / Piece</th>
-                                        <th>Açıklama / Explanation</th>
-                                        <th>Satır Toplam / Row Total</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <div class="card-body" style="font-size:16px;">
+                        <table class=" table-tab" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>SİPARİŞ NO / ORDER NO</th>
+                                    <th id="txtsiparisno"></th>
+                                </tr>
+                                <tr>
+                                    <th>SİPARİŞ TARİHİ / ORDER DATE</th>
+                                    <th id="txtsiparistarihi"></th>
+                                </tr>
+                                <tr>
+                                    <th>SİPARİŞ DURUMU / ORDER STATUS</th>
+                                    <th id="txtsiparisdurum"></th>
+                                </tr>
+                                <tr>
+                                    <th>ONAYLAYAN YETKİLİ / APPROVING AUTHORITY</th>
+                                    <th id="txtkullanici"></th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
-                    <div class="col-12 col-sm-6">
+                </div>
+                <div class="col-12 col-sm-12">
+                    <div style="font-size:12px;">
+                        <table class="table table-bordered" id="sepettable">
+                            <thead>
+                                <tr style="background-color:#B17F2C">
+                                    <th style="width:15%;">
+                                        <center>
+                                            Ürün Resmi <br /> Product Image
+                                        </center>
+                                    </th>
+                                    <th style="width:5%;">
+                                        <center>
+                                            Ürün Kodu <br /> Product Kode
+                                        </center>
+                                    </th>
+                                    <th style="width:10%;">
+                                        <center>
+                                            Ürün Adı <br /> Product Name
+                                        </center>
+                                    </th>
+                                    <th style="width:5%;"><center>Adet <br /> Amount</center></th>
+                                    <th style="width:13%;"><center>Ahşap Rengi <br /> Wood Color</center></th>
+                                    <th style="width:13%;"><center>Deri Rengi <br /> Skin Color</center></th>
+                                    <th style="width:13%;">
+                                        <center>
+                                            Özel Not
+                                            <br />
+                                            Special Note
+                                        </center>
+                                    </th>
+                                    <th style="width:9%;">
+                                        <center>
+                                            Birim Fiyat <br />
+                                            Unit Price
+                                        </center>
+                                    </th>
+                                    <th style="width:9%;">
+                                        <center>
+                                            Toplam Fiyat<br />
+                                            Total Price
+                                        </center>
+                                    </th>
+                                    <th style="width:8%;"></th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="card-body" style="font-size:12px; float:right;">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Toplam Sipariş Adedi / Total Order Number</th>
-                                        <th id="txttoplamadet"></th>
-                                    </tr>
-                                    <tr>
-                                        <th>Ara Toplam / Subtotal</th>
-                                        <th id="txtaratoplam"></th>
-                                    </tr>
-                                    <tr>
-                                        <th>Iskonto Toplam / Discount Total %@ViewBag.iskonto</th>
-                                        <th id="txtiskontotoplam"></th>
-                                    </tr>
-                                    <tr>
-                                        <th>KDV Toplam / VAT Total %@ViewBag.kdv</th>
-                                        <th id="txtkdvtoplam"></th>
-                                    </tr>
-                                    <tr>
-                                        <th>Genel Toplam / Grand Total</th>
-                                        <th id="txtgeneltoplam"></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                            <div class="footer" style="margin-top:14px;">
-                                <button onclick="SepetOnay()" class="btn btn-success btn-xs" style="float:right;"><i class="fas fa-check"></i> Sepeti Onayla / Confirm Cart</button>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-6">
+                            <div class="card-body">
+                                <table class="table-tab">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ ADEDİ</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamadet"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">ARA TOPLAM</th>
+                                            <th style="width:50%; text-align: center;" id="txtaratoplam"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">BAYİ İSKONTO %@ViewBag.iskonto</th>
+                                            <th style="width:50%; text-align: center;" id="txtiskontotoplam"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%; background-color:lightgray;">İNDİRİMLİ FİYAT</th>
+                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtindirimlifiyat"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%; background-color:lightgray;">KDV TOPLAM %@ViewBag.kdv</th>
+                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtkdvtoplam"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%; background-color:lightgray;">GENEL TOPLAM</th>
+                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtgeneltoplam"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
+                            <button onclick="SepetOnay()" class="btn btn-success btn-xs" style="float:right;"><i class="fas fa-check"></i> Sepeti Onayla / Confirm Cart</button>
                         </div>
                     </div>
                 </div>
@@ -126,24 +209,7 @@
             ajax: {
                 url: '/SiparisApi/SepetList/@bayiid',
                 method: 'POST',
-                dataSrc: function (json) {
-                    let dataCount = 0;
-                    if (Array.isArray(json)) {
-                        dataCount = json.length;
-                    }
-                    else if (json.data && Array.isArray(json.data)) {
-                        dataCount = json.data.length;
-                    }
-                    if (dataCount == 0) {
-                        document.getElementById('sepetyok').style.display = 'block';
-                        document.getElementById('sepet').style.display = 'none';
-                    }
-                    else {
-                        document.getElementById('sepetyok').style.display = 'none';
-                        document.getElementById('sepet').style.display = 'block';
-                    }
-                    return json.data ? json.data : json;
-                },
+                dataSrc: '',
                 error: function (xhr, error, thrown) {
                     if (xhr.status === 404) {
                         Swal.fire({
@@ -157,16 +223,60 @@
                 }
             },
             columns: [
-                { data: 'urunKodu' },
-                { data: 'urunAciklama' },
+                {
+                    data: 'resim',
+                    render: function (data, type, full, meta) {
+                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                    }
+                },
+                {
+                    data: 'urunKodu',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'urunAciklama',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
                 {
                     data: 'id',
                     render: function (data, type, row, meta) {
-                        return '<input type="number"  style="font-size:14px; text-align:center;" class="miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
+                        return '<input type="number" style="text-align:center; width: 100%; box-sizing: border-box; padding: 4px; margin: 0;" class="miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
                     }
                 },
-                { data: 'aciklama' },
-                { data: 'satirToplam' },
+                {
+                    data: 'ahsapRengi',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'deriRengi',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'aciklama',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'birimFiyat',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'satirToplam',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
@@ -174,10 +284,10 @@
                     }
                 }
             ],
+            ordering: false,
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
-            ordering: false,
             searching: false,
             lengthChange: false,
             paging: false,
@@ -300,7 +410,12 @@
                 $("#txtaratoplam").text(x.araToplam);
                 $("#txtgeneltoplam").text(x.toplamTutar);
                 $("#txtiskontotoplam").text(x.istoktoToplam);
+                $("#txtindirimlifiyat").text(x.indirimlifiyat);
                 $("#txtkdvtoplam").text(x.kdvToplam);
+                $("#txtsiparisno").text(x.siparisNo);
+                $("#txtsiparistarihi").text(x.siparisTarihi);
+                $("#txtsiparisdurum").text(x.siparisDurum);
+                $("#txtkullanici").text(x.kullanici);
             }
         });
     }

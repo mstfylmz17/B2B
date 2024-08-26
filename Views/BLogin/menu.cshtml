@@ -52,9 +52,9 @@
 
             <br /><br />
         </p>
-        <a href="/Dosyalar/Katalog.pdf" target="_blank" class="btn" style="color:#B17F2C; border:double;">2024 Ürün Katalog (PDF)</a>
-        <a href="/Dosyalar/DolarFiyatListesi.pdf" target="_blank" class="btn" style="color:#B17F2C; border:double;">2024 Fiyat Listesi (USD)</a>
-        <a href="/Dosyalar/TLFiyatListesi.pdf" target="_blank" class="btn" style="color:#B17F2C; border:double;">2024 Fiyat Listesi (TL)</a>
+        <a href="/Dosyalar/Katalog.pdf" target="_blank" class="btn" style="color:#B17F2C; border:double;">2024 Ürün Katalog / Product Catalog (PDF)</a>
+        <a href="/Dosyalar/DolarFiyatListesi.pdf" target="_blank" class="btn" style="color:#B17F2C; border:double;">2024 Fiyat Listesi / Price List (USD)</a>
+        <a href="/Dosyalar/TLFiyatListesi.pdf" target="_blank" class="btn" style="color:#B17F2C; border:double;">2024 Fiyat Listesi / Price List (TL)</a>
     </div>
 </div>
 <div class="row">
@@ -95,7 +95,9 @@
                 <span><i class="fas fa-user"></i> @bayi.Yetkili</span>  <br />
                 <span><i class="fas fa-envelope"> </i> @bayi.EPosta</span>
                 <br />
-                <span><i class="fas fa-industry"></i> @bayi.BayiKodu - @bayi.Unvan</span>
+                <span><i class="fas fa-phone"></i> @bayi.Telefon</span>
+                <br />
+                <span><i class="fas fa-industry"></i> @bayi.Unvan</span>
                 <hr />
                 <a href="/BLogin/Hesap" class="btn" style="color:#B17F2C; border:double;">Hesap Bilgileri</a>
             </div>
@@ -114,7 +116,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#SipTable', {
             ajax: {
-                url: '/SiparisApi/SiparisList/@bayiid',
+                url: '/SiparisApi/SiparisList10/@bayiid',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -132,11 +134,37 @@
             columns: [
                 { data: 'siparisNo' },
                 { data: 'siparisTarihi' },
-                { data: 'siparisDurum' },
+                {
+                    data: 'siparisDurum',
+                    render: function (data, type, full, meta) {
+                        let buttonClass;
+                        switch (data) {
+                            case "Sipariş Onaylandı...":
+                                buttonClass = 'btn btn-primary';
+                                break;
+                            case "Onay Bekliyor...":
+                                buttonClass = 'btn btn-secondary';
+                                break;
+                            case "Reddedildi...":
+                                buttonClass = 'btn btn-danger';
+                                break;
+                            case "Kısmi Teslim Edildi...":
+                                buttonClass = 'btn btn-warning';
+                                break;
+                            case "Tamamı Teslim Edildi...":
+                                buttonClass = 'btn btn-success';
+                                break;
+                            default:
+                                buttonClass = 'btn btn-light';
+                                break;
+                        }
+                        return '<button class="' + buttonClass + ' btn-xs" style="font-size:14px; display: flex; align-items: center;">' + data + '</button>';
+                    }
+                },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="/BLogin/SipDet/' + data + '" class=" btn-xs"style="color:#B17F2C; display: flex; align-items: center;"> Detay --> </a>'
+                        return '<a href="/BLogin/SipDet/' + data + '" class=" btn-xs"style="color:#B17F2C; display: flex; align-items: center; font-size:14px;"> Detay --> </a>'
                     }
                 }
             ],
@@ -148,23 +176,6 @@
             lengthChange: false,
             paging: false,
             info: false,
-            rowCallback: function (row, data, index) {
-                if (data.siparisDurum == "Sipariş Onaylandı...") {
-                    $(row).addClass('table-primary');
-                }
-                else if (data.siparisDurum == "Onay Bekliyor...") {
-                    $(row).addClass('table-secondary');
-                }
-                else if (data.siparisDurum == "Reddedildi...") {
-                    $(row).addClass('table-danger');
-                }
-                else if (data.siparisDurum == "Kısmi Teslim Edildi...") {
-                    $(row).addClass('table-warning');
-                }
-                else if (data.siparisDurum == "Tamamı Teslim Edildi...") {
-                    $(row).addClass('table-secondary');
-                }
-            },
         });
     }
     function tabloGuncelle() {

@@ -22,11 +22,10 @@
     }
     BayiHata.Icerik = "";
 }
-
 <br />
 
 <div class="row">
-    <div class="col-4">
+    <div class="col-12">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -40,31 +39,51 @@
                         </div>
                         <div class="widget-content widget-content-area">
                             <form>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" placeholder="Ünvan">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Ünvan <span style="color:darkred">*</span></label>
+                                        <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1">
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Bayi Kodu <span style="color:darkred">*</span></label>
+                                        <input type="text" class="form-control" id="BayiKodu" aria-describedby="emailHelp1">
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="BayiKodu" aria-describedby="emailHelp1" placeholder="Bayi Kodu">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Firma Adı <span style="color:darkred">*</span></label>
+                                        <input type="text" class="form-control" id="KullaniciAdi" aria-describedby="emailHelp1">
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Şifre <span style="color:darkred">*</span></label>
+                                        <input type="text" class="form-control" id="Sifre" aria-describedby="emailHelp1">
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="KullaniciAdi" aria-describedby="emailHelp1" placeholder="Kullanıcı Adı">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Telefon <span style="color:darkred">*</span></label>
+                                        <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1">
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                        <label>E-Posta Adresi</label>
+                                        <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1">
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="Sifre" aria-describedby="emailHelp1" placeholder="Şifre">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Adres</label>
+                                        <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1">
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Yetkili <span style="color:darkred">*</span></label>
+                                        <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1">
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" placeholder="Telefon">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1" placeholder="E-Posta Adresi">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1" placeholder="Adres">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1" placeholder="Yetkili">
-                                </div>
-                                <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
                             </form>
                         </div>
                     </div>
@@ -72,7 +91,7 @@
             </div>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-12">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -86,12 +105,12 @@
                         </div>
                         <div class="widget-content widget-content-area">
                             <div class="table-responsive">
-                                <table id="myTable" class="table table-hover" style="width:100%">
+                                <table id="myTable" class="table table-hover" style="width:100%; font-size:14px;">
                                     <thead>
                                         <tr>
                                             <th>Bayi Kodu</th>
                                             <th>Ünvan</th>
-                                            <th>Kullanıcı Adı</th>
+                                            <th>Firma Adı</th>
                                             <th>Telefon</th>
                                             <th></th>
                                         </tr>
@@ -146,6 +165,9 @@
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
+            paging: false,
+            scrollY: '47vh',
+            scrollCollapse: true,
             ordering: false,
         });
     }
@@ -213,15 +235,17 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
-                $("#Unvan").val('');
-                $("#KullaniciAdi").val('');
-                $("#Sifre").val('');
-                $("#Telefon").val('');
-                $("#EPosta").val('');
-                $("#Adres").val('');
-                $("#Yetkili").val('');
-                $("#BayiKodu").val('');
-                tabloGuncelle();
+                if (result.status == "success") {
+                    $("#Unvan").val('');
+                    $("#KullaniciAdi").val('');
+                    $("#Sifre").val('');
+                    $("#Telefon").val('');
+                    $("#EPosta").val('');
+                    $("#Adres").val('');
+                    $("#Yetkili").val('');
+                    $("#BayiKodu").val('');
+                    tabloGuncelle();
+                }
             }
         });
     }

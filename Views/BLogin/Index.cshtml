@@ -23,6 +23,17 @@
     <link href="~/Template/assets/css/authentication/form-2.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Template/assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="~/Template/assets/css/forms/switches.css">
+
+    <style>
+        body {
+            background-image: url('/Resimler/vnnlogotrans.png');
+            background-size: calc(20% - 20px);
+            background-position: center top 20px;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+
 </head>
 <body class="form">
     <div class="form-container outer">
@@ -30,26 +41,32 @@
             <div class="form-form-wrap">
                 <div class="form-container">
                     <div class="form-content">
-                        <h1 class="">Bayi Panel</h1>
-                        <p class="">Hoş Geldiniz... Lütfen Giriş Yapınız...</p>
+                        <h3 class="">
+                            Bayi Paneli / Dealer Panel
+                        </h3>
+                        <p class="">
+                            Hoş Geldiniz... Lütfen Giriş Yapınız... / Welcome... Please Login...
+                        </p>
                         <form class="text-left" action="/BLogin/Index" method="post">
                             <div class="form">
                                 <div id="username-field" class="field-wrapper input">
-                                    <label for="username">Kullanıcı Adı</label>
+                                    <label for="username">
+                                        Kullanıcı Adı / User Advertisement
+                                    </label>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                    <input id="KullaniciAdi" name="KullaniciAdi" type="text" class="form-control" placeholder="Kullanıcı Adı" autofocus>
+                                    <input id="KullaniciAdi" name="KullaniciAdi" type="text" class="form-control" placeholder="Firma Adı / Company Name" autofocus>
                                 </div>
                                 <div id="password-field" class="field-wrapper input mb-2">
                                     <div class="d-flex justify-content-between">
-                                        <label for="password">Şifre</label>
+                                        <label for="password">Şifre / Password</label>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                    <input id="Sifre" name="Sifre" type="password" class="form-control" placeholder="Şifre">
+                                    <input id="Sifre" name="Sifre" type="password" class="form-control" placeholder="Şifre / Password">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 </div>
                                 <div class="d-sm-flex justify-content-between">
                                     <div class="field-wrapper">
-                                        <button type="submit" class="btn btn-primary" value="">Giriş</button>
+                                        <button type="submit" class="btn btn-primary" value="">Giriş / Login</button>
                                     </div>
                                 </div>
                             </div>

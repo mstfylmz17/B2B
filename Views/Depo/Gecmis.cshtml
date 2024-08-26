@@ -20,7 +20,7 @@
             });
         </script>
     }
-    SiparisHata.Icerik = "";
+    DepoHata.Icerik = "";
 }
 <br />
 <div class="card">
@@ -30,7 +30,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Geçmiş Siparişler</h4>
+                            <h4>Devam Eden İş Emirleri</h4>
                         </div>
                     </div>
                 </div>
@@ -39,10 +39,15 @@
                         <table id="myTable" class="table table-hover" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Sipariş Tarihi</th>
                                     <th>Sipariş No</th>
-                                    <th>Toplam Sipariş Miktarı</th>
-                                    <th>Sipariş Durumu</th>
+                                    <th>Ürün Resmi</th>
+                                    <th>Ürün Kodu</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Sipariş Miktarı</th>
+                                    <th>Sipariş Özellikleri</th>
+                                    <th>Başlangıç Tarihi</th>
+                                    <th>Bitiş Tarihi</th>
+                                    <th>Personel</th>
                                 </tr>
                             </thead>
                         </table>
@@ -63,7 +68,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/SiparisApi/GecmisList',
+                url: '/DepoApi/GecmisIsEmirleri',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -79,17 +84,24 @@
                 }
             },
             columns: [
-                { data: 'siparisTarihi' },
                 { data: 'siparisNo' },
-                { data: 'toplamAdet' },
-                { data: 'siparisDurum' }
+                {
+                    data: 'resim',
+                    render: function (data, type, full, meta) {
+                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                    }
+                },
+                { data: 'urunKodu' },
+                { data: 'urunAdi' },
+                { data: 'gelenAdet' },
+                { data: 'ozellikleri' },
+                { data: 'baslangicTarihi' },
+                { data: 'bitisTarihi' },
+                { data: 'kullanici' },
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
-            paging: false,
-            scrollY: '73vh',
-            scrollCollapse: true,
             ordering: false,
         });
     }

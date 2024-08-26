@@ -24,7 +24,7 @@
 }
 <br />
 <div class="row">
-    <div class="col-4">
+    <div class="col-12">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -38,41 +38,67 @@
                         </div>
                         <div class="widget-content widget-content-area">
                             <form id="UrunForm">
-                                <div class="form-group mb-3">
-                                    @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Seçiniz...", new { @class = "form-control basic", id = "UrunKategoriID" })
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Ürün Kategori</label>
+                                        @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Seçiniz...", new { @class = "form-control basic", id = "UrunKategoriID" })
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Ürün Türü <span style="color:darkred">*</span></label>
+                                        @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Seçiniz...", new { @class = "form-control basic", id = "UrunTuruID" })
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Seçiniz...", new { @class = "form-control basic", id = "UrunTuruID" })
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Ürün Kodu <span style="color:darkred">*</span></label>
+                                        <input type="text" class="form-control" id="UrunKodu">
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Ürün Adı <span style="color:darkred">*</span></label>
+                                        <input type="text" class="form-control" id="UrunAdi">
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="UrunKodu" placeholder="Ürün Kodu">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Birim KG</label>
+                                        <input type="text" class="form-control" id="BirimKG">
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Birim M3</label>
+                                        <input type="text" class="form-control" id="BirimM3">
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="UrunAdi" placeholder="Ürün Adı">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Boyut</label>
+                                        <input type="text" class="form-control" id="Boyut">
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Paket Adedi</label>
+                                        <input type="text" class="form-control" id="PaketAdet">
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="BirimKG" placeholder="Birim KG">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Kritik Stok Miktarı <span style="color:darkred">*</span></label>
+                                        <input type="number" class="form-control" id="KritikStokMiktari">
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                        <label>Birim <span style="color:darkred">*</span></label>
+                                        @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control basic", id = "BirimID" })
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="BirimM3" placeholder="Birim M3">
+                                <div class="row">
+                                    <div class="input-group col-6">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="imagee" name="imagee">
+                                            <label class="custom-file-label" for="exampleInputFile">Resim Yükle</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6" style="margin-top:-15px;">
+                                        <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="Boyut" placeholder="Boyut">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" class="form-control" id="PaketAdet" placeholder="Paket Adedi">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input type="number" class="form-control" id="KritikStokMiktari" placeholder="Kritik Stok Miktarı">
-                                </div>
-                                <div class="form-group mb-3">
-                                    @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control basic", id = "BirimID" })
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label>Ürün Resmi</label>
-                                    <input type="file" class="form-control-file" id="imagee" name="imagee">
-                                </div>
-                                <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
                             </form>
                         </div>
                     </div>
@@ -80,7 +106,7 @@
             </div>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-12">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -143,9 +169,9 @@
             },
             columns: [
                 {
-                    data: 'resim',
+                    data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 100px;"  />';
                     }
                 },
                 { data: 'urunTuru' },
@@ -163,7 +189,28 @@
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
             ordering: false,
+            initComplete: function (settings, json) {
+                loadImages(json);
+            }
+        });
+    }
+    function loadImages(data) {
+        data.forEach(function (item) {
+            $.ajax({
+                url: '/UrunApi/GetResim',
+                method: 'POST',
+                data: { id: item.id },
+                success: function (imageData) {
+                    $('#img_' + item.id).attr('src', 'data:image/jpeg;base64,' + imageData);
+                },
+                error: function (xhr, status, error) {
+                    console.log('Resim yüklenirken hata oluştu: ', error);
+                }
+            });
         });
     }
     function tabloGuncelle() {
@@ -237,20 +284,22 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
-                $("#UrunKategoriID").val('');
-                $("#UrunTuruID").val('');
-                $("#UrunKodu").val('');
-                $("#UrunAdi").val('');
-                $("#KritikStokMiktari").val('');
-                $("#BirimID").val('');
-                $("#imagee").val('');
-                $("#BirimKG").val('');
-                $("#BirimM3").val('');
-                $("#Boyut").val('');
-                $("#PaketAdet").val('');
-                $("#FiyatTL").val('');
-                $("#FiyatUSD").val('');
-                tabloGuncelle();
+                if (result.status == "success") {
+                    $("#UrunKategoriID").val('');
+                    $("#UrunTuruID").val('');
+                    $("#UrunKodu").val('');
+                    $("#UrunAdi").val('');
+                    $("#KritikStokMiktari").val('');
+                    $("#BirimID").val('');
+                    $("#imagee").val('');
+                    $("#BirimKG").val('');
+                    $("#BirimM3").val('');
+                    $("#Boyut").val('');
+                    $("#PaketAdet").val('');
+                    $("#FiyatTL").val('');
+                    $("#FiyatUSD").val('');
+                    tabloGuncelle();
+                }
             }
         });
     }

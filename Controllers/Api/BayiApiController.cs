@@ -36,7 +36,7 @@ namespace VNNB2B.Controllers.Api
                 if (x.KDVDurum == true) list.KDVDurumu = "KDV Dahil Satış"; else list.KDVDurumu = "KDV Hariç Satış";
                 ham.Add(list);
             }
-            return Json(ham);
+            return Json(ham.OrderBy(v => v.BayiKodu));
         }
         [HttpPost]
         public IActionResult BayiEkle(Bayiler d)
@@ -47,7 +47,7 @@ namespace VNNB2B.Controllers.Api
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
             if (kul != null)
             {
-                if (d.Unvan != null && d.KullaniciAdi != null && d.Sifre != null && d.Telefon != null)
+                if (d.Unvan != null && d.KullaniciAdi != null && d.Sifre != null && d.Telefon != null && d.Yetkili != null)
                 {
                     Bayiler de = new Bayiler();
                     de.Unvan = d.Unvan;

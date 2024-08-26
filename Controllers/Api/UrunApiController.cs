@@ -2,6 +2,7 @@
 using EntityLayer.Concrate;
 using EntityLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace VNNB2B.Controllers.Api
 {
@@ -12,11 +13,48 @@ namespace VNNB2B.Controllers.Api
         {
             c = context;
         }
-
         [HttpPost]
         public IActionResult UrunList()
         {
-            var veri = c.Urunlers.Where(v => v.Durum == true).OrderByDescending(v => v.ID).ToList();
+            var veri = c.Urunlers
+                .Where(v => v.Durum == true)
+                .OrderByDescending(v => v.ID)
+                .Select(x => new DtoUrunler
+                {
+                    ID = x.ID,
+                    UrunKodu = x.UrunKodu ?? "Tanımlanmamış...",
+                    UrunAdi = x.UrunAdi ?? "Tanımlanmamış...",
+                    UrunAciklama = x.UrunAciklama ?? "Tanımlanmamış...",
+                    KritikStokMiktari = x.KritikStokMiktari.ToString() ?? "Tanımlanmamış...",
+                    Birim = c.Birimlers.FirstOrDefault(b => b.ID == x.BirimID).BirimAdi ?? "Tanımlanmamış...",
+                    UrunKategori = c.UrunKategoris.FirstOrDefault(k => k.ID == x.UrunKategoriID).Adi ?? "Tanımlanmamış...",
+                    UrunTuru = c.UrunTurlaris.FirstOrDefault(t => t.ID == x.UrunTuruID).UrunGrubuAdi ?? "Tanımlanmamış...",
+                    StokMiktari = c.UrunStoklaris
+                        .Where(s => s.ID == x.ID && s.Durum == true && s.StokMiktari > 0)
+                        .Sum(s => s.StokMiktari)
+                        .ToString(),
+                    Durum = (c.UrunStoklaris
+                            .Where(s => s.ID == x.ID && s.Durum == true && s.StokMiktari > 0)
+                            .Sum(s => s.StokMiktari) < x.KritikStokMiktari) ? "Red" : "Normal"
+                })
+                .ToList();
+            return Json(veri.OrderBy(v => v.ID));
+        }
+        [HttpPost]
+        public IActionResult GetResim(int id)
+        {
+            var urun = c.Urunlers.Find(id);
+            if (urun == null || urun.Resim == null)
+            {
+                return NotFound();
+            }
+            var base64Image = Convert.ToBase64String(urun.Resim);
+            return Ok(base64Image);
+        }
+        [HttpPost]
+        public IActionResult HammaddeHirdavatList()
+        {
+            var veri = c.Urunlers.Where(v => v.Durum == true && v.UrunTuruID != 3).OrderByDescending(v => v.ID).ToList();
             List<DtoUrunler> ham = new List<DtoUrunler>();
             foreach (var x in veri)
             {
@@ -155,14 +193,14 @@ namespace VNNB2B.Controllers.Api
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
             if (kul != null)
             {
+                Urunler kat = c.Urunlers.FirstOrDefault(v => v.ID == d.ID);
                 var kodbosmu = c.Urunlers.FirstOrDefault(v => v.UrunKodu == d.UrunKodu);
-                if (kodbosmu != null)
+                if (kodbosmu != null && d.UrunKodu != null && d.UrunKodu != kat.UrunKodu)
                 {
                     result = new { status = "error", message = "Ürün Kodu Daha Önce Farklı Bir Ürüne Atanmış Lütfen Farklı Bir Ürün Kdu Tanımlayınız..." };
                 }
                 else
                 {
-                    Urunler kat = c.Urunlers.FirstOrDefault(v => v.ID == d.ID);
                     if (d.UrunKodu != null)
                         kat.UrunKodu = d.UrunKodu;
                     if (d.UrunAdi != null)
@@ -215,7 +253,7 @@ namespace VNNB2B.Controllers.Api
                     }
                     catch (Exception ex)
                     {
-
+                        result = new { status = "error", message = ex.Message };
                     }
                     c.SaveChanges();
                     result = new { status = "success", message = "Kayıt Başarılı..." };
@@ -322,26 +360,29 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult KatUrunList(int id)
         {
-            var veri = c.Urunlers.Where(v => v.Durum == true && v.UrunKategoriID == id && v.UrunTuruID == 3).OrderByDescending(v => v.ID).ToList();
-            List<DtoUrunler> ham = new List<DtoUrunler>();
-            foreach (var x in veri)
-            {
-                decimal guncel = 0;
-                DtoUrunler list = new DtoUrunler();
-                list.ID = Convert.ToInt32(x.ID);
-                if (x.UrunKodu != null) list.UrunKodu = x.UrunKodu.ToString(); else list.UrunKodu = "Tanımlanmamış...";
-                if (x.UrunAdi != null) list.UrunAdi = x.UrunAdi.ToString(); else list.UrunAdi = "Tanımlanmamış...";
-                if (x.UrunAciklama != null) list.UrunAciklama = x.UrunAciklama.ToString(); else list.UrunAciklama = "Tanımlanmamış...";
-                if (x.KritikStokMiktari != null) list.KritikStokMiktari = x.KritikStokMiktari.ToString(); else list.KritikStokMiktari = "Tanımlanmamış...";
-                if (x.BirimID != null) list.Birim = c.Birimlers.FirstOrDefault(v => v.ID == x.BirimID).BirimAdi.ToString(); else list.Birim = "Tanımlanmamış...";
-                if (x.UrunKategoriID != null) list.UrunKategori = c.UrunKategoris.FirstOrDefault(v => v.ID == x.UrunKategoriID).Adi.ToString(); else list.UrunKategori = "Tanımlanmamış...";
-                list.UrunTuru = c.UrunTurlaris.FirstOrDefault(v => v.ID == x.UrunTuruID).UrunGrubuAdi.ToString();
-                list.StokMiktari = c.UrunStoklaris.Where(v => v.ID == x.ID && v.Durum == true && v.StokMiktari > 0).Sum(v => v.StokMiktari).ToString();
-                if (guncel < x.KritikStokMiktari) list.Durum = "Red";
-                if (x.Resim != null) list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(x.Resim);
-                ham.Add(list);
-            }
-            return Json(ham.OrderBy(v => v.ID));
+            var veri = c.Urunlers
+                .Where(v => v.Durum == true && v.UrunTuruID == 3 && v.UrunKategoriID == id)
+                .OrderByDescending(v => v.ID)
+                .Select(x => new DtoUrunler
+                {
+                    ID = x.ID,
+                    UrunKodu = x.UrunKodu ?? "Tanımlanmamış...",
+                    UrunAdi = x.UrunAdi ?? "Tanımlanmamış...",
+                    UrunAciklama = x.UrunAciklama ?? "Tanımlanmamış...",
+                    KritikStokMiktari = x.KritikStokMiktari.ToString() ?? "Tanımlanmamış...",
+                    Birim = c.Birimlers.FirstOrDefault(b => b.ID == x.BirimID).BirimAdi ?? "Tanımlanmamış...",
+                    UrunKategori = c.UrunKategoris.FirstOrDefault(k => k.ID == x.UrunKategoriID).Adi ?? "Tanımlanmamış...",
+                    UrunTuru = c.UrunTurlaris.FirstOrDefault(t => t.ID == x.UrunTuruID).UrunGrubuAdi ?? "Tanımlanmamış...",
+                    StokMiktari = c.UrunStoklaris
+                        .Where(s => s.ID == x.ID && s.Durum == true && s.StokMiktari > 0)
+                        .Sum(s => s.StokMiktari)
+                        .ToString(),
+                    Durum = (c.UrunStoklaris
+                            .Where(s => s.ID == x.ID && s.Durum == true && s.StokMiktari > 0)
+                            .Sum(s => s.StokMiktari) < x.KritikStokMiktari) ? "Red" : "Normal"
+                })
+                .ToList();
+            return Json(veri.OrderBy(v => v.ID));
         }
         [HttpPost]
         public IActionResult UrunAltOzellikleri(int id)

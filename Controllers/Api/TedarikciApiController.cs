@@ -44,7 +44,7 @@ namespace VNNB2B.Controllers.Api
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
             if (kul != null)
             {
-                if (d.Unvan != null && d.Telefon != null)
+                if (d.Unvan != null && d.Telefon != null && d.TedarikciKodu != null)
                 {
                     Tedarikciler de = new Tedarikciler();
                     de.Unvan = d.Unvan;

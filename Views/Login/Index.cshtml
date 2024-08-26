@@ -14,29 +14,39 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Admin Panel Giriş</title>
+    <title>VANNA OFİS MOBİLYALARI</title>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
     <link href="~/Template/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Template/assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="~/Template/assets/css/authentication/form-2.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
     <link rel="stylesheet" type="text/css" href="~/Template/assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="~/Template/assets/css/forms/switches.css">
+
+    <style>
+        body {
+            background-image: url('/Resimler/vnnlogotrans.png');
+            background-size: calc(20% - 20px);
+            background-position: center top 20px;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+
 </head>
+
 <body class="form">
-
-
     <div class="form-container outer">
         <div class="form-form">
             <div class="form-form-wrap">
                 <div class="form-container">
                     <div class="form-content">
-
-                        <h1 class="">Admin Panel</h1>
-                        <p class="">Hoş Geldiniz... Lütfen Giriş Yapınız...</p>
-
+                        <h3 class="">
+                            Sipariş Yönetim Sistemi (SYS)
+                        </h3>
+                        <p class="">
+                            Hoş Geldiniz... Lütfen Giriş Yapınız...
+                        </p>
                         <form class="text-left" action="/Login/Index" method="post">
                             <div class="form">
 
@@ -61,22 +71,15 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="~/Template/assets/js/libs/jquery-3.1.1.min.js"></script>
     <script src="~/Template/bootstrap/js/popper.min.js"></script>
     <script src="~/Template/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="~/Template/assets/js/authentication/form-2.js"></script>
-
     @if (hasError)
     {
         <script>

@@ -47,16 +47,21 @@
         <div class="card-body">
             <center><h6 id="sepetyok" style="display:none;">Geçmiş Sipariş Bulunamadı! / No Past Order Found!</h6></center>
             <div id="sepet">
-                <div style="font-size:12px;">
+                <div style="font-size:14px;">
                     <table class="table table-bordered" id="sepettable">
                         <thead>
                             <tr>
-                                <th>Sipariş Tarihi</th>
-                                <th>Sipariş No</th>
-                                <th>Toplam Sipariş Miktarı</th>
-                                <th>Sipariş Durumu</th>
-                                <th>Teslimat Bilgileri</th>
-                                <th></th>
+                            <tr>
+                                <th>Sipariş No / Order No</th>
+                                <th>
+                                    Sipariş Tarihi / Order Date
+                                </th>
+                                <th>
+                                    Sipariş Durumu /
+                                    Order Status
+                                </th>
+                                <th>Sipariş Detay / Order Detail</th>
+                            </tr>
                             </tr>
                         </thead>
                     </table>
@@ -110,15 +115,39 @@
                 }
             },
             columns: [
-                { data: 'siparisTarihi' },
                 { data: 'siparisNo' },
-                { data: 'toplamAdet' },
-                { data: 'siparisDurum' },
-                { data: 'teslimTarihi' },
+                { data: 'siparisTarihi' },
+                {
+                    data: 'siparisDurum',
+                    render: function (data, type, full, meta) {
+                        let buttonClass;
+                        switch (data) {
+                            case "Sipariş Onaylandı...":
+                                buttonClass = 'btn btn-primary';
+                                break;
+                            case "Onay Bekliyor...":
+                                buttonClass = 'btn btn-secondary';
+                                break;
+                            case "Reddedildi...":
+                                buttonClass = 'btn btn-danger';
+                                break;
+                            case "Kısmi Teslim Edildi...":
+                                buttonClass = 'btn btn-warning';
+                                break;
+                            case "Tamamı Teslim Edildi...":
+                                buttonClass = 'btn btn-success';
+                                break;
+                            default:
+                                buttonClass = 'btn btn-light';
+                                break;
+                        }
+                        return '<button class="' + buttonClass + ' btn-xs" style="font-size:14px; display: flex; align-items: center;">' + data + '</button>';
+                    }
+                },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="/BLogin/SipDet/' + data + '" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a> <button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button>'
+                        return '<a href="/BLogin/SipDet/' + data + '" class=" btn-xs"style="color:#B17F2C; display: flex; align-items: center; font-size:14px;"> Detay --> </a>'
                     }
                 }
             ],
@@ -130,23 +159,6 @@
             lengthChange: false,
             paging: false,
             info: false,
-            rowCallback: function (row, data, index) {
-                if (data.siparisDurum == "Sipariş Onaylandı...") {
-                    $(row).addClass('table-primary');
-                }
-                else if (data.siparisDurum == "Onay Bekliyor...") {
-                    $(row).addClass('table-secondary');
-                }
-                else if (data.siparisDurum == "Reddedildi...") {
-                    $(row).addClass('table-danger');
-                }
-                else if (data.siparisDurum == "Kısmi Teslim Edildi...") {
-                    $(row).addClass('table-warning');
-                }
-                else if (data.siparisDurum == "Tamamı Teslim Edildi...") {
-                    $(row).addClass('table-secondary');
-                }
-            },
         });
     }
     function tabloGuncelle() {

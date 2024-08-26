@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Gecmis";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,7 +20,7 @@
             });
         </script>
     }
-    SiparisHata.Icerik = "";
+    BoyaHata.Icerik = "";
 }
 <br />
 <div class="card">
@@ -30,7 +30,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Geçmiş Siparişler</h4>
+                            <h4>Boyaya Sevk Edilen İş Emirleri</h4>
                         </div>
                     </div>
                 </div>
@@ -39,10 +39,13 @@
                         <table id="myTable" class="table table-hover" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Sipariş Tarihi</th>
                                     <th>Sipariş No</th>
-                                    <th>Toplam Sipariş Miktarı</th>
-                                    <th>Sipariş Durumu</th>
+                                    <th>Ürün Resmi</th>
+                                    <th>Ürün Kodu</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Sipariş Miktarı</th>
+                                    <th>Sipariş Özellikleri</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -63,7 +66,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/SiparisApi/GecmisList',
+                url: '/BoyaApi/IsEmirleri',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -79,17 +82,27 @@
                 }
             },
             columns: [
-                { data: 'siparisTarihi' },
                 { data: 'siparisNo' },
-                { data: 'toplamAdet' },
-                { data: 'siparisDurum' }
+                {
+                    data: 'resim',
+                    render: function (data, type, full, meta) {
+                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                    }
+                },
+                { data: 'urunKodu' },
+                { data: 'urunAdi' },
+                { data: 'gelenAdet' },
+                { data: 'ozellikleri' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" onclick="sil(' + data + ')" class="btn btn-info btn-sm" style="margin-right:3px;"><i class="fas fa-eye"></i> </a>'
+                    }
+                }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
-            paging: false,
-            scrollY: '73vh',
-            scrollCollapse: true,
             ordering: false,
         });
     }
@@ -102,4 +115,36 @@
     $(document).ready(function () {
         initializeDataTable();
     })
+    function sil(element) {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Kayıt Okundu Olarak İşeretlenecek Emin Misiniz?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Eminim!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                submitForm(element);
+            }
+        })
+    }
+    function submitForm(element) {
+        $.ajax({
+            type: "POST",
+            url: "/BoyaApi/Okundu/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
 </script>

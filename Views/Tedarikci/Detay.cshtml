@@ -61,28 +61,51 @@
                             <div class="tab-pane fade show active" id="icon-pills-home" role="tabpanel" aria-labelledby="icon-pills-home-tab">
                                 <form>
                                     <input name="ID" value="@id" id="ID" type="hidden" />
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" placeholder="Ünvan : @Model.Unvan">
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-6">
+                                            <label>Ünvan</label>
+                                            <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" value="@Model.Unvan">
+                                        </div>
+                                        <div class="form-group mb-3 col-6">
+                                            <label>Tedarikçi Kodu</label>
+                                            <input type="text" class="form-control" id="TedarikciKodu" aria-describedby="emailHelp1" value="@Model.TedarikciKodu">
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" id="TedarikciKodu" aria-describedby="emailHelp1" placeholder="Tedarikçi Kodu : @Model.TedarikciKodu">
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-6">
+                                            <label>Telefon</label>
+                                            <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" value="@Model.Telefon">
+                                        </div>
+                                        <div class="form-group mb-3 col-6">
+                                            <label>E-Posta Adresi</label>
+                                            <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1" value="@Model.EPosta">
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" placeholder="Telefon : @Model.Telefon">
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-6">
+                                            <label>Yetkili</label>
+                                            <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1" value="@Model.Yetkili">
+                                        </div>
+                                        <div class="form-group mb-3 col-6">
+                                            <label>Vergi Dairesi</label>
+                                            <input type="text" class="form-control" id="VergiDairesi" aria-describedby="emailHelp1" value="@Model.VergiDairesi">
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1" placeholder="E-Posta Adresi : @Model.EPosta">
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-6">
+                                            <label>Vergi No</label>
+                                            <input type="text" class="form-control" id="VergiNo" aria-describedby="emailHelp1" value="@Model.VergiNo">
+                                        </div>
+                                        <div class="form-group mb-3 col-6">
+                                            <label>Adres</label>
+                                            <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1" value="@Model.Adres">
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1" placeholder="Yetkili : @Model.Yetkili">
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-6">
+                                            <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" id="VergiDairesi" aria-describedby="emailHelp1" placeholder="Vergi Dairesi : @Model.VergiDairesi">
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" id="VergiNo" aria-describedby="emailHelp1" placeholder="Vergi No : @Model.VergiNo">
-                                    </div>
-                                    <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="icon-pills-contact" role="tabpanel" aria-labelledby="icon-pills-contact-tab1">

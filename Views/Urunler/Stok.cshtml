@@ -37,7 +37,7 @@
                 </div>
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive">
-                        <table id="myTable" class="table table-hover" style="width:100%; color:black;">
+                        <table id="myTable" class="table table-hover" style="width:100%">
                             <thead>
                                 <tr style="color:white;">
                                     <th>Resim</th>
@@ -83,9 +83,9 @@
             },
             columns: [
                 {
-                    data: 'resim',
+                    data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 100px;"  />';
                     }
                 },
                 { data: 'urunTuru' },
@@ -97,12 +97,28 @@
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
-            rowCallback: function (row, data, index) {
-                if (data.kritikStokMiktari >= data.stokMiktari) {
-                    $(row).addClass('table-danger');
-                }
-            },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
             ordering: false,
+            initComplete: function (settings, json) {
+                loadImages(json);
+            }
+        });
+    }
+    function loadImages(data) {
+        data.forEach(function (item) {
+            $.ajax({
+                url: '/UrunApi/GetResim',
+                method: 'POST',
+                data: { id: item.id },
+                success: function (imageData) {
+                    $('#img_' + item.id).attr('src', 'data:image/jpeg;base64,' + imageData);
+                },
+                error: function (xhr, status, error) {
+                    console.log('Resim yüklenirken hata oluştu: ', error);
+                }
+            });
         });
     }
     function tabloGuncelle() {

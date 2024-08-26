@@ -23,6 +23,7 @@
     AdminHata.Icerik = "";
 }
 <br />
+@*Sipariş*@
 <div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
@@ -114,7 +115,7 @@
         </div>
     </div>
 </div>
-
+@*Satın Alma*@
 <div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
@@ -198,7 +199,7 @@
         </div>
     </div>
 </div>
-
+@*Üretim*@
 <div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
@@ -208,7 +209,10 @@
         </div>
     </div>
     <div class="col-lg-12 col-12">
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> YENİ İŞ EMİRLERİ </a>
+        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
+            YENİ İŞ EMİRLERİ
+            <span class="right badge badge-danger">0</span>
+        </a>
         <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
@@ -277,7 +281,7 @@
         </div>
     </div>
 </div>
-
+@*Depo*@
 <div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
@@ -287,19 +291,22 @@
         </div>
     </div>
     <div class="col-lg-12 col-12">
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> YENİ İŞ EMİRLERİ </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a class="btn btn-xs" href="/Depo" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
+            YENİ İŞ EMİRLERİ
+            <span class="right badge badge-danger">0</span>
+        </a>
+        <a class="btn btn-xs" href="/Depo/Devam" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a class="btn btn-xs" href="/Depo/Kısmi" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             KISMİ SEVK EDİLEN İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> ÜRÜNÜ BOYAYA ÇIKAR </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> HAMMADDE & HIRDAVAT ÇIKAR </a>
+        <a class="btn btn-xs" href="/Depo/BoyaSevk" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> ÜRÜNÜ BOYAYA ÇIKAR </a>
+        <a class="btn btn-xs" href="/Depo/UrunSevk" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> HAMMADDE & HIRDAVAT ÇIKAR </a>
         <a href="/Urunler/Stok" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> STOK DURUMU </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a class="btn btn-xs" href="/Depo/Gecmis" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
@@ -357,7 +364,7 @@
         </div>
     </div>
 </div>
-
+@*Boya*@
 <div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
@@ -367,18 +374,21 @@
         </div>
     </div>
     <div class="col-lg-12 col-12">
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> YENİ İŞ EMİRLERİ </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a href="/Boya" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
+            YENİ İŞ EMİRLERİ
+            <span class="right badge badge-danger">0</span>
+        </a>
+        <a href="/Boya/Devam" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a href="/Boya/KısmiBoyanan" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             KISMİ BOYANAN İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ BOYAYA AL </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> ÜRÜNÜ BOYADAN ÇIKAR </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a href="/Boya/Al" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ BOYAYA AL </a>
+        <a href="/Boya/Cikar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> ÜRÜNÜ BOYADAN ÇIKAR </a>
+        <a href="/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
@@ -436,7 +446,7 @@
         </div>
     </div>
 </div>
-
+@*Döşeme*@
 <div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
@@ -446,7 +456,10 @@
         </div>
     </div>
     <div class="col-lg-12 col-12">
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> YENİ İŞ EMİRLERİ </a>
+        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
+            YENİ İŞ EMİRLERİ
+            <span class="right badge badge-danger">0</span>
+        </a>
         <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
@@ -515,7 +528,7 @@
         </div>
     </div>
 </div>
-
+@*Ambalaj*@
 <div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
@@ -526,7 +539,10 @@
     </div>
     <div class="col-lg-12 col-12">
         <div class="col-12">
-            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> YENİ İŞ EMİRLERİ </a>
+            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
+                YENİ İŞ EMİRLERİ
+                <span class="right badge badge-danger">0</span>
+            </a>
             <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
                 DEVAM EDEN İŞ EMİRLERİ
                 <span class="right badge badge-danger">0</span>
@@ -597,7 +613,7 @@
         </div>
     </div>
 </div>
-
+@*Sevkiyat*@
 <div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
@@ -608,7 +624,10 @@
     </div>
     <div class="col-lg-12 col-12">
         <div class="col-12">
-            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> YENİ İŞ EMİRLERİ</a>
+            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
+                YENİ İŞ EMİRLERİ
+                <span class="right badge badge-danger">0</span>
+            </a>
             <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
                 DEVAM EDEN SİPARİŞLER
                 <span class="right badge badge-danger">0</span>

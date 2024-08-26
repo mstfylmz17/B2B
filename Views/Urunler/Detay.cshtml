@@ -70,57 +70,89 @@
                             <div class="tab-pane fade show active" id="icon-pills-home" role="tabpanel" aria-labelledby="icon-pills-home-tab">
                                 <div class="row">
                                     <div class="col-12">
-                                        <form id="UrunForm">
+                                        <form class="form_advanced_validation" id="UrunForm">
                                             <input name="ID" value="@id" id="ID" type="hidden" />
-                                            <div class="form-group mb-3">
-                                                @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Ürün Kategori : " + Model.UrunKategori, new { @class = "form-control basic", id = "UrunKategoriID" })
+                                            <div class="row">
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Ürün Kategori</label>
+                                                    @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Ürün Kategori : " + Model.UrunKategori, new { @class = "form-control basic", id = "UrunKategoriID" })
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Ürün Türü</label>
+                                                    @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü : " + Model.UrunTuru, new { @class = "form-control basic", id = "UrunTuruID" })
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü : " + Model.UrunTuru, new { @class = "form-control basic", id = "UrunTuruID" })
+                                            <div class="row">
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Ürün Kodu</label>
+                                                    <input type="text" class="form-control" id="UrunKodutxt" value="@Model.UrunKodu">
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Ürün Adı</label>
+                                                    <input type="text" class="form-control" id="UrunAditxt" value="@Model.UrunAdi">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="UrunKodutxt" placeholder="Ürün Kodu : @Model.UrunKodu">
+                                            <div class="row">
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Birim KG</label>
+                                                    <input type="text" class="form-control" id="BirimKG" value="@Model.BirimKG">
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Birim M3</label>
+                                                    <input type="text" class="form-control" id="BirimM3" value="@Model.BirimM3">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="UrunAditxt" placeholder="Ürün Adı : @Model.UrunAdi">
+                                            <div class="row">
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Boyut</label>
+                                                    <input type="text" class="form-control" id="Boyut" value="@Model.Boyut">
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Paket Adedi</label>
+                                                    <input type="text" class="form-control" id="PaketAdet" value="@Model.PaketAdet">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="UrunAciklamatxt" placeholder="Ürün Açıklama : @Model.UrunAciklama">
+                                            <div class="row">
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">TL Fiyat</label>
+                                                    <input type="text" class="form-control" id="FiyatTL" value="@Model.FiyatTl">
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">USD Fiyat</label>
+                                                    <input type="text" class="form-control" id="FiyatUSD" value="@Model.FiyatUSD">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="BirimKG" placeholder="Birim KG : @Model.UrunAciklama">
+                                            <div class="row">
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Kritik Stok Miktarı</label>
+                                                    <input type="text" class="form-control" id="KritikStokMiktaritxt" value="@Model.KritikStokMiktari">
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Güncel Stok Miktarı</label>
+                                                    <input type="number" class="form-control" id="StokMiktaritxt" placeholder="@Model.StokMiktari" readonly>
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="BirimM3" placeholder="Birim M3 : @Model.BirimM3">
+                                            <div class="row">
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Birim</label>
+                                                    @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim : " + Model.Birim, new { @class = "form-control basic", id = "BirimID" })
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <label class="form-label">Resim Değiştir</label>
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="imagee" name="imagee">
+                                                        <label class="custom-file-label" for="exampleInputFile">Dosya Seç</label>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="Boyut" placeholder="Boyut : @Model.Boyut">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
+                                                </div>
+                                                <div class="col-6">
+                                                    <img src="@Model.Resim" width="50%" style="border-radius:8px; border-color:black; border-style:double;" />
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="PaketAdet" placeholder="Paket Adedi : @Model.PaketAdet">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="FiyatTL" placeholder="TL Fiyat : @Model.FiyatTl">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="FiyatUSD" placeholder="USD Fiyat : @Model.FiyatUSD">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <input type="number" class="form-control" id="KritikStokMiktaritxt" placeholder="Kritik Stok Miktarı : @Model.KritikStokMiktari">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <input type="number" class="form-control" id="StokMiktaritxt" placeholder="Güncel Stok Miktarı : @Model.StokMiktari" readonly>
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim : " + Model.Birim, new { @class = "form-control basic", id = "BirimID" })
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <label>Ürün Resmi</label><br />
-                                                <img src="@Model.Resim" height="250" width="250" />
-                                                <br />
-                                                <input type="file" class="form-control-file" id="imagee" name="imagee">
-                                            </div>
-                                            <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
                                         </form>
                                     </div>
                                 </div>

@@ -61,58 +61,102 @@
                         <div class="tab-content" id="icon-pills-tabContent">
                             <div class="tab-pane fade show active" id="icon-pills-home" role="tabpanel" aria-labelledby="icon-pills-home-tab">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
+                                        <div class="card-header">
+                                            <h3>Bayi Bilgileri Güncelle</h3>
+                                            <hr />
+                                        </div>
                                         <form>
                                             <input name="ID" value="@id" id="ID" type="hidden" />
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" placeholder="Ünvan : @Model.Unvan">
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Ünvan</label>
+                                                    <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" value="@Model.Unvan">
+                                                </div>
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Bayi Kodu</label>
+                                                    <input type="text" class="form-control" id="BayiKodu" aria-describedby="emailHelp1" value="@Model.BayiKodu">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="BayiKodu" aria-describedby="emailHelp1" placeholder="Bayi Kodu : @Model.BayiKodu">
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Firma Adı</label>
+                                                    <input type="text" class="form-control" id="KullaniciAdi" aria-describedby="emailHelp1" value="@Model.KullaniciAdi">
+                                                </div>
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Telefon</label>
+                                                    <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" value="@Model.Telefon">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="KullaniciAdi" aria-describedby="emailHelp1" placeholder="Kullanıcı Adı : @Model.KullaniciAdi">
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>E-Posta Adresi</label>
+                                                    <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1" value="@Model.EPosta">
+                                                </div>
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Adres</label>
+                                                    <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1" value="@Model.Adres">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" placeholder="Telefon : @Model.Telefon">
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Yetkili</label>
+                                                    <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1" value="@Model.Yetkili">
+                                                </div>
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>İskonto Oranı</label>
+                                                    <input type="text" class="form-control" id="IskontoOran" aria-describedby="emailHelp1" value="@Model.IskontoOran">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1" placeholder="E-Posta Adresi : @Model.EPosta">
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Alışveriş Limiti</label>
+                                                    <input type="text" class="form-control" id="AlisVerisLimiti" aria-describedby="emailHelp1" value="@Convert.ToDecimal(Model.AlisVerisLimiti).ToString("N2")">
+                                                </div>
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Para Birimi</label>
+                                                    @Html.DropDownList("ParaBirimi", (List<SelectListItem>)ViewBag.parabirimleri, "Para Birimi : " + Model.ParaBirimi, new { @class = "form-control basic", id = "ParaBirimi" })
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1" placeholder="Adres : @Model.Adres">
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>KDV Durumu</label>
+                                                    @Html.DropDownList("KDVDurum", (List<SelectListItem>)ViewBag.kdvdurumlari, "KDV Durumu : " + Model.KDVDurumu, new { @class = "form-control basic", id = "KDVDurum" })
+                                                </div>
+                                                <div class="form-group mb-3 col-6" style="margin-top:15px;">
+                                                    <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1" placeholder="Yetkili : @Model.Yetkili">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="IskontoOran" aria-describedby="emailHelp1" placeholder="İskonto Oranı : @Model.IskontoOran">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="AlisVerisLimiti" aria-describedby="emailHelp1" placeholder="Alış-Veriş Limiti : @Model.AlisVerisLimiti">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                @Html.DropDownList("ParaBirimi", (List<SelectListItem>)ViewBag.parabirimleri, "Para Birimi : " + Model.ParaBirimi, new { @class = "form-control basic", id = "ParaBirimi" })
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                @Html.DropDownList("KDVDurum", (List<SelectListItem>)ViewBag.kdvdurumlari, "KDV Durumu : " + Model.KDVDurumu, new { @class = "form-control basic", id = "KDVDurum" })
-                                            </div>
-                                            <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
                                         </form>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-12">
+                                        <div class="card-header">
+                                            <h3>Şifre Değiştirme</h3>
+                                            <hr />
+                                        </div>
                                         <form>
                                             <input name="ID" value="@id" id="ID" type="hidden" />
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="Eski" aria-describedby="emailHelp1" placeholder="Eski Şifre">
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-12">
+                                                    <label>Eski Şifre</label>
+                                                    <input type="password" class="form-control" id="Eski" aria-describedby="emailHelp1" placeholder="******">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="Yeni" aria-describedby="emailHelp1" placeholder="Yeni Şifre">
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Yeni Şifre</label>
+                                                    <input type="password" class="form-control" id="Yeni" aria-describedby="emailHelp1" placeholder="******">
+                                                </div>
+                                                <div class="form-group mb-3 col-6">
+                                                    <label>Yeni Şifre Tekrar</label>
+                                                    <input type="password" class="form-control" id="Yeni1" aria-describedby="emailHelp1" placeholder="******">
+                                                </div>
                                             </div>
-                                            <div class="form-group mb-3">
-                                                <input type="text" class="form-control" id="Yeni1" aria-describedby="emailHelp1" placeholder="Yei Şifre Tekrar">
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-12">
+                                                    <button type="button" onclick="Sifre()" class="btn btn-info mt-3">Şifre Değiştir</button>
+                                                </div>
                                             </div>
-                                            <button type="button" onclick="Sifre()" class="btn btn-info mt-3">Şifre Değiştir</button>
                                         </form>
                                     </div>
                                 </div>
@@ -277,6 +321,7 @@
                 tabloGuncelle();
             }
         });
+        location.reload();
     }
     function Sifre() {
         var formData = {
