@@ -151,7 +151,6 @@
                 </div>
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-6"></div>
                         <div class="col-6">
                             <div class="card-body">
                                 <table class="table-tab">
@@ -160,6 +159,26 @@
                                             <th style="width:50%;">TOPLAM SİPARİŞ ADEDİ</th>
                                             <th style="width:50%; text-align: center;" id="txttoplamadet"></th>
                                         </tr>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ PARÇA ADEDİ</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamparcaadet"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ M3</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamm3"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ KG</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamkg"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card-body">
+                                <table class="table-tab">
+                                    <thead>
                                         <tr>
                                             <th style="width:50%;">ARA TOPLAM</th>
                                             <th style="width:50%; text-align: center;" id="txtaratoplam"></th>
@@ -311,6 +330,9 @@
                 $("#txtsiparistarihi").text(x.siparisTarihi);
                 $("#txtsiparisdurum").text(x.siparisDurum);
                 $("#txtkullanici").text(x.kullanici);
+                $("#txttoplamparcaadet").text(x.toplamparcaadet);
+                $("#txttoplamm3").text(x.toplamm3);
+                $("#txttoplamkg").text(x.toplamkg);
             }
         });
     }

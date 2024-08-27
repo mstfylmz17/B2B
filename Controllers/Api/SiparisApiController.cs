@@ -503,6 +503,20 @@ namespace VNNB2B.Controllers.Api
                 if (bayi.KullaniciAdi != null) list.FirmaAdi = bayi.KullaniciAdi.ToString(); else list.FirmaAdi = "";
                 if (bayi.Telefon != null) list.Telefon = bayi.Telefon.ToString(); else list.Telefon = "";
                 if (bayi.Adres != null) list.Adres = bayi.Adres.ToString(); else list.Adres = "";
+                var icerik = c.SiparisIceriks.Where(v => v.SiparisID == id && v.Durum == true).ToList();
+                decimal toplamm3 = 0;
+                decimal toplamkg = 0;
+                decimal toplampaketadet = 0;
+                foreach (var v in icerik)
+                {
+                    var urun = c.Urunlers.FirstOrDefault(a => a.ID == v.UrunID);
+                    if (urun.BirimKG != null) toplamkg = Convert.ToDecimal(urun.BirimKG * v.Miktar);
+                    if (urun.BirimM3 != null) toplamm3 = Convert.ToDecimal(urun.BirimM3 * v.Miktar);
+                    if (urun.PaketAdet != null) toplampaketadet = Convert.ToDecimal(urun.PaketAdet * v.Miktar);
+                }
+                list.toplamm3 = toplamm3.ToString("N2");
+                list.toplamkg = toplamkg.ToString("N2");
+                list.toplamparcaadet = toplampaketadet.ToString("N2");
                 return Json(list);
             }
             else

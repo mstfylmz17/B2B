@@ -33,12 +33,12 @@ namespace VNNB2B.Controllers
                 };
 
                 HttpContext.Response.Cookies.Append("VNNBayiCerez", kul.ID.ToString(), cookieOptions);
-                AdminHata.Icerik = "Hos Geldin... " + kul.Unvan;
+                BLoginHata.Icerik = "Hos Geldin... " + kul.Unvan;
                 return RedirectToAction("menu", "BLogin");
             }
             else
             {
-                LoginHata.Icerik = "Kullanici Bilgileri Yanlis...";
+                BLoginHata.Icerik = "Kullanici Bilgileri Yanlis...";
                 return RedirectToAction("Index");
             }
         }
@@ -54,7 +54,7 @@ namespace VNNB2B.Controllers
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                BLoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "BLogin");
             }
             else
@@ -68,7 +68,7 @@ namespace VNNB2B.Controllers
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                BLoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "BLogin");
             }
             else
@@ -82,7 +82,7 @@ namespace VNNB2B.Controllers
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                BLoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "BLogin");
             }
             else
@@ -96,7 +96,7 @@ namespace VNNB2B.Controllers
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                BLoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "BLogin");
             }
             else
@@ -117,7 +117,7 @@ namespace VNNB2B.Controllers
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                BLoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "BLogin");
             }
             else
@@ -131,7 +131,7 @@ namespace VNNB2B.Controllers
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                BLoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "BLogin");
             }
             else
@@ -149,7 +149,7 @@ namespace VNNB2B.Controllers
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                BLoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "BLogin");
             }
             else
@@ -163,7 +163,7 @@ namespace VNNB2B.Controllers
             HttpContext.Request.Cookies.TryGetValue("VNNBayiCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
             {
-                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                BLoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "BLogin");
             }
             else

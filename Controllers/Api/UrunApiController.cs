@@ -38,7 +38,7 @@ namespace VNNB2B.Controllers.Api
                             .Sum(s => s.StokMiktari) < x.KritikStokMiktari) ? "Red" : "Normal"
                 })
                 .ToList();
-            return Json(veri.OrderBy(v => v.ID));
+            return Json(veri.OrderByDescending(v => v.ID));
         }
         [HttpPost]
         public IActionResult GetResim(int id)
@@ -84,7 +84,7 @@ namespace VNNB2B.Controllers.Api
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
             if (kul != null)
             {
-                var kodbosmu = c.Urunlers.FirstOrDefault(v => v.UrunKodu == d.UrunKodu);
+                var kodbosmu = c.Urunlers.FirstOrDefault(v => v.UrunKodu == d.UrunKodu && v.Durum == true);
                 if (kodbosmu != null)
                 {
                     result = new { status = "error", message = "Ürün Kodu Daha Önce Farklı Bir Ürüne Atanmış Lütfen Farklı Bir Ürün Kdu Tanımlayınız..." };
