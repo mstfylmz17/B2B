@@ -24,7 +24,7 @@
 }
 <br />
 <div class="row">
-    <div class="col-12">
+    <div class="col-5">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -79,6 +79,16 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="form-group col-6">
+                                        <label class="form-label">TL Fiyat</label>
+                                        <input type="text" class="form-control" id="FiyatTL">
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label class="form-label">USD Fiyat</label>
+                                        <input type="text" class="form-control" id="FiyatUSD">
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group mb-3 col-6">
                                         <label>Kritik Stok Miktarı <span style="color:darkred">*</span></label>
                                         <input type="number" class="form-control" id="KritikStokMiktari">
@@ -96,7 +106,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6" style="margin-top:-15px;">
-                                        <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
+                                        <button type="button" onclick="AddForm()" class="btn btn-primary mt-3" style=" float:right;">Kaydet</button>
                                     </div>
                                 </div>
                             </form>
@@ -106,7 +116,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12">
+    <div class="col-7">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">

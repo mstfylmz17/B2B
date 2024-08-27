@@ -45,6 +45,7 @@ namespace VNNB2B.Controllers
         public IActionResult Cikis()
         {
             HttpContext.Response.Cookies.Delete("VNNBayiCerez");
+            BLoginHata.Icerik = "Çıkış Yapıldı...";
             return RedirectToAction("Index");
         }
 

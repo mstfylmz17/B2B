@@ -101,11 +101,12 @@
                     <div class="col-6">
                         <form id="productForm">
                         </form>
-                        <button type="button" class="btn btn-dark btn-sm" onclick="Sepet()" style="float:right;">SEPETE EKLE / ADD TO BASKET</button>
+                        
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-dark btn-sm" onclick="Sepet()" style="float:right;">SEPETE EKLE / ADD TO BASKET</button>
             </div>
         </div>
     </div>
@@ -188,7 +189,7 @@
                                                                                                                                                                                             <div class="form-group">
                                                                                                                                                                                                         <label style="margin-bottom:-5px;" for="Miktar">ADET / PIECE</label>
                                                                                                                                                                                                 <input id="Miktar" class="form-control" type="number" maxlength="2" />
-                                                                                                                                                                                            </div>
+                                                                                                                                                                                                </div><br/>
                                                                                                                                                                                     `);
 
                 // Dinamik olarak özellikleri ekle
@@ -199,7 +200,7 @@
                                                                                                                                                                                      <select class="form-control" id="${ozellik.id}">x
                                                                                                                                                                                         <option>Yükleniyor...</option>
                                                                                                                                                                                      </select>
-                                                                                                                                                                                   </div>`);
+                                                                                                                                                                                   </div><br/>`);
 
                     // Özellikler için API sorgulaması yap
                     fetchOzellikDegerleri(ozellik.id);
@@ -210,7 +211,7 @@
                                                                                                                                                                                 <div class="form-group">
                                                                                                                                                                                             <label style="margin-bottom:-5px;" for="Aciklama">AÇIKLAMA / EXPLANATION <br/></label>
                                                                                                                                                                                             <textarea rows="3" class="form-control" id="Aciklama" placeholder="Lütfen Ürün İle İlgili Özel Notlarınızı Yazınız... / Please Write Your Special Notes About the Product..."></textarea>
-                                                                                                                                                                                </div>
+                                                                                                                                                                                    </div><br/>
                                                                                                                                                                             `);
             },
             error: function () {
@@ -278,7 +279,10 @@
                 $('#productModal').modal('hide');
             },
             error: function () {
-                alert('Veriler kaydedilemedi.');
+                swal.fire({
+                    title: result.status === "error" ? 'Başarısız!' : 'Veriler Gönderilemedi Lütfen Tekrar Deneyiniz!',
+                    confirmButtonText: 'Tamam'
+                });
             }
         });
 

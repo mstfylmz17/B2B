@@ -76,7 +76,7 @@ namespace VNNB2B.Controllers.Api
             return Json(ham.OrderBy(v => v.ID));
         }
         [HttpPost]
-        public async Task<IActionResult> UrunEkle(Urunler d, IFormFile imagee)
+        public async Task<IActionResult> UrunEkle(Urunler d, IFormFile imagee, string FiyatTL, string FiyatUSD)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
@@ -118,6 +118,32 @@ namespace VNNB2B.Controllers.Api
                         kat.Durum = true;
                         c.Urunlers.Add(kat);
                         c.SaveChanges();
+                        var kaydedilen = c.Urunlers.OrderByDescending(v => v.ID).FirstOrDefault(v => v.Durum == true);
+                        try
+                        {
+                            var fiyat = c.UrunFiyatlaris.FirstOrDefault(v => v.UrunID == kaydedilen.ID && v.Durum == true);
+                            decimal? tlfiat = Convert.ToDecimal(FiyatTL);
+                            decimal? usdfiyat = Convert.ToDecimal(FiyatUSD);
+
+                            UrunFiyatlari f = new UrunFiyatlari();
+                            f.FiyatTL = tlfiat;
+                            f.FiyatUSD = usdfiyat;
+                            f.UrunID = kaydedilen.ID;
+                            f.FiyatTarihi = DateTime.Now;
+                            f.Durum = true;
+                            c.UrunFiyatlaris.Add(f);
+                            c.SaveChanges();
+
+                            if (fiyat != null)
+                            {
+                                fiyat.Durum = false;
+                            }
+                            c.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            result = new { status = "error", message = ex.Message };
+                        }
                         result = new { status = "success", message = "Kayıt Başarılı..." };
                     }
                     else
@@ -247,8 +273,10 @@ namespace VNNB2B.Controllers.Api
                         f.Durum = true;
                         c.UrunFiyatlaris.Add(f);
                         c.SaveChanges();
-
-                        fiyat.Durum = false;
+                        if (fiyat != null)
+                        {
+                            fiyat.Durum = false;
+                        }
                         c.SaveChanges();
                     }
                     catch (Exception ex)
