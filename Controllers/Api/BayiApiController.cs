@@ -33,7 +33,7 @@ namespace VNNB2B.Controllers.Api
                 if (x.IskontoOran != null) list.IskontoOran = x.IskontoOran.ToString(); else list.IskontoOran = "Tanımlanmamış...";
                 if (x.AlisVerisLimiti != null) list.AlisVerisLimiti = x.AlisVerisLimiti.ToString(); else list.AlisVerisLimiti = "Tanımlanmamış...";
                 if (x.BayiKodu != null) list.BayiKodu = x.BayiKodu.ToString(); else list.BayiKodu = "Tanımlanmamış...";
-                if (x.KDVDurum == true) list.KDVDurumu = "KDV Dahil Satış"; else list.KDVDurumu = "KDV Hariç Satış";
+                if (x.KDVDurum == true) list.KDVDurumu = "KDV'li SATIŞ"; else { if (x.KDVBilgi != null) { list.KDVDurumu = x.KDVBilgi.ToString(); } else list.KDVDurumu = "KDV'siz SATIŞ"; };
                 ham.Add(list);
             }
             return Json(ham.OrderBy(v => v.BayiKodu));
@@ -47,7 +47,7 @@ namespace VNNB2B.Controllers.Api
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
             if (kul != null)
             {
-                if (d.Unvan != null && d.KullaniciAdi != null && d.Sifre != null && d.Telefon != null && d.Yetkili != null)
+                if (d.Unvan != null && d.KullaniciAdi != null && d.Sifre != null && d.Telefon != null && d.Yetkili != null && d.EPosta != null && d.Adres != null && d.ParaBirimi != null && d.KDVDurum != null && d.IskontoOran != null && d.AlisVerisLimiti != null)
                 {
                     Bayiler de = new Bayiler();
                     de.Unvan = d.Unvan;
@@ -57,11 +57,12 @@ namespace VNNB2B.Controllers.Api
                     de.EPosta = d.EPosta;
                     de.Adres = d.Adres;
                     de.Yetkili = d.Yetkili;
-                    de.IskontoOran = 0;
-                    de.AlisVerisLimiti = 0;
+                    de.IskontoOran = d.IskontoOran;
+                    de.AlisVerisLimiti = d.AlisVerisLimiti;
                     de.BayiKodu = d.BayiKodu;
-                    de.ParaBirimi = 1;
-                    de.KDVDurum = false;
+                    de.ParaBirimi = d.ParaBirimi;
+                    de.KDVDurum = d.KDVDurum;
+                    de.KDVBilgi = d.KDVBilgi;
                     de.Durum = true;
                     c.Bayilers.Add(de);
                     c.SaveChanges();
@@ -119,7 +120,8 @@ namespace VNNB2B.Controllers.Api
                 if (d.BayiKodu != null) de.BayiKodu = d.BayiKodu;
                 if (d.ParaBirimi != null) de.ParaBirimi = d.ParaBirimi;
                 if (d.KDVDurum != null) de.KDVDurum = d.KDVDurum;
-                c.SaveChanges();
+                if (d.KDVBilgi != null) de.KDVBilgi = d.KDVBilgi;
+                 c.SaveChanges();
                 result = new { status = "success", message = "Güncelleme Başarılı..." };
             }
             else

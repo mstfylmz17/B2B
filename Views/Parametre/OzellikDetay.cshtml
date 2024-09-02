@@ -84,12 +84,46 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="modal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kayıt Güncelleme</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-header border-transparent">
+                    <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                        <div class="statbox widget box box-shadow">
+                            <div class="widget-content widget-content-area">
+                                <form>
+                                    <div class="form-group mb-3">
+                                        <label style="margin-bottom:-15px;">Ürün Özellik Türü</label>
+                                        <input type="text" class="form-control" id="dUrunOzellikAdi" aria-describedby="emailHelp1">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" onclick="Guncelle()" class="btn btn-primary">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
+    var satirid;
     var myDataTable;
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
@@ -115,13 +149,17 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">< path d = "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" /><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" /></svg></button>'
+                        return '<a class="btn btn-primary mb-2 mr-2 btn-rounded" href="#" onclick="SatirGuncelle(' + data + ')" data-toggle="modal" data-target="#modal"><i class="fas fa-pen"></i></a>' + '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><i class="fas fa-trash"></i></button>'
                     }
                 }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
-            }
+            },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
+            ordering: false,
         });
     }
     function tabloGuncelle() {
@@ -183,6 +221,38 @@
                     confirmButtonText: 'Tamam'
                 });
                 $("#OzellikAdi").val('');
+                tabloGuncelle();
+            }
+        });
+    }
+    function SatirGuncelle(element) {
+        satirid = element;
+        $.ajax({
+            type: "POST",
+            url: "/ParametreApi/UrunAltOzellikBilgi",
+            data: { id: element },
+            success: function (x) {
+                $("#dUrunOzellikAdi").val(x.ozellikAdi);
+            }
+        });
+    }
+    function Guncelle() {
+        var formData = {
+            OzellikAdi: $("#dUrunOzellikAdi").val(),
+            ID: satirid,
+        };
+        $.ajax({
+            type: "POST",
+            url: "/ParametreApi/UrunAltOzellikTurlariDuzenle",
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
                 tabloGuncelle();
             }
         });

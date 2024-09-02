@@ -59,7 +59,9 @@ namespace VNNB2B.Controllers
                 int bayiid = Convert.ToInt32(sip.BayiID);
                 var bayi = c.Bayilers.FirstOrDefault(b => b.ID == bayiid);
                 if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";
-                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString();
+                string kdvbilgi = "";
+                if (bayi.KDVBilgi != null) kdvbilgi = bayi.KDVBilgi.ToString();
+                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString() + kdvbilgi;
                 ViewBag.id = id;
                 ViewBag.hata = SiparisHata.Icerik;
                 return View();
@@ -79,7 +81,9 @@ namespace VNNB2B.Controllers
                 int bayiid = Convert.ToInt32(sip.BayiID);
                 var bayi = c.Bayilers.FirstOrDefault(b => b.ID == bayiid);
                 if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";
-                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString();
+                string kdvbilgi = "";
+                if (bayi.KDVBilgi != null) kdvbilgi = bayi.KDVBilgi.ToString();
+                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString() + kdvbilgi;
                 ViewBag.id = id;
                 ViewBag.hata = SiparisHata.Icerik;
                 return View();

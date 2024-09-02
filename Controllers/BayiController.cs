@@ -2,6 +2,7 @@
 using EntityLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using VNNB2B.Models.Hata;
 
 namespace VNNB2B.Controllers
@@ -23,6 +24,40 @@ namespace VNNB2B.Controllers
             }
             else
             {
+                List<SelectListItem> parabirimleri = (from v in c.ParaBirimleris.Where(v => v.Durum == true).ToList()
+                                                      select new SelectListItem
+                                                      {
+                                                          Text = v.ParaBirimAdi.ToString(),
+                                                          Value = v.ID.ToString()
+                                                      }).ToList();
+
+                ViewBag.parabirimleri = parabirimleri;
+
+                List<SelectListItem> kdvdurumlari = new List<SelectListItem>
+                {
+                    new SelectListItem
+                    {
+                        Text = "KDV'li SATIŞ",
+                        Value = true.ToString()
+                    },
+                    new SelectListItem
+                    {
+                        Text = "KDV'siz SATIŞ",
+                        Value = false.ToString()
+                    },
+                    new SelectListItem
+                    {
+                        Text = "İHR.FAT. SATIŞ",
+                        Value = false.ToString()
+                    },
+                    new SelectListItem
+                    {
+                        Text = "İHR.KAY. Satış",
+                        Value = false.ToString()
+                    }
+                };
+
+                ViewBag.kdvdurumlari = kdvdurumlari;
                 ViewBag.hata = BayiHata.Icerik;
                 return View();
             }
@@ -50,12 +85,22 @@ namespace VNNB2B.Controllers
                 {
                     new SelectListItem
                     {
-                        Text = "KDV Dahil Satış",
+                        Text = "KDV'li SATIŞ",
                         Value = true.ToString()
                     },
                     new SelectListItem
                     {
-                        Text = "KDV Hariç Satış",
+                        Text = "KDV'siz SATIŞ",
+                        Value = false.ToString()
+                    },
+                    new SelectListItem
+                    {
+                        Text = "İHR.FAT. SATIŞ",
+                        Value = false.ToString()
+                    },
+                    new SelectListItem
+                    {
+                        Text = "İHR.KAY. Satış",
                         Value = false.ToString()
                     }
                 };
@@ -80,7 +125,7 @@ namespace VNNB2B.Controllers
                     if (para != null) veri.ParaBirimi = para.ParaBirimAdi.ToString();
                 }
                 else veri.ParaBirimi = "TL";
-                if (bayi.KDVDurum == true) veri.KDVDurumu = "KDV Dahil Satış"; else veri.KDVDurumu = "KDV Hariç Satış";
+                if (bayi.KDVDurum == true) veri.KDVDurumu = "KDV'li SATIŞ"; else { if (bayi.KDVBilgi != null) { veri.KDVDurumu = bayi.KDVBilgi.ToString(); } else veri.KDVDurumu = "KDV'siz SATIŞ"; };
                 ViewBag.id = id;
                 ViewBag.hata = BayiHata.Icerik;
                 return View(veri);

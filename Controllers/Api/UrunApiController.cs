@@ -14,7 +14,7 @@ namespace VNNB2B.Controllers.Api
             c = context;
         }
         [HttpPost]
-        public IActionResult UrunList()
+        public async Task<IActionResult> UrunList()
         {
             var veri = c.Urunlers
                 .Where(v => v.Durum == true)
@@ -41,7 +41,7 @@ namespace VNNB2B.Controllers.Api
             return Json(veri.OrderByDescending(v => v.ID));
         }
         [HttpPost]
-        public IActionResult GetResim(int id)
+        public async Task<IActionResult> GetResim(int id)
         {
             var urun = c.Urunlers.Find(id);
             if (urun == null || urun.Resim == null)
@@ -76,7 +76,7 @@ namespace VNNB2B.Controllers.Api
             return Json(ham.OrderBy(v => v.ID));
         }
         [HttpPost]
-        public async Task<IActionResult> UrunEkle(Urunler d, IFormFile imagee, string FiyatTL, string FiyatUSD)
+        public async Task<IActionResult> UrunEkle(Urunler d, IFormFile imagee, string FiyatTL, string FiyatUSD, List<int> UrunOzellikleri)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
@@ -119,6 +119,18 @@ namespace VNNB2B.Controllers.Api
                         c.Urunlers.Add(kat);
                         c.SaveChanges();
                         var kaydedilen = c.Urunlers.OrderByDescending(v => v.ID).FirstOrDefault(v => v.Durum == true);
+                        foreach (var v in UrunOzellikleri)
+                        {
+                            if (v != null && v > 0)
+                            {
+                                UrunOzellikTanimlari oz = new UrunOzellikTanimlari();
+                                oz.UrunOzellikTurlariID = v;
+                                oz.UrunID = kaydedilen.ID;
+                                oz.Durum = true;
+                                c.UrunOzellikTanimlaris.Add(oz);
+                                c.SaveChanges();
+                            }
+                        }
                         try
                         {
                             var fiyat = c.UrunFiyatlaris.FirstOrDefault(v => v.UrunID == kaydedilen.ID && v.Durum == true);

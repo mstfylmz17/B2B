@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "UrunTurlari";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,11 +20,11 @@
             });
         </script>
     }
-    TedarikciHata.Icerik = "";
+    ParametreHata.Icerik = "";
 }
 <br />
 <div class="row">
-    <div class="col-3">
+    <div class="col-4">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -32,30 +32,16 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Tedarikçi Ekle</h4>
+                                    <h4>Ürün Türü Ekle</h4>
                                 </div>
                             </div>
                         </div>
                         <div class="widget-content widget-content-area">
                             <form>
-                                <label style="margin-top:10px; margin-bottom:-5px;">Ünvan <span style="color:darkred;">*</span></label>
-                                <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1">
-                                <label style="margin-top:10px; margin-bottom:-5px;">Tedarikçi Kodu <span style="color:darkred;">*</span></label>
-                                <input type="text" class="form-control" id="TedarikciKodu" aria-describedby="emailHelp1">
-                                <label style="margin-top:10px; margin-bottom:-5px;">Firma Adı <span style="color:darkred;">*</span></label>
-                                <input type="text" class="form-control" id="FirmaAdi" aria-describedby="emailHelp1">
-                                <label style="margin-top:10px; margin-bottom:-5px;">Yetkili <span style="color:darkred">*</span></label>
-                                <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1">
-                                <label style="margin-top:10px; margin-bottom:-5px;">Telefon <span style="color:darkred;">*</span></label>
-                                <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1">
-                                <label style="margin-top:10px; margin-bottom:-5px;">E-Posta Adresi <span style="color:darkred">*</span></label>
-                                <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1">
-                                <label style="margin-top:10px; margin-bottom:-5px;">Vergi Dairesi <span style="color:darkred">*</span></label>
-                                <input type="text" class="form-control" id="VergiDairesi" aria-describedby="emailHelp1">
-                                <label style="margin-top:10px; margin-bottom:-5px;">Vergi No <span style="color:darkred">*</span></label>
-                                <input type="text" class="form-control" id="VergiNo" aria-describedby="emailHelp1">
-                                <label style="margin-top:10px; margin-bottom:-5px;">Adres <span style="color:darkred">*</span></label>
-                                <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1">
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="SiraNo" aria-describedby="emailHelp2" placeholder="Sıra No">
+                                    <input type="text" class="form-control" id="UrunGrubuAdi" aria-describedby="emailHelp1" placeholder="Üzellik Tür Adı">
+                                </div>
                                 <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
                             </form>
                         </div>
@@ -64,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="col-9">
+    <div class="col-8">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -72,19 +58,17 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Tedarikçiler</h4>
+                                    <h4>Ürün Türleri</h4>
                                 </div>
                             </div>
                         </div>
                         <div class="widget-content widget-content-area">
                             <div class="table-responsive">
-                                <table id="myTable" class="table table-hover" style="width:100%; font-size:14px;">
+                                <table id="myTable" class="table table-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Tedarikçi Kodu</th>
-                                            <th>Ünvan</th>
-                                            <th>Firma Adı</th>
-                                            <th>Telefon</th>
+                                            <th>Sıra</th>
+                                            <th>Ürün Türü</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -98,17 +82,52 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kayıt Güncelleme</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-header border-transparent">
+                    <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                        <div class="statbox widget box box-shadow">
+                            <div class="widget-content widget-content-area">
+                                <form>
+                                    <div class="form-group mb-3">
+                                        <label style="margin-bottom:-15px;">Sıra No</label>
+                                        <input type="text" class="form-control" id="dSiraNo" aria-describedby="emailHelp2">
+                                        <label style="margin-bottom:-15px;">Ürün Grubu Adı</label>
+                                        <input type="text" class="form-control" id="dUrunGrubuAdi" aria-describedby="emailHelp1">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" onclick="Guncelle()" class="btn btn-primary">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
+    var satirid;
     var myDataTable;
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/TedarikciApi/TedarikciList',
+                url: '/ParametreApi/UrunTuruList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -124,14 +143,12 @@
                 }
             },
             columns: [
-                { data: 'tedarikciKodu', width: '15%' },
-                { data: 'unvan', width: '40%' },
-                { data: 'firmaAdi', width: '15%' },
-                { data: 'telefon', width: '15%' },
+                { data: 'siraNo' },
+                { data: 'urunGrubuAdi' },
                 {
-                    data: 'id', width: '15%',
+                    data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="/Tedarikci/Detay/' + data + '" class="btn btn-primary mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d = "M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" /></svg></a>' + '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">< path d = "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" /><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" /></svg></button>'
+                        return '<a class="btn btn-primary mb-2 mr-2 btn-rounded" href="#" onclick="SatirGuncelle(' + data + ')" data-toggle="modal" data-target="#modal"><i class="fas fa-pen"></i></a>' + '<a href="#" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><i class="fas fa-trash"></i></button>'
                     }
                 }
             ],
@@ -139,9 +156,21 @@
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
             paging: false,
-            scrollY: '75vh',
+            scrollY: '73vh',
             scrollCollapse: true,
             ordering: false,
+        });
+    }
+    function SatirGuncelle(element) {
+        satirid = element;
+        $.ajax({
+            type: "POST",
+            url: "/ParametreApi/UrunTuruBilgi",
+            data: { id: element },
+            success: function (x) {
+                $("#dSiraNo").val(x.siraNo);
+                $("#dUrunGrubuAdi").val(x.urunGrubuAdi);
+            }
         });
     }
     function tabloGuncelle() {
@@ -172,7 +201,7 @@
     function submitForm(element) {
         $.ajax({
             type: "POST",
-            url: "/TedarikciApi/TedarikciSil/" + element,
+            url: "/ParametreApi/UrunTuruSil/" + element,
             dataType: "json",
             success: function (result) {
                 swal.fire({
@@ -187,19 +216,12 @@
     }
     function AddForm() {
         var formData = {
-            Unvan: $("#Unvan").val(),
-            AddForm: $("Adres").val(),
-            VergiDairesi: $("#VergiDairesi").val(),
-            VergiNo: $("#VergiNo").val(),
-            Telefon: $("#Telefon").val(),
-            EPosta: $("#EPosta").val(),
-            Yetkili: $("#Yetkili").val(),
-            TedarikciKodu: $("#TedarikciKodu").val(),
-            FirmaAdi: $("#FirmaAdi").val(),
+            UrunGrubuAdi: $("#UrunGrubuAdi").val(),
+            SiraNo: $("#SiraNo").val(),
         };
         $.ajax({
             type: "POST",
-            url: "/TedarikciApi/TedarikciEkle",
+            url: "/ParametreApi/UrunTuruEkle",
             data: formData,
             dataType: "json",
             success: function (result) {
@@ -209,15 +231,30 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
-                $("#Unvan").val('');
-                $("#VergiDairesi").val('');
-                $("#VergiNo").val('');
-                $("#Telefon").val('');
-                $("#EPosta").val('');
-                $("#Yetkili").val('');
-                $("#TedarikciKodu").val('');
-                $("#FirmaAdi").val('');
-                $("#Adres").val('');
+                $("#UrunGrubuAdi").val('');
+                $("#SiraNo").val('');
+                tabloGuncelle();
+            }
+        });
+    }
+    function Guncelle() {
+        var formData = {
+            UrunGrubuAdi: $("#dUrunGrubuAdi").val(),
+            SiraNo: $("#dSiraNo").val(),
+            ID: satirid,
+        };
+        $.ajax({
+            type: "POST",
+            url: "/ParametreApi/UrunTuruDuzenle",
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
                 tabloGuncelle();
             }
         });

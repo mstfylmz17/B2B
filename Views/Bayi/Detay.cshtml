@@ -9,18 +9,18 @@
 @{
     string mesaj = ViewBag.hata;
     var hasError = !string.IsNullOrEmpty(ViewBag.hata);
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (hasError)
     {
-        <script>
-            $(document).ready(function () {
-                Swal.fire({
-                    icon: 'info',
-                    title: '@mesaj'
+            <script>
+                $(document).ready(function () {
+                    Swal.fire({
+                        icon: 'info',
+                        title: '@mesaj'
+                    });
                 });
-            });
-        </script>
+            </script>
     }
     BayiHata.Icerik = "";
     int id = Convert.ToInt32(ViewBag.id);
@@ -293,6 +293,7 @@
             BayiKodu: $("#BayiKodu").val(),
             ParaBirimi: $("#ParaBirimi").val(),
             KDVDurum: $("#KDVDurum").val(),
+            KDVBilgi: $("#KDVDurum option:selected").text(),
         };
         $.ajax({
             type: "POST",
@@ -321,7 +322,6 @@
                 tabloGuncelle();
             }
         });
-        location.reload();
     }
     function Sifre() {
         var formData = {

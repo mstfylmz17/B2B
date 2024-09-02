@@ -16,36 +16,43 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult IsEmirleri()
         {
-            var veri = c.DepoIsEmirleris.Where(v => v.Durum == true && v.GorulduMu != true).OrderByDescending(v => v.ID).ToList();
-            List<DtoDepoIsEmirleri> ham = new List<DtoDepoIsEmirleri>();
-            foreach (var x in veri)
+            var sip = c.Siparis.FirstOrDefault(v => v.Durum == true && v.BayiOnay == false);
+            var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+            string para = "";
+            if (bayi.ParaBirimi == 2) para = " $"; else para = " ₺";
+            if (sip != null)
             {
-                var varmi = ham.FirstOrDefault(v => v.ID == x.SiparisID);
-                if (varmi == null)
+                var veri = c.SiparisIceriks.Where(v => v.SiparisID == sip.ID && v.Durum == true).OrderByDescending(v => v.ID).ToList();
+                List<DtoSiparisIcerik> ham = new List<DtoSiparisIcerik>();
+                foreach (var x in veri)
                 {
-                    var sipic = c.SiparisIceriks.FirstOrDefault(v => v.ID == x.SiparisIcerikID);
-                    var sip = c.Siparis.FirstOrDefault(v => v.ID == x.SiparisID);
                     var urun = c.Urunlers.FirstOrDefault(v => v.ID == x.UrunID);
-                    DtoDepoIsEmirleri list = new DtoDepoIsEmirleri();
+                    var kat = c.UrunKategoris.FirstOrDefault(v => v.ID == urun.UrunKategoriID);
+                    DtoSiparisIcerik list = new DtoSiparisIcerik();
                     list.ID = Convert.ToInt32(x.ID);
-                    list.SiparisNo = sip.SiparisNo.ToString();
-                    list.UrunKodu = urun.UrunKodu.ToString();
-                    list.UrunAdi = urun.UrunAdi.ToString();
+                    if (urun.UrunKodu != null) list.UrunKodu = urun.UrunKodu.ToString(); else list.UrunKodu = "Tanımlanmamış...";
+                    if (urun.UrunAdi != null) list.UrunAciklama = kat.Adi + " / " + urun.UrunAdi.ToString(); else list.UrunAciklama = "Tanımlanmamış...";
+                    if (urun.Boyut != null)
+                        list.UrunAciklama += " <br/> " + urun.Boyut.ToString();
                     if (urun.Resim != null) list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(urun.Resim);
-                    list.GelenAdet = Convert.ToInt32(sipic.Miktar).ToString();
-                    string stozellik = "";
-                    var oz = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
-                    foreach (var v in oz)
+                    if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = "Açıklama Yok!";
+                    if (x.Miktar != null) list.Miktar = Convert.ToInt32(x.Miktar).ToString(); else list.Miktar = "1";
+                    if (x.SatirToplam != null && x.SatirToplam > 0) list.SatirToplam = Convert.ToDecimal(x.SatirToplam).ToString("N2") + para; else list.SatirToplam = "0,00" + para;
+                    if (x.BirimFiyat != null && x.BirimFiyat > 0) list.BirimFiyat = Convert.ToDecimal(x.BirimFiyat).ToString("N2") + para; else list.BirimFiyat = "0,00" + para;
+                    var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.ID && v.Durum == true).ToList();
+                    foreach (var v in ozellik)
                     {
                         var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
-                        var tur = c.UrunOzelikTurlaris.FirstOrDefault(a => a.ID == o.UrunOzellikTurlariID);
-                        stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
+                        if (o.UrunOzellikTurlariID == 6) list.DeriRengi = o.OzellikAdi.ToString(); else if (o.UrunOzellikTurlariID == 7) { if (o != null) list.AhsapRengi = o.OzellikAdi.ToString(); else list.AhsapRengi = ""; }
                     }
-                    list.Ozellikleri = stozellik;
                     ham.Add(list);
                 }
+                return Json(ham.OrderBy(v => v.ID));
             }
-            return Json(ham);
+            else
+            {
+                return Json(2);
+            }
         }
         [HttpPost]
         public IActionResult GecmisIsEmirleri()

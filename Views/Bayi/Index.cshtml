@@ -25,7 +25,7 @@
 <br />
 
 <div class="row">
-    <div class="col-4">
+    <div class="col-3">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -39,51 +39,31 @@
                         </div>
                         <div class="widget-content widget-content-area">
                             <form>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Ünvan <span style="color:darkred">*</span></label>
-                                        <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1">
-                                    </div>
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Bayi Kodu <span style="color:darkred">*</span></label>
-                                        <input type="text" class="form-control" id="BayiKodu" aria-describedby="emailHelp1">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Firma Adı <span style="color:darkred">*</span></label>
-                                        <input type="text" class="form-control" id="KullaniciAdi" aria-describedby="emailHelp1">
-                                    </div>
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Şifre <span style="color:darkred">*</span></label>
-                                        <input type="text" class="form-control" id="Sifre" aria-describedby="emailHelp1">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Telefon <span style="color:darkred">*</span></label>
-                                        <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1">
-                                    </div>
-                                    <div class="form-group mb-3 col-6">
-                                        <label>E-Posta Adresi</label>
-                                        <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Adres</label>
-                                        <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1">
-                                    </div>
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Yetkili <span style="color:darkred">*</span></label>
-                                        <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
-                                    </div>
-                                </div>
+                                <label style="margin-top:10px; margin-bottom:-5px;">Ünvan <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">Bayi Kodu <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="BayiKodu" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">Firma Adı <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="KullaniciAdi" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">Şifre <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="Sifre" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">Telefon <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">E-Posta Adresi <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="EPosta" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">Adres <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">Yetkili <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">İskonto Oranı <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="IskontoOran" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">Alışveriş Limiti <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="AlisVerisLimiti" aria-describedby="emailHelp1">
+                                <label style="margin-top:10px; margin-bottom:-5px;">Para Birimi<span style="color:darkred">*</span></label>
+                                @Html.DropDownList("ParaBirimi", (List<SelectListItem>)ViewBag.parabirimleri, "Para Birimi Seçiniz... ", new { @class = "form-control basic", id = "ParaBirimi" })
+                                <label style="margin-top:10px; margin-bottom:-5px;">KDV Durumu<span style="color:darkred">*</span></label>
+                                @Html.DropDownList("KDVDurum", (List<SelectListItem>)ViewBag.kdvdurumlari, "KDV Durumu Seçiniz... ", new { @class = "form-control basic", id = "KDVDurum" })
+                                <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
                             </form>
                         </div>
                     </div>
@@ -91,7 +71,7 @@
             </div>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-9">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -151,12 +131,13 @@
                 }
             },
             columns: [
-                { data: 'bayiKodu' },
-                { data: 'unvan' },
-                { data: 'kullaniciAdi' },
-                { data: 'telefon' },
+                { data: 'bayiKodu', width: '15%' },
+                { data: 'unvan', width: '40%' },
+                { data: 'kullaniciAdi', width: '15%' },
+                { data: 'telefon', width: '15%' },
                 {
                     data: 'id',
+                    width: '15%',
                     render: function (data, type, full, meta) {
                         return '<a href="/Bayi/Detay/' + data + '" class="btn btn-primary mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d = "M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" /></svg></a>' + '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">< path d = "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" /><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" /></svg></button>'
                     }
@@ -166,7 +147,7 @@
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
             paging: false,
-            scrollY: '33vh',
+            scrollY: '90vh',
             scrollCollapse: true,
             ordering: false,
         });
@@ -222,7 +203,14 @@
             Adres: $("#Adres").val(),
             Yetkili: $("#Yetkili").val(),
             BayiKodu: $("#BayiKodu").val(),
+            IskontoOran: $("#IskontoOran").val(),
+            AlisVerisLimiti: $("#AlisVerisLimiti").val(),
+            ParaBirimi: $("#ParaBirimi").val(),
+            KDVDurum: $("#KDVDurum").val(),
+            KDVBilgi: $("#KDVDurum option:selected").text(),
         };
+
+        console.log(formData);
         $.ajax({
             type: "POST",
             url: "/BayiApi/BayiEkle",
@@ -244,6 +232,10 @@
                     $("#Adres").val('');
                     $("#Yetkili").val('');
                     $("#BayiKodu").val('');
+                    $("#IskontoOran").val('');
+                    $("#AlisVerisLimiti").val('');
+                    $("#ParaBirimi").val('');
+                    $("#KDVDurum").val('');
                     tabloGuncelle();
                 }
             }

@@ -100,6 +100,13 @@ namespace VNNB2B.Controllers.Api
             var sip = c.Siparis.FirstOrDefault(v => v.BayiID == id && v.BayiOnay == false);
             sip.BayiOnay = true;
             sip.SiparisDurum = "Onay Bekliyor...";
+            var siparisadimturlari = c.SiparisAdimTurlaris.Where(v => v.Durum == true).OrderBy(v => v.ID).ToList();
+            foreach (var x in siparisadimturlari)
+            {
+                SiparisAdimlari a = new SiparisAdimlari();
+                a.SiparisAdimTurlariID = x.ID;
+                a.SiparisID = sip.ID;
+            }
             c.SaveChanges();
             result = new { status = "success", message = "Sepet Onaylandı... Sipariş Durumunu Siparişlerim Sekmesinden Kontrol Edebilirsiniz..." };
             return Json(result);
@@ -278,7 +285,7 @@ namespace VNNB2B.Controllers.Api
             {
                 var dosyaAdi = Path.GetFileName(imagee.FileName);
 
-                var dosyaYolu = Path.Combine("wwwroot/Evraklar/SiparisOnayEvraklar", dosyaAdi);
+                var dosyaYolu = Path.Combine("/Evraklar/SiparisOnayEvraklar", dosyaAdi);
 
                 using (var stream = new FileStream(dosyaYolu, FileMode.Create))
                 {
@@ -492,6 +499,7 @@ namespace VNNB2B.Controllers.Api
                 list.ToplamTutar = Convert.ToDecimal(x.ToplamTutar).ToString("N2") + para;
                 list.AraToplam = Convert.ToDecimal(x.AraToplam).ToString("N2") + para;
                 list.IstoktoToplam = Convert.ToDecimal(x.IstoktoToplam).ToString("N2") + para;
+                list.DosyaYolu = x.DosyaYolu;
                 list.KDVToplam = Convert.ToDecimal(x.KDVToplam).ToString("N2") + para;
                 if (x.OnaylayanID != null)
                     list.Kullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.OnaylayanID).AdSoyad.ToString();

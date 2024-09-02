@@ -51,6 +51,15 @@ namespace VNNB2B.Controllers
 
                 ViewBag.kat = kat;
 
+                List<SelectListItem> ozellikler = (from x in c.UrunOzelikTurlaris.Where(x => x.Durum == true).ToList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.OzellikAdi.ToString(),
+                                                       Value = x.ID.ToString()
+                                                   }).OrderBy(v => v.Text).ToList();
+
+                ViewBag.ozellikler = ozellikler;
+
                 ViewBag.hata = UrunHata.Icerik;
                 return View();
             }

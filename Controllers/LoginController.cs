@@ -32,7 +32,6 @@ namespace VNNB2B.Controllers
                 };
 
                 HttpContext.Response.Cookies.Append("VNNCerez", kul.ID.ToString(), cookieOptions);
-                AdminHata.Icerik = "Hos Geldin... " + kul.AdSoyad;
                 return RedirectToAction("Index", "Admin");
             }
             else

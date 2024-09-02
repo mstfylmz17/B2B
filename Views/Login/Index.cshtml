@@ -6,7 +6,20 @@
 @{
     string mesaj = ViewBag.hata;
     var hasError = !string.IsNullOrEmpty(ViewBag.hata);
-    LoginHata.Icerik = "";
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    AdminHata.Icerik = "";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -80,17 +93,5 @@
     <script src="~/Template/bootstrap/js/popper.min.js"></script>
     <script src="~/Template/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/Template/assets/js/authentication/form-2.js"></script>
-    @if (hasError)
-    {
-        <script>
-            $(document).ready(function () {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Hata',
-                    text: '@mesaj'
-                });
-            });
-        </script>
-    }
 </body>
 </html>

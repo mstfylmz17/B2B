@@ -23,8 +23,9 @@
     UrunHata.Icerik = "";
 }
 <br />
+
 <div class="row">
-    <div class="col-5">
+    <div class="col-3">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -38,77 +39,60 @@
                         </div>
                         <div class="widget-content widget-content-area">
                             <form id="UrunForm">
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Ürün Kategori</label>
-                                        @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Seçiniz...", new { @class = "form-control basic", id = "UrunKategoriID" })
-                                    </div>
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Ürün Türü <span style="color:darkred">*</span></label>
-                                        @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Seçiniz...", new { @class = "form-control basic", id = "UrunTuruID" })
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Ürün Kodu <span style="color:darkred">*</span></label>
-                                        <input type="text" class="form-control" id="UrunKodu">
-                                    </div>
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Ürün Adı <span style="color:darkred">*</span></label>
-                                        <input type="text" class="form-control" id="UrunAdi">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Birim KG</label>
-                                        <input type="text" class="form-control" id="BirimKG">
-                                    </div>
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Birim M3</label>
-                                        <input type="text" class="form-control" id="BirimM3">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Boyut</label>
-                                        <input type="text" class="form-control" id="Boyut">
-                                    </div>
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Paket Adedi</label>
-                                        <input type="text" class="form-control" id="PaketAdet">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-6">
-                                        <label class="form-label">TL Fiyat</label>
-                                        <input type="text" class="form-control" id="FiyatTL">
-                                    </div>
-                                    <div class="form-group col-6">
-                                        <label class="form-label">USD Fiyat</label>
-                                        <input type="text" class="form-control" id="FiyatUSD">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Kritik Stok Miktarı <span style="color:darkred">*</span></label>
-                                        <input type="number" class="form-control" id="KritikStokMiktari">
-                                    </div>
-                                    <div class="form-group mb-3 col-6">
-                                        <label>Birim <span style="color:darkred">*</span></label>
-                                        @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control basic", id = "BirimID" })
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-group col-6">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="imagee" name="imagee">
-                                            <label class="custom-file-label" for="exampleInputFile">Resim Yükle</label>
+                                <label style="margin-top:10px; margin-bottom:-5px;">Ürün Kategori</label>
+                                @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Seçiniz...", new { @class = "form-control basic", id = "UrunKategoriID" })
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Ürün Türü <span style="color:darkred">*</span></label>
+                                @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Seçiniz...", new { @class = "form-control basic", id = "UrunTuruID" })
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Ürün Kodu <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="UrunKodu">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Ürün Adı <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="UrunAdi">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Birim KG</label>
+                                <input type="text" class="form-control" id="BirimKG">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Birim M3</label>
+                                <input type="text" class="form-control" id="BirimM3">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Boyut</label>
+                                <input type="text" class="form-control" id="Boyut">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Paket Adedi</label>
+                                <input type="text" class="form-control" id="PaketAdet">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;" class="form-label">TL Fiyat</label>
+                                <input type="text" class="form-control" id="FiyatTL">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;" class="form-label">USD Fiyat</label>
+                                <input type="text" class="form-control" id="FiyatUSD">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Kritik Stok Miktarı <span style="color:darkred">*</span></label>
+                                <input type="number" class="form-control" id="KritikStokMiktari">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Birim <span style="color:darkred">*</span></label>
+                                @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control basic", id = "BirimID" })
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Resim Yükle</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="imagee" name="imagee">
+                                    <label class="custom-file-label" for="customFile">Resim Seç</label>
+                                </div><div class="form-group">
+                                    <label style="margin-top:10px; margin-bottom:-5px;">Ürün Özellikleri:</label>
+                                    @foreach (var ozellik in ViewBag.ozellikler)
+                                    {
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="@ozellik.Value" id="@ozellik.Value" name="UrunOzellikleri" @(ozellik.Selected ? "checked" : "") />
+                                            <label class="form-check-label" for="@ozellik.Value">
+                                                @ozellik.Text
+                                            </label>
                                         </div>
-                                    </div>
-                                    <div class="col-6" style="margin-top:-15px;">
-                                        <button type="button" onclick="AddForm()" class="btn btn-primary mt-3" style=" float:right;">Kaydet</button>
-                                    </div>
+                                    }
                                 </div>
+                                <button type="button" onclick="AddForm()" class="btn btn-primary mt-3" style=" float:right;">Kaydet</button>
+
                             </form>
                         </div>
                     </div>
@@ -116,7 +100,7 @@
             </div>
         </div>
     </div>
-    <div class="col-7">
+    <div class="col-9">
         <div class="card">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -158,6 +142,7 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
+    var secilen;
     var myDataTable;
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
@@ -181,7 +166,7 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 100px;"  />';
+                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" />';
                     }
                 },
                 { data: 'urunTuru' },
@@ -192,7 +177,8 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="/Urunler/Detay/' + data + '" class="btn btn-primary mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d = "M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" /></svg></a>' + '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">< path d = "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" /><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" /></svg></button>'
+                        return '<a href="/Urunler/Detay/' + data + '" class="btn btn-primary mb-2 mr-2 btn-rounded"><i class="fas fa-eye"></i></a>' +
+                            '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><i class="fas fa-trash"></i></button>';
                     }
                 }
             ],
@@ -200,11 +186,34 @@
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
             paging: false,
-            scrollY: '73vh',
+            scrollY: '120vh',
             scrollCollapse: true,
             ordering: false,
             initComplete: function (settings, json) {
-                loadImages(json);
+                $(document).on('mouseenter', 'td img.img-thumbnail', function () {
+                    var imgElement = $(this);
+                    var id = imgElement.attr('id').split('_')[1];
+
+                    if (imgElement.attr('src') === '') {
+                        $.ajax({
+                            url: '/UrunApi/GetResim',
+                            method: 'POST',
+                            data: { id: id },
+                            success: function (imageData) {
+                                imgElement.attr('src', 'data:image/jpeg;base64,' + imageData);
+                            },
+                            error: function (xhr, status, error) {
+                                // swal.fire({
+                                //     title: 'Başarısız!',
+                                //     text: 'Resim Kaynağı Bulunamadı...',
+                                //     type: 'warning',
+                                //     confirmButtonText: 'Tamam'
+                                // });
+                                imgElement.attr('src', '/Resimler/vnnlogotrans.png');
+                            }
+                        });
+                    }
+                });
             }
         });
     }
@@ -216,9 +225,6 @@
                 data: { id: item.id },
                 success: function (imageData) {
                     $('#img_' + item.id).attr('src', 'data:image/jpeg;base64,' + imageData);
-                },
-                error: function (xhr, status, error) {
-                    console.log('Resim yüklenirken hata oluştu: ', error);
                 }
             });
         });
@@ -280,6 +286,7 @@
         formData.append("PaketAdet", $("#PaketAdet").val());
         formData.append("FiyatTL", $("#FiyatTL").val());
         formData.append("FiyatUSD", $("#FiyatUSD").val());
+        formData.append("UrunOzellikleri", $("#UrunOzellikleri").val());
         $.ajax({
             type: "POST",
             url: "/UrunApi/UrunEkle",

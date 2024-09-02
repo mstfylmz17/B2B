@@ -73,6 +73,16 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group mb-3 col-6">
+                                            <label>Firma Adı</label>
+                                            <input type="text" class="form-control" id="FirmaAdi" aria-describedby="emailHelp1" value="@Model.FirmaAdi">
+                                        </div>
+                                        <div class="form-group mb-3 col-6">
+                                            <label>Yetkili</label>
+                                            <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1" value="@Model.Yetkili">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-6">
                                             <label>Telefon</label>
                                             <input type="text" class="form-control" id="Telefon" aria-describedby="emailHelp1" value="@Model.Telefon">
                                         </div>
@@ -83,25 +93,19 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group mb-3 col-6">
-                                            <label>Yetkili</label>
-                                            <input type="text" class="form-control" id="Yetkili" aria-describedby="emailHelp1" value="@Model.Yetkili">
-                                        </div>
-                                        <div class="form-group mb-3 col-6">
                                             <label>Vergi Dairesi</label>
                                             <input type="text" class="form-control" id="VergiDairesi" aria-describedby="emailHelp1" value="@Model.VergiDairesi">
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="form-group mb-3 col-6">
                                             <label>Vergi No</label>
                                             <input type="text" class="form-control" id="VergiNo" aria-describedby="emailHelp1" value="@Model.VergiNo">
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="form-group mb-3 col-6">
                                             <label>Adres</label>
                                             <input type="text" class="form-control" id="Adres" aria-describedby="emailHelp1" value="@Model.Adres">
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="form-group mb-3 col-6">
                                             <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
                                         </div>
@@ -235,6 +239,7 @@
             EPosta: $("#EPosta").val(),
             Yetkili: $("#Yetkili").val(),
             TedarikciKodu: $("#TedarikciKodu").val(),
+            FirmaAdi: $("#FirmaAdi").val(),
         };
         $.ajax({
             type: "POST",
@@ -255,6 +260,7 @@
                 $("#EPosta").val('');
                 $("#Yetkili").val('');
                 $("#TedarikciKodu").val('');
+                $("#FirmaAdi").val('');
                 tabloGuncelle();
             }
         });

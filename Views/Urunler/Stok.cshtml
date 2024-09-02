@@ -85,7 +85,7 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 100px;"  />';
+                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" />';
                     }
                 },
                 { data: 'urunTuru' },
@@ -98,11 +98,29 @@
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
             paging: false,
-            scrollY: '73vh',
+            scrollY: '120vh',
             scrollCollapse: true,
             ordering: false,
             initComplete: function (settings, json) {
-                loadImages(json);
+                $(document).on('mouseenter', 'td img.img-thumbnail', function () {
+                    var imgElement = $(this);
+                    var id = imgElement.attr('id').split('_')[1];
+
+                    if (imgElement.attr('src') === '') {
+                        $.ajax({
+                            url: '/UrunApi/GetResim',
+                            method: 'POST',
+                            data: { id: id },
+                            success: function (imageData) {
+                                imgElement.attr('src', 'data:image/jpeg;base64,' + imageData);
+                            },
+                            error: function (xhr, status, error) {
+                               
+                                imgElement.attr('src', '/Resimler/vnnlogotrans.png');
+                            }
+                        });
+                    }
+                });
             }
         });
     }

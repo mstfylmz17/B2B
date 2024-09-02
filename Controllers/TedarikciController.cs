@@ -47,6 +47,7 @@ namespace VNNB2B.Controllers
                 if (bayi.EPosta != null) veri.EPosta = bayi.EPosta; else veri.EPosta = "Tanımlı Değil...";
                 if (bayi.Yetkili != null) veri.Yetkili = bayi.Yetkili; else veri.Yetkili = "Tanımlı Değil...";
                 if (bayi.TedarikciKodu != null) veri.TedarikciKodu = bayi.TedarikciKodu; else veri.TedarikciKodu = "Tanımlı Değil...";
+                if (bayi.FirmaAdi != null) veri.FirmaAdi = bayi.FirmaAdi; else veri.FirmaAdi = "Tanımlı Değil...";
                 ViewBag.id = id;
                 ViewBag.hata = TedarikciHata.Icerik;
                 return View(veri);

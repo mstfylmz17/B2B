@@ -24,6 +24,7 @@ namespace VNNB2B.Controllers.Api
                 DtoTedarikciler list = new DtoTedarikciler();
                 list.ID = Convert.ToInt32(x.ID);
                 if (x.Unvan != null) list.Unvan = x.Unvan.ToString(); else list.Unvan = "Tanımlanmamış...";
+                if (x.FirmaAdi != null) list.FirmaAdi = x.FirmaAdi.ToString(); else list.FirmaAdi = "Tanımlanmamış...";
                 if (x.Adres != null) list.Adres = x.Adres.ToString(); else list.Adres = "Tanımlanmamış...";
                 if (x.Telefon != null) list.Telefon = x.Telefon.ToString(); else list.Telefon = "Tanımlanmamış...";
                 if (x.EPosta != null) list.EPosta = x.EPosta.ToString(); else list.EPosta = "Tanımlanmamış...";
@@ -33,7 +34,7 @@ namespace VNNB2B.Controllers.Api
                 if (x.TedarikciKodu != null) list.TedarikciKodu = x.TedarikciKodu.ToString(); else list.TedarikciKodu = "Tanımlanmamış...";
                 ham.Add(list);
             }
-            return Json(ham);
+            return Json(ham.OrderBy(v => v.TedarikciKodu));
         }
         [HttpPost]
         public IActionResult TedarikciEkle(Tedarikciler d)
@@ -44,10 +45,11 @@ namespace VNNB2B.Controllers.Api
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
             if (kul != null)
             {
-                if (d.Unvan != null && d.Telefon != null && d.TedarikciKodu != null)
+                if (d.Unvan != null && d.Telefon != null && d.TedarikciKodu != null && d.FirmaAdi != null && d.Yetkili != null && d.EPosta != null && d.VergiDairesi != null && d.VergiNo != null && d.Adres != null)
                 {
                     Tedarikciler de = new Tedarikciler();
                     de.Unvan = d.Unvan;
+                    de.FirmaAdi = d.FirmaAdi;
                     de.Telefon = d.Telefon;
                     de.EPosta = d.EPosta;
                     de.Yetkili = d.Yetkili;
@@ -101,6 +103,7 @@ namespace VNNB2B.Controllers.Api
             {
                 Tedarikciler de = c.Tedarikcilers.FirstOrDefault(v => v.ID == d.ID);
                 if (d.Unvan != null) de.Unvan = d.Unvan;
+                if (d.FirmaAdi != null) de.FirmaAdi = d.FirmaAdi;
                 if (d.Telefon != null) de.Telefon = d.Telefon;
                 if (d.EPosta != null) de.EPosta = d.EPosta;
                 if (d.Yetkili != null) de.Yetkili = d.Yetkili;
