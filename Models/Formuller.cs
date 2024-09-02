@@ -14,7 +14,7 @@ namespace VNNB2B.Models
         public static bool durum = false;
         public static string mesaj = "";
 
-        public void SiparisOnay(int id)
+        public void SiparisOnay(int id, int idd)
         {
             var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
             var icerik = c.SiparisIceriks.Where(v => v.SiparisID == id).ToList();
@@ -38,6 +38,14 @@ namespace VNNB2B.Models
                 c.DepoIsEmirleris.Add(i);
                 c.SaveChanges();
             }
+            SiparisAdimlari a = new SiparisAdimlari();
+            a.SiparisID = id;
+            a.KullaniciID = idd;
+            a.SiparisAdimTurlariID = 1;
+            a.Tarih = DateTime.Now;
+            a.Durum = true;
+            c.SiparisAdimlaris.Add(a);
+            c.SaveChanges();
             mesaj = "Tüm Ürünler Depoya Sevk Edildi.";
         }
         public void BoyaSevk(int id, int kulid)

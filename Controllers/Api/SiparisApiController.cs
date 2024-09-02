@@ -279,20 +279,21 @@ namespace VNNB2B.Controllers.Api
                 return Json(result);
             }
 
-            sip.SiparisDurum = "Sipariş Onaylandı...";
 
             if (imagee != null)
             {
                 var dosyaAdi = Path.GetFileName(imagee.FileName);
 
-                var dosyaYolu = Path.Combine("/Evraklar/SiparisOnayEvraklar", dosyaAdi);
+                var dosyaYolu = Path.Combine("wwwroot/Evraklar/SiparisOnayEvraklar", dosyaAdi);
 
                 using (var stream = new FileStream(dosyaYolu, FileMode.Create))
                 {
                     await imagee.CopyToAsync(stream);
                 }
 
-                sip.DosyaYolu = dosyaYolu;
+                sip.SiparisDurum = "Sipariş Onaylandı...";
+
+                sip.DosyaYolu = dosyaYolu.Substring(7);
 
                 sip.OnayDurum = true;
                 sip.OnaylayanID = kulid;
@@ -300,7 +301,7 @@ namespace VNNB2B.Controllers.Api
                 sip.OnayAciklama = OnayAciklama;
 
                 Formuller formuller = new Formuller(c);
-                formuller.SiparisOnay(id);
+                formuller.SiparisOnay(id, kulid);
 
                 c.SaveChanges();
                 SiparisHata.Icerik = "Sipariş Onaylandı...";

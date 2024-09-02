@@ -33,6 +33,20 @@
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                             <h4>Stok Listesi</h4>
                         </div>
+                        <div class="col">
+                            @Html.DropDownList("fUrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Filtrele", new { @class = "form-control basic", id = "fUrunKategoriID" })
+                        </div>
+                        <div class="col">
+                            @Html.DropDownList("fUrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Filtrele", new { @class = "form-control basic", id = "fUrunTuruID" })
+                        </div>
+                        <div class="col">
+                            <input type="text" id="searchUrunAciklama" class="form-control" placeholder="Ürün Marka Ara">
+                        </div>
+                        <div class="col">
+                            <input type="text" id="searchUrunAdi" class="form-control" placeholder="Ürün Adı Ara">
+                        </div>
+                        <br />
+                        <br />
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
@@ -42,7 +56,9 @@
                                 <tr style="color:white;">
                                     <th>Resim</th>
                                     <th>Ürün Türü</th>
+                                    <th>Ürün Kategori</th>
                                     <th>Ürün Kodu</th>
+                                    <th>Ürün Marka</th>
                                     <th>Ürün Adı</th>
                                     <th>Kritik Stok Miktarı</th>
                                     <th>Güncel Stok</th>
@@ -89,7 +105,9 @@
                     }
                 },
                 { data: 'urunTuru' },
+                { data: 'urunKategori' },
                 { data: 'urunKodu' },
+                { data: 'urunAciklama' },
                 { data: 'urunAdi' },
                 { data: 'kritikStokMiktari' },
                 { data: 'stokMiktari' }
@@ -115,14 +133,53 @@
                                 imgElement.attr('src', 'data:image/jpeg;base64,' + imageData);
                             },
                             error: function (xhr, status, error) {
-                               
                                 imgElement.attr('src', '/Resimler/vnnlogotrans.png');
                             }
                         });
                     }
                 });
+
+                $('#searchUrunAciklama').on('keyup', function () {
+                    var searchValue = normalizeTurkishCharacters(this.value);
+                    myDataTable.column(3).search(searchValue, true, false, true).draw();
+                });
+
+                $('#searchUrunAdi').on('keyup', function () {
+                    var searchValue = normalizeTurkishCharacters(this.value);
+                    myDataTable.column(4).search(searchValue, true, false, true).draw();
+                });
+
+                $('#fUrunTuruID').on('change', function () {
+                    var selectedText = $("#fUrunTuruID option:selected").text();
+
+                    if (selectedText !== "Ürün Türü Filtrele") {
+                        myDataTable.column(1).search(selectedText, true, false, true).draw();
+                    }
+                });
+
+                $('#fUrunKategoriID').on('change', function () {
+                    var selectedText = $("#fUrunKategoriID option:selected").text();
+
+                    if (selectedText !== "Ürün Kategori Filtrele") {
+                        myDataTable.column(2).search(selectedText, true, false, true).draw();
+                    }
+                });
             }
         });
+    }
+    function normalizeTurkishCharacters(text) {
+        return text.replace(/ç/g, 'c')
+            .replace(/Ç/g, 'C')
+            .replace(/ğ/g, 'g')
+            .replace(/Ğ/g, 'G')
+            .replace(/ı/g, 'i')
+            .replace(/İ/g, 'I')
+            .replace(/ö/g, 'o')
+            .replace(/Ö/g, 'O')
+            .replace(/ş/g, 's')
+            .replace(/Ş/g, 'S')
+            .replace(/ü/g, 'u')
+            .replace(/Ü/g, 'U');
     }
     function loadImages(data) {
         data.forEach(function (item) {

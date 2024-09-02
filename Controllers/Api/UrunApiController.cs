@@ -38,7 +38,7 @@ namespace VNNB2B.Controllers.Api
                             .Sum(s => s.StokMiktari) < x.KritikStokMiktari) ? "Red" : "Normal"
                 })
                 .ToList();
-            return Json(veri.OrderByDescending(v => v.ID));
+            return Json(veri.OrderBy(v => v.ID));
         }
         [HttpPost]
         public async Task<IActionResult> GetResim(int id)

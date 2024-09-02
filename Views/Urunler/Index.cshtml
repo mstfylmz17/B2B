@@ -22,6 +22,7 @@
     }
     UrunHata.Icerik = "";
 }
+
 <br />
 
 <div class="row">
@@ -50,6 +51,9 @@
 
                                 <label style="margin-top:10px; margin-bottom:-5px;">Ürün Adı <span style="color:darkred">*</span></label>
                                 <input type="text" class="form-control" id="UrunAdi">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Ürün Marka <span style="color:darkred">*</span></label>
+                                <input type="text" class="form-control" id="UrunAciklama">
 
                                 <label style="margin-top:10px; margin-bottom:-5px;">Birim KG</label>
                                 <input type="text" class="form-control" id="BirimKG">
@@ -110,6 +114,20 @@
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                     <h4>Ürünler</h4>
                                 </div>
+                                <div class="col">
+                                    @Html.DropDownList("fUrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Filtrele", new { @class = "form-control basic", id = "fUrunKategoriID" })
+                                </div>
+                                <div class="col">
+                                    @Html.DropDownList("fUrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Filtrele", new { @class = "form-control basic", id = "fUrunTuruID" })
+                                </div>
+                                <div class="col">
+                                    <input type="text" id="searchUrunAciklama" class="form-control" placeholder="Ürün Marka Ara">
+                                </div>
+                                <div class="col">
+                                    <input type="text" id="searchUrunAdi" class="form-control" placeholder="Ürün Adı Ara">
+                                </div>
+                                <br />
+                                <br />
                             </div>
                         </div>
                         <div class="widget-content widget-content-area">
@@ -119,7 +137,9 @@
                                         <tr>
                                             <th>Resim</th>
                                             <th>Ürün Türü</th>
+                                            <th>Ürün Kategori</th>
                                             <th>Ürün Kodu</th>
+                                            <th>Ürün Marka</th>
                                             <th>Ürün Adı</th>
                                             <th>Kritik Stok Miktarı</th>
                                             <th>Güncel Stok</th>
@@ -170,7 +190,9 @@
                     }
                 },
                 { data: 'urunTuru' },
+                { data: 'urunKategori' },
                 { data: 'urunKodu' },
+                { data: 'urunAciklama' },
                 { data: 'urunAdi' },
                 { data: 'kritikStokMiktari' },
                 { data: 'stokMiktari' },
@@ -203,19 +225,63 @@
                                 imgElement.attr('src', 'data:image/jpeg;base64,' + imageData);
                             },
                             error: function (xhr, status, error) {
-                                // swal.fire({
-                                //     title: 'Başarısız!',
-                                //     text: 'Resim Kaynağı Bulunamadı...',
-                                //     type: 'warning',
-                                //     confirmButtonText: 'Tamam'
-                                // });
                                 imgElement.attr('src', '/Resimler/vnnlogotrans.png');
                             }
                         });
                     }
                 });
+
+                $('#searchUrunAciklama').on('keyup', function () {
+                    var searchValue = normalizeTurkishCharacters(this.value);
+                    myDataTable.column(3).search(searchValue, true, false, true).draw();
+                });
+
+                $('#searchUrunAdi').on('keyup', function () {
+                    var searchValue = normalizeTurkishCharacters(this.value);
+                    myDataTable.column(4).search(searchValue, true, false, true).draw();
+                });
+
+                $('#fUrunTuruID').on('change', function () {
+                    var selectedText = $("#fUrunTuruID option:selected").text();
+                    if (selectedText !== "Ürün Türü Filtrele") {
+                        myDataTable.column(1).search(normalizeTurkishCharacters(selectedText), true, false, true).draw();
+                    }
+                    else {
+                        myDataTable.column(1).search('').draw();
+                    }
+                });
+
+                $('#fUrunKategoriID').on('change', function () {
+                    var selectedText = $("#fUrunKategoriID option:selected").text();
+
+                    if (selectedText !== "Kategori Filtrele") {
+                        myDataTable.column(2).search(normalizeTurkishCharacters(selectedText), true, false, true).draw();
+                    }
+                    else {
+                        myDataTable.column(2).search('').draw();
+                    }
+                });
             }
         });
+    }
+    function normalizeTurkishCharacters(text) {
+        if (!text) return text;
+
+        return text
+            .replace(/ç/g, 'c')
+            .replace(/Ç/g, 'C')
+            .replace(/ğ/g, 'g')
+            .replace(/Ğ/g, 'G')
+            .replace(/ı/g, 'i')
+            .replace(/İ/g, 'I')
+            .replace(/ö/g, 'o')
+            .replace(/Ö/g, 'O')
+            .replace(/ş/g, 's')
+            .replace(/Ş/g, 'S')
+            .replace(/ü/g, 'u')
+            .replace(/Ü/g, 'U')
+            .replace(/\s+/g, ' ')
+            .trim();
     }
     function loadImages(data) {
         data.forEach(function (item) {
@@ -277,6 +343,7 @@
         formData.append("UrunTuruID", $("#UrunTuruID").val());
         formData.append("UrunKodu", $("#UrunKodu").val());
         formData.append("UrunAdi", $("#UrunAdi").val());
+        formData.append("UrunAciklama", $("#UrunAciklama").val());
         formData.append("KritikStokMiktari", $("#KritikStokMiktari").val());
         formData.append("BirimID", $("#BirimID").val());
         formData.append("imagee", $("#imagee").val());
@@ -306,6 +373,7 @@
                     $("#UrunTuruID").val('');
                     $("#UrunKodu").val('');
                     $("#UrunAdi").val('');
+                    $("#UrunAciklama").val('');
                     $("#KritikStokMiktari").val('');
                     $("#BirimID").val('');
                     $("#imagee").val('');

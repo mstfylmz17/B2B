@@ -24,7 +24,7 @@ namespace VNNB2B.Controllers
             else
             {
 
-                List<SelectListItem> urungrubu = (from x in c.UrunTurlaris.Where(x => x.Durum == true).ToList()
+                List<SelectListItem> urungrubu = (from x in c.UrunTurlaris.Where(x => x.Durum == true).ToList().OrderBy(v => v.SiraNo)
                                                   select new SelectListItem
                                                   {
                                                       Text = x.UrunGrubuAdi.ToString(),
@@ -42,7 +42,7 @@ namespace VNNB2B.Controllers
 
                 ViewBag.birim = birim;
 
-                List<SelectListItem> kat = (from x in c.UrunKategoris.Where(x => x.Durum == true).ToList()
+                List<SelectListItem> kat = (from x in c.UrunKategoris.Where(x => x.Durum == true).ToList().OrderBy(v => v.SiraNo)
                                             select new SelectListItem
                                             {
                                                 Text = x.Adi.ToString(),
@@ -51,7 +51,7 @@ namespace VNNB2B.Controllers
 
                 ViewBag.kat = kat;
 
-                List<SelectListItem> ozellikler = (from x in c.UrunOzelikTurlaris.Where(x => x.Durum == true).ToList()
+                List<SelectListItem> ozellikler = (from x in c.UrunOzelikTurlaris.Where(x => x.Durum == true).ToList().OrderBy(v => v.OzellikAdi)
                                                    select new SelectListItem
                                                    {
                                                        Text = x.OzellikAdi.ToString(),
@@ -74,7 +74,7 @@ namespace VNNB2B.Controllers
             }
             else
             {
-                List<SelectListItem> urungrubu = (from v in c.UrunTurlaris.Where(v => v.Durum == true).ToList()
+                List<SelectListItem> urungrubu = (from v in c.UrunTurlaris.Where(v => v.Durum == true).ToList().OrderBy(v => v.SiraNo)
                                                   select new SelectListItem
                                                   {
                                                       Text = v.UrunGrubuAdi.ToString(),
@@ -92,7 +92,7 @@ namespace VNNB2B.Controllers
 
                 ViewBag.birim = birim;
 
-                List<SelectListItem> kat = (from v in c.UrunKategoris.Where(v => v.Durum == true).ToList()
+                List<SelectListItem> kat = (from v in c.UrunKategoris.Where(v => v.Durum == true).ToList().OrderBy(v => v.SiraNo)
                                             select new SelectListItem
                                             {
                                                 Text = v.Adi.ToString(),
@@ -121,7 +121,7 @@ namespace VNNB2B.Controllers
                 if (x.KritikStokMiktari != null) list.KritikStokMiktari = x.KritikStokMiktari.ToString(); else list.KritikStokMiktari = "Tanımlanmamış...";
                 if (x.BirimID != null) list.Birim = c.Birimlers.FirstOrDefault(v => v.ID == x.BirimID).BirimAdi.ToString(); else list.Birim = "Tanımlanmamış...";
                 list.UrunTuru = c.UrunTurlaris.FirstOrDefault(v => v.ID == x.UrunTuruID).UrunGrubuAdi.ToString();
-                list.UrunKategori = c.UrunKategoris.FirstOrDefault(v => v.ID == x.UrunKategoriID).Adi.ToString();
+                if (x.UrunKategoriID != null) list.UrunKategori = c.UrunKategoris.FirstOrDefault(v => v.ID == x.UrunKategoriID).Adi.ToString(); else list.UrunKategori = "Tanımlanmamış...";
                 list.StokMiktari = c.UrunStoklaris.Where(v => v.ID == x.ID && v.Durum == true && v.StokMiktari > 0).Sum(v => v.StokMiktari).ToString();
                 if (guncel < x.KritikStokMiktari) list.Durum = "Red";
                 if (x.Resim != null) list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(x.Resim);
@@ -154,6 +154,24 @@ namespace VNNB2B.Controllers
             }
             else
             {
+
+                List<SelectListItem> kat = (from x in c.UrunKategoris.Where(x => x.Durum == true).ToList().OrderBy(v => v.SiraNo)
+                                            select new SelectListItem
+                                            {
+                                                Text = x.Adi.ToString(),
+                                                Value = x.ID.ToString()
+                                            }).ToList();
+
+                ViewBag.kat = kat;
+
+                List<SelectListItem> urungrubu = (from x in c.UrunTurlaris.Where(x => x.Durum == true).ToList().OrderBy(v => v.SiraNo)
+                                                  select new SelectListItem
+                                                  {
+                                                      Text = x.UrunGrubuAdi.ToString(),
+                                                      Value = x.ID.ToString()
+                                                  }).ToList();
+
+                ViewBag.urungrubu = urungrubu;
                 ViewBag.hata = UrunHata.Icerik;
                 return View();
             }

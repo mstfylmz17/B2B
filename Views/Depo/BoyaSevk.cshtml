@@ -68,7 +68,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/DepoApi/DevamList',
+                url: '/DepoApi/DevamIcList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -107,6 +107,9 @@
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
             ordering: false,
         });
     }
