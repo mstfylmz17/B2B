@@ -40,10 +40,10 @@
                         <div class="widget-content widget-content-area">
                             <form id="UrunForm">
                                 <div class="form-group mb-3">
-                                    @Html.DropDownList("UrunID", (List<SelectListItem>)ViewBag.urunler, "Ürün Seçiniz...", new { @class = "form-control basic", id = "UrunID" })
+                                    @Html.DropDownList("UrunID", (List<SelectListItem>)ViewBag.urunler, "Ürün Seçiniz...", new { @class = "form-control select2", id = "UrunID" })
                                 </div>
                                 <div class="form-group mb-3">
-                                    @Html.DropDownList("Birim", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control basic", id = "Birim" })
+                                    @Html.DropDownList("Birim", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control select2", id = "Birim" })
                                 </div>
                                 <div class="form-group mb-3">
                                     <input type="text" class="form-control" id="Miktar" placeholder="Talep Edilen Miktarı">

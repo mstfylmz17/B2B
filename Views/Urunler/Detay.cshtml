@@ -24,8 +24,8 @@
     UrunHata.Icerik = "";
     int id = Convert.ToInt32(ViewBag.id);
 }
-
 <br />
+
 <div class="card">
     <div class="card-header border-transparent">
         <div class="row">
@@ -75,19 +75,23 @@
                                             <div class="row">
                                                 <div class="form-group col-6">
                                                     <label class="form-label">Ürün Kategori</label>
-                                                    @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Ürün Kategori : " + Model.UrunKategori, new { @class = "form-control basic", id = "UrunKategoriID" })
+                                                    @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Ürün Kategori : " + Model.UrunKategori, new { @class = "form-control select2", id = "UrunKategoriID" })
                                                 </div>
                                                 <div class="form-group col-6">
                                                     <label class="form-label">Ürün Türü</label>
-                                                    @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü : " + Model.UrunTuru, new { @class = "form-control basic", id = "UrunTuruID" })
+                                                    @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü : " + Model.UrunTuru, new { @class = "form-control select2", id = "UrunTuruID" })
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group col-6">
+                                                <div class="form-group col-4">
                                                     <label class="form-label">Ürün Kodu</label>
                                                     <input type="text" class="form-control" id="UrunKodutxt" value="@Model.UrunKodu">
                                                 </div>
-                                                <div class="form-group col-6">
+                                                <div class="form-group col-4">
+                                                    <label class="form-label">Ürün Marka</label>
+                                                    <input type="text" class="form-control" id="UrunMarkatxt" value="@Model.UrunAciklama">
+                                                </div>
+                                                <div class="form-group col-4">
                                                     <label class="form-label">Ürün Adı</label>
                                                     <input type="text" class="form-control" id="UrunAditxt" value="@Model.UrunAdi">
                                                 </div>
@@ -135,7 +139,7 @@
                                             <div class="row">
                                                 <div class="form-group col-6">
                                                     <label class="form-label">Birim</label>
-                                                    @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim : " + Model.Birim, new { @class = "form-control basic", id = "BirimID" })
+                                                    @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim : " + Model.Birim, new { @class = "form-control select2", id = "BirimID" })
                                                 </div>
                                                 <div class="form-group col-6">
                                                     <label class="form-label">Resim Değiştir</label>
@@ -326,6 +330,7 @@
         formData.append("PaketAdet", $("#PaketAdet").val());
         formData.append("FiyatTL", $("#FiyatTL").val());
         formData.append("FiyatUSD", $("#FiyatUSD").val());
+        formData.append("UrunMarka", $("#UrunMarkatxt").val());
         $.ajax({
             type: "POST",
             url: "/UrunApi/UrunDuzenle",
@@ -354,6 +359,7 @@
                 $("#PaketAdet").val('');
                 $("#FiyatTL").val('');
                 $("#FiyatUSD").val('');
+                $("#UrunMarkatxt").val('');
                 tabloGuncelle();
             }
         });

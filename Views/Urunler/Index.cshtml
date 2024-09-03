@@ -41,10 +41,10 @@
                         <div class="widget-content widget-content-area">
                             <form id="UrunForm">
                                 <label style="margin-top:10px; margin-bottom:-5px;">Ürün Kategori</label>
-                                @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Seçiniz...", new { @class = "form-control basic", id = "UrunKategoriID" })
+                                @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Seçiniz...", new { @class = "form-control select2", id = "UrunKategoriID" })
 
                                 <label style="margin-top:10px; margin-bottom:-5px;">Ürün Türü <span style="color:darkred">*</span></label>
-                                @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Seçiniz...", new { @class = "form-control basic", id = "UrunTuruID" })
+                                @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Seçiniz...", new { @class = "form-control select2", id = "UrunTuruID" })
 
                                 <label style="margin-top:10px; margin-bottom:-5px;">Ürün Kodu <span style="color:darkred">*</span></label>
                                 <input type="text" class="form-control" id="UrunKodu">
@@ -77,7 +77,7 @@
                                 <input type="number" class="form-control" id="KritikStokMiktari">
 
                                 <label style="margin-top:10px; margin-bottom:-5px;">Birim <span style="color:darkred">*</span></label>
-                                @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control basic", id = "BirimID" })
+                                @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control select2", id = "BirimID" })
 
                                 <label style="margin-top:10px; margin-bottom:-5px;">Resim Yükle</label>
                                 <div class="custom-file">

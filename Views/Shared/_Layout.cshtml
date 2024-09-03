@@ -7,9 +7,16 @@
     <title>VNN | SYS Paneli</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="/Tema/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="/Tema/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="/Tema/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="/Tema/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="/Tema/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <link rel="stylesheet" href="/Tema/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="/Tema/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/Tema/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="/Tema/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <link rel="stylesheet" href="/Tema/plugins/bs-stepper/css/bs-stepper.min.css">
+    <link rel="stylesheet" href="/Tema/plugins/dropzone/min/dropzone.min.css">
     <link rel="stylesheet" href="/Tema/dist/css/adminlte.min.css">
-
 </head>
 <body class="hold-transition dark-mode layout-top-nav">
     <div class="wrapper">
@@ -652,14 +659,24 @@
     </div>
     <script src="/Tema/plugins/jquery/jquery.min.js"></script>
     <script src="/Tema/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/Tema/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <script src="/Tema/dist/js/adminlte.js"></script>
-    <script src="/Tema/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="/Tema/plugins/raphael/raphael.min.js"></script>
-    <script src="/Tema/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="/Tema/plugins/jquery-mapael/maps/usa_states.min.js"></script>
-    <script src="/Tema/plugins/chart.js/Chart.min.js"></script>
-    <script src="/Tema/dist/js/pages/dashboard2.js"></script>
+    <script src="/Tema/plugins/select2/js/select2.full.min.js"></script>
+    <script src="/Tema/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+    <script src="/Tema/plugins/moment/moment.min.js"></script>
+    <script src="/Tema/plugins/inputmask/jquery.inputmask.min.js"></script>
+    <script src="/Tema/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="/Tema/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    <script src="/Tema/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="/Tema/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <script src="/Tema/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+    <script src="/Tema/plugins/dropzone/min/dropzone.min.js"></script>
     <script src="/Tema/dist/js/adminlte.min.js"></script>
+    <script>
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+        })
+    </script>
 </body>
 </html>

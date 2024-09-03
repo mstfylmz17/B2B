@@ -60,9 +60,9 @@
                                 <label style="margin-top:10px; margin-bottom:-5px;">Alışveriş Limiti <span style="color:darkred">*</span></label>
                                 <input type="text" class="form-control" id="AlisVerisLimiti" aria-describedby="emailHelp1">
                                 <label style="margin-top:10px; margin-bottom:-5px;">Para Birimi<span style="color:darkred">*</span></label>
-                                @Html.DropDownList("ParaBirimi", (List<SelectListItem>)ViewBag.parabirimleri, "Para Birimi Seçiniz... ", new { @class = "form-control basic", id = "ParaBirimi" })
+                                @Html.DropDownList("ParaBirimi", (List<SelectListItem>)ViewBag.parabirimleri, "Para Birimi Seçiniz... ", new { @class = "form-control select2", id = "ParaBirimi" })
                                 <label style="margin-top:10px; margin-bottom:-5px;">KDV Durumu<span style="color:darkred">*</span></label>
-                                @Html.DropDownList("KDVDurum", (List<SelectListItem>)ViewBag.kdvdurumlari, "KDV Durumu Seçiniz... ", new { @class = "form-control basic", id = "KDVDurum" })
+                                @Html.DropDownList("KDVDurum", (List<SelectListItem>)ViewBag.kdvdurumlari, "KDV Durumu Seçiniz... ", new { @class = "form-control select2", id = "KDVDurum" })
                                 <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Kaydet</button>
                             </form>
                         </div>
@@ -209,7 +209,6 @@
             KDVDurum: $("#KDVDurum").val(),
             KDVBilgi: $("#KDVDurum option:selected").text(),
         };
-
         console.log(formData);
         $.ajax({
             type: "POST",

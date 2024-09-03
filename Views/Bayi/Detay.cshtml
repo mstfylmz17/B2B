@@ -115,13 +115,13 @@
                                                 </div>
                                                 <div class="form-group mb-3 col-6">
                                                     <label>Para Birimi</label>
-                                                    @Html.DropDownList("ParaBirimi", (List<SelectListItem>)ViewBag.parabirimleri, "Para Birimi : " + Model.ParaBirimi, new { @class = "form-control basic", id = "ParaBirimi" })
+                                                    @Html.DropDownList("ParaBirimi", (List<SelectListItem>)ViewBag.parabirimleri, "Para Birimi : " + Model.ParaBirimi, new { @class = "form-control select2", id = "ParaBirimi" })
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group mb-3 col-6">
                                                     <label>KDV Durumu</label>
-                                                    @Html.DropDownList("KDVDurum", (List<SelectListItem>)ViewBag.kdvdurumlari, "KDV Durumu : " + Model.KDVDurumu, new { @class = "form-control basic", id = "KDVDurum" })
+                                                    @Html.DropDownList("KDVDurum", (List<SelectListItem>)ViewBag.kdvdurumlari, "KDV Durumu : " + Model.KDVDurumu, new { @class = "form-control select2", id = "KDVDurum" })
                                                 </div>
                                                 <div class="form-group mb-3 col-6" style="margin-top:15px;">
                                                     <button type="button" onclick="AddForm()" class="btn btn-primary mt-3">Güncelle</button>
