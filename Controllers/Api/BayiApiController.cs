@@ -121,7 +121,7 @@ namespace VNNB2B.Controllers.Api
                 if (d.ParaBirimi != null) de.ParaBirimi = d.ParaBirimi;
                 if (d.KDVDurum != null) de.KDVDurum = d.KDVDurum;
                 if (d.KDVBilgi != null) de.KDVBilgi = d.KDVBilgi;
-                 c.SaveChanges();
+                c.SaveChanges();
                 result = new { status = "success", message = "Güncelleme Başarılı..." };
             }
             else

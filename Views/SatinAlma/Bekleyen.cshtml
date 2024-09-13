@@ -1,0 +1,185 @@
+﻿@using VNNB2B.Models.Hata
+@{
+    ViewData["Title"] = "Bekleyen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    SatinAlmaHata.Icerik = "";
+}
+
+<br />
+<div class="col-12">
+    <div class="card">
+        <div class="card-header border-transparent">
+            <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-header">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <h4>Onay Bekleyen Satın Almalar</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content widget-content-area">
+                        <div class="table-responsive" style="font-size:14px;">
+                            <table id="myTable" class="table table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Tarih</th>
+                                        <th>Satın Alma No</th>
+                                        <th>Tedarikçi</th>
+                                        <th>Toplam Miktar</th>
+                                        <th>Toplam Tutar</th>
+                                        <th>Belgeyi Oluşturan</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Lütfen Genel Müdür Onaylı Evrağı Buraya Yükleyiniz...</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/SatinAlmaTalepApi/SatinAlmaOnayla" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input id="SiparisNo" type="hidden" name="id" />
+                    <div class="form-group mb-3">
+                        <label>Açıklama</label>
+                        <input type="text" class="form-control" id="OnayAciklama" name="OnayAciklama">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Evrak Yükleme</label>
+                        <input type="file" class="form-control-file" id="imagee" name="imagee">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" style="float:right;">Onayla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var satirid;
+    var myDataTable;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#myTable', {
+            ajax: {
+                url: '/SatinAlmaTalepApi/SatinAlmaBekleyenList',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                { data: 'tarih' },
+                { data: 'satinAlmaNo' },
+                { data: 'tedarikciID' },
+                { data: 'toplamMiktar' },
+                { data: 'toplamTutar' },
+                { data: 'kullaniciID' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="/SatinAlma/Detay/' + data + '" class="btn btn-info btn-sm" style="margin-right:3px;"><i class="fas fa-eye"></i> </a>' + '<button type="button" onclick="onayla(' + data + ')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-check"></i></button>' + ' <button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>'
+                    }
+                }
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            paging: false,
+            scrollY: '120vh',
+            scrollCollapse: true,
+            ordering: false,
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        initializeDataTable();
+    })
+    function sil(element) {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Kayıt Silinecek!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                submitForm(element);
+            }
+        })
+    }
+    function submitForm(element) {
+        $.ajax({
+            type: "POST",
+            url: "/SatinAlmaTalepApi/SatinAlmaSil/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
+    function onayla(element) {
+        satir = element;
+        $("#SiparisNo").val(element);
+    }
+</script>

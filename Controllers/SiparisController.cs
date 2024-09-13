@@ -1,9 +1,9 @@
 ﻿using DataAccessLayer.Concrate;
+using EntityLayer.Concrate;
 using EntityLayer.Dto;
 using FastReport.Export.PdfSimple;
 using FastReport.Web;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using VNNB2B.Models.Hata;
 
 namespace VNNB2B.Controllers
@@ -18,6 +18,20 @@ namespace VNNB2B.Controllers
             c = context;
         }
         public IActionResult Index()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult Kaydedilmemis()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             if (Cerez == null && Cerez == "")
@@ -61,7 +75,7 @@ namespace VNNB2B.Controllers
                 if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";
                 string kdvbilgi = "";
                 if (bayi.KDVBilgi != null) kdvbilgi = bayi.KDVBilgi.ToString();
-                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString() + kdvbilgi;
+                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString() + " (" + kdvbilgi + ")";
                 ViewBag.id = id;
                 ViewBag.hata = SiparisHata.Icerik;
                 return View();
@@ -83,7 +97,7 @@ namespace VNNB2B.Controllers
                 if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";
                 string kdvbilgi = "";
                 if (bayi.KDVBilgi != null) kdvbilgi = bayi.KDVBilgi.ToString();
-                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString() + kdvbilgi;
+                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString() + " (" + kdvbilgi + ")";
                 ViewBag.id = id;
                 ViewBag.hata = SiparisHata.Icerik;
                 return View();
@@ -141,6 +155,35 @@ namespace VNNB2B.Controllers
             }
             else
             {
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult Teslimatlar()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult TeslimatDetay(int id)
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.id = id;
                 ViewBag.hata = SiparisHata.Icerik;
                 return View();
             }
@@ -264,6 +307,81 @@ namespace VNNB2B.Controllers
                     pdfArray = Convert.ToBase64String(stream.ToArray()),
                     fileName = "siparis.pdf"
                 });
+            }
+        }
+
+        //SYS Sipariş Oluşturma
+        public IActionResult Yeni()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
+        [HttpPost]
+        public IActionResult YeniSiparis(int id)
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                var bayi = c.Bayilers.FirstOrDefault(v => v.ID == id);
+                Siparis s = new Siparis();
+                s.BayiID = id;
+                s.SiparisBayiAciklama = "";
+                s.SiparisTarihi = DateTime.Now;
+                s.ToplamAdet = 0;
+                s.ToplamTeslimEdilen = 0;
+                s.ToplamTutar = 0;
+                s.IskontoOran = 0;
+                s.IstoktoToplam = 0;
+                s.AraToplam = 0;
+                s.KDVToplam = 0;
+                s.OnayDurum = false;
+                s.OnayAciklama = "";
+                s.Durum = false;
+                s.SiparisDurum = "Sipariş Onay Bekliyor...";
+                s.SiparisNo = bayi.BayiKodu + " " + (c.Siparis.Count() + 1).ToString();
+                s.BayiOnay = true;
+                c.Siparis.Add(s);
+                c.SaveChanges();
+                var sonsip = c.Siparis.OrderByDescending(v => v.ID).FirstOrDefault(v =>v.BayiID == id);
+                SiparisHata.Icerik = "Sipariş Kaydı Oluşturuldu...";
+                return Json(new { status = "success", message = "Sipariş Kaydı Oluşturuldu", redirectUrl = Url.Action("YeniDetay", new { id = sonsip.ID }) });
+                //return RedirectToAction("YeniDetay", new { id = sonsip.ID });
+            }
+        }
+        public IActionResult YeniDetay(int id)
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
+                int bayiid = Convert.ToInt32(sip.BayiID);
+                var bayi = c.Bayilers.FirstOrDefault(b => b.ID == bayiid);
+                if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";
+                string kdvbilgi = "";
+                if (bayi.KDVBilgi != null) kdvbilgi = bayi.KDVBilgi.ToString();
+                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString() + " (" + kdvbilgi + ")";
+                ViewBag.id = id;
+                ViewBag.hata = SiparisHata.Icerik;
+                return View();
             }
         }
     }

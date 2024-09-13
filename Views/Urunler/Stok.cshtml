@@ -115,53 +115,68 @@
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
-            paging: false,
+            paging: true,
+            pageLength: 25,
             scrollY: '120vh',
             scrollCollapse: true,
             ordering: false,
             initComplete: function (settings, json) {
-                $(document).on('mouseenter', 'td img.img-thumbnail', function () {
-                    var imgElement = $(this);
-                    var id = imgElement.attr('id').split('_')[1];
+                loadImages();
+            }
+        });
 
-                    if (imgElement.attr('src') === '') {
-                        $.ajax({
-                            url: '/UrunApi/GetResim',
-                            method: 'POST',
-                            data: { id: id },
-                            success: function (imageData) {
-                                imgElement.attr('src', 'data:image/jpeg;base64,' + imageData);
-                            },
-                            error: function (xhr, status, error) {
-                                imgElement.attr('src', '/Resimler/vnnlogotrans.png');
-                            }
-                        });
-                    }
-                });
+        myDataTable.on('draw', function () {
+            loadImages();
+        });
 
-                $('#searchUrunAciklama').on('keyup', function () {
-                    var searchValue = normalizeTurkishCharacters(this.value);
-                    myDataTable.column(3).search(searchValue, true, false, true).draw();
-                });
+        $('#searchUrunAciklama').on('keyup', function () {
+            var searchValue = this.value;
+            myDataTable.column(4).search(searchValue).draw();
+            loadImages();
+        });
 
-                $('#searchUrunAdi').on('keyup', function () {
-                    var searchValue = normalizeTurkishCharacters(this.value);
-                    myDataTable.column(4).search(searchValue, true, false, true).draw();
-                });
+        $('#searchUrunAdi').on('keyup', function () {
+            var searchValue = this.value;
+            myDataTable.column(5).search(searchValue).draw();
+            loadImages();
+        });
 
-                $('#fUrunTuruID').on('change', function () {
-                    var selectedText = $("#fUrunTuruID option:selected").text();
+        $('#fUrunTuruID').on('change', function () {
+            var selectedText = $("#fUrunTuruID option:selected").text();
+            if (selectedText !== "Ürün Türü Filtrele") {
+                myDataTable.column(1).search(selectedText).draw();
+                loadImages();
+            } else {
+                myDataTable.column(1).search('').draw();
+            }
+        });
 
-                    if (selectedText !== "Ürün Türü Filtrele") {
-                        myDataTable.column(1).search(selectedText, true, false, true).draw();
-                    }
-                });
+        $('#fUrunKategoriID').on('change', function () {
+            var selectedText = $("#fUrunKategoriID option:selected").text();
+            if (selectedText !== "Bayi Paneli Kategori Filtrele") {
+                myDataTable.column(2).search(selectedText).draw();
+                loadImages();
+            } else {
+                myDataTable.column(2).search('').draw();
+            }
+        });
+    }
+    function loadImages() {
+        $('td img.img-thumbnail').each(function () {
+            var imgElement = $(this);
+            var id = imgElement.attr('id').split('_')[1];
 
-                $('#fUrunKategoriID').on('change', function () {
-                    var selectedText = $("#fUrunKategoriID option:selected").text();
-
-                    if (selectedText !== "Ürün Kategori Filtrele") {
-                        myDataTable.column(2).search(selectedText, true, false, true).draw();
+            if (imgElement.attr('src') === '') {
+                $.ajax({
+                    url: '/UrunApi/GetResim',
+                    method: 'POST',
+                    data: { id: id },
+                    xhrFields: {
+                        responseType: 'blob' // Blob tipi ile yanıt alın
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        imgElement.attr('src', url); // Blob URL'yi kullanarak resmi yükle
                     }
                 });
             }
@@ -180,21 +195,6 @@
             .replace(/Ş/g, 'S')
             .replace(/ü/g, 'u')
             .replace(/Ü/g, 'U');
-    }
-    function loadImages(data) {
-        data.forEach(function (item) {
-            $.ajax({
-                url: '/UrunApi/GetResim',
-                method: 'POST',
-                data: { id: item.id },
-                success: function (imageData) {
-                    $('#img_' + item.id).attr('src', 'data:image/jpeg;base64,' + imageData);
-                },
-                error: function (xhr, status, error) {
-                    console.log('Resim yüklenirken hata oluştu: ', error);
-                }
-            });
-        });
     }
     function tabloGuncelle() {
         if (myDataTable) {

@@ -161,8 +161,8 @@
         if (myDataTable) {
             myDataTable.destroy();
         }
-        initializeDataTable();
         sepetsayigetir();
+        initializeDataTable();
     }
     $(document).ready(function () {
         initializeDataTable();
@@ -259,8 +259,6 @@
                 OzellikAdi: ozellikDeger,
             });
         });
-
-        console.log(formDataa);
 
         // POST isteği gönder
         $.ajax({

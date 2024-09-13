@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "YH";
+    ViewData["Title"] = "Yeni";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -22,7 +22,9 @@
     }
     SiparisHata.Icerik = "";
 }
+
 <br />
+
 <div class="card">
     <div class="card-header border-transparent">
         <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -30,22 +32,20 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Yüklemeye Hazır Siparişler</h4>
+                            <h4>Bayi Seçimi</h4>
                         </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive">
-                        <table id="myTable" class="table table-hover" style="width:100%">
+                        <table id="myTable" class="table table-hover" style="width:100%; font-size:14px;">
                             <thead>
                                 <tr>
-                                    <th>Sipariş No</th>
-                                    <th>Bayi Adı</th>
-                                    <th>Ürün Adı</th>
-                                    <th>Sipariş Tarihi</th>
-                                    <th>Sipariş Miktarı</th>
-                                    <th>Kalan Miktar</th>
-                                    <th>Renk / Deri / Notlar</th>
+                                    <th>Bayi Kodu</th>
+                                    <th>Ünvan</th>
+                                    <th>Firma Adı</th>
+                                    <th>Telefon</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -62,11 +62,12 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
+    var bayiid;
     var myDataTable;
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/SiparisApi/YHList',
+                url: '/BayiApi/BayiList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -82,21 +83,29 @@
                 }
             },
             columns: [
-                { data: 'siparisID' },
-                { data: 'bayiID' },
-                { data: 'urunID' },
-                { data: 'siparisTarihi' },
-                { data: 'miktar' },
-                { data: 'teslimAdet' },
-                { data: 'aciklama' },
+                { data: 'bayiKodu', width: '15%' },
+                { data: 'unvan', width: '40%' },
+                { data: 'kullaniciAdi', width: '15%' },
+                { data: 'telefon', width: '15%' },
+                {
+                    data: 'id',
+                    width: '15%',
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" onclick="BayiSec(' + data + ')" class="btn btn-success mb-2 mr-2 btn-rounded"><i class="fas fa-check-circle"></i></a>'
+
+                    }
+                }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
             paging: false,
-            scrollY: '73vh',
+            scrollY: '90vh',
             scrollCollapse: true,
             ordering: false,
+            rowCallback: function (row, data, index) {
+                $(row).attr('data-id', data.id);
+            },
         });
     }
     function tabloGuncelle() {
@@ -107,5 +116,40 @@
     }
     $(document).ready(function () {
         initializeDataTable();
-    })
+    });
+    function BayiSec(element) {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Seçilen Bayi İçin Sipariş Kaydı Oluşturulacak!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Oluştur!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                submitForm(element);
+            }
+        })
+    }
+    function submitForm(element) {
+        $.ajax({
+            type: "POST",
+            url: "/Siparis/YeniSiparis/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                }).then(function () {
+                    if (result.redirectUrl) {
+                        window.location.href = result.redirectUrl; 
+                    }
+                });
+            }
+        });
+    }
 </script>

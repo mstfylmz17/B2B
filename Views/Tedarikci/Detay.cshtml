@@ -63,7 +63,7 @@
                                     <input name="ID" value="@id" id="ID" type="hidden" />
                                     <div class="row">
                                         <div class="form-group mb-3 col-6">
-                                            <label>Ünvan</label>
+                                            <label>Fatura Ünvanı</label>
                                             <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" value="@Model.Unvan">
                                         </div>
                                         <div class="form-group mb-3 col-6">
@@ -253,6 +253,9 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
+                if (result.status == "success") {
+                    window.history.back();
+                }
                 $("#Unvan").val('');
                 $("#VergiDairesi").val('');
                 $("#VergiNo").val('');

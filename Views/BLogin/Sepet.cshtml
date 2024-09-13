@@ -64,17 +64,11 @@
 </style>
 
 <div class="content-header">
-    <div class="container">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">
-                    <small>
-                        Sepet / Shopping Cart
-                    </small>
-                </h1>
-            </div>
-        </div>
-    </div>
+    <h1 class="m-0">
+        <small>
+            Sepet / Shopping Cart
+        </small>
+    </h1>
 </div>
 
 <div class="col-lg-12">
@@ -155,7 +149,30 @@
                 </div>
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-6"></div>
+                        <div class="col-6">
+                            <div class="card-body">
+                                <table class="table-tab">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ ADEDİ</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamadet"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ PARÇA ADEDİ</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamparcaadet"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ M3</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamm3"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ KG</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamkg"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                         <div class="col-6">
                             <div class="card-body">
                                 <table class="table-tab">
@@ -280,7 +297,7 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<div class="row"><div class="col-6"><button class="btn btn-info btn-xs" style="margin-right:2px; float:left;" type="button" onclick="SatirNo(' + data + ')"><i class="fas fa-edit"></i></a></div>' + '<div class="col-6"><button type="button" onclick="sil(' + data + ')" style="float:right;" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button></div></div>'
+                        return '<cnter><button class="btn btn-info btn-xs" style="margin-right:2px; float:center;" type="button" onclick="SatirNo(' + data + ')"> Düzenle</a>' + '<button type="button" onclick="sil(' + data + ')" style="float:center;" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button></center>'
                     }
                 }
             ],
@@ -405,17 +422,24 @@
             url: "/SiparisApi/SepetIcerik",
             data: { id: @cerez },
             success: function (x) {
-                console.log(x);
                 $("#txttoplamadet").text(x.toplamAdet);
                 $("#txtaratoplam").text(x.araToplam);
                 $("#txtgeneltoplam").text(x.toplamTutar);
                 $("#txtiskontotoplam").text(x.istoktoToplam);
-                $("#txtindirimlifiyat").text(x.indirimlifiyat);
                 $("#txtkdvtoplam").text(x.kdvToplam);
                 $("#txtsiparisno").text(x.siparisNo);
                 $("#txtsiparistarihi").text(x.siparisTarihi);
                 $("#txtsiparisdurum").text(x.siparisDurum);
                 $("#txtkullanici").text(x.kullanici);
+                $("#txtindirimlifiyat").text(x.indirimlifiyat);
+                $("#txtunvan").text(x.unvan);
+                $("#txtfirmaadi").text(x.firmaAdi);
+                $("#txtyetkili").text(x.yetkili);
+                $("#txttelefon").text(x.telefon);
+                $("#txtadres").text(x.adres);
+                $("#txttoplamparcaadet").text(x.toplamparcaadet);
+                $("#txttoplamm3").text(x.toplamm3);
+                $("#txttoplamkg").text(x.toplamkg);
             }
         });
     }

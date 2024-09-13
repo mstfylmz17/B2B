@@ -9,18 +9,18 @@
 @{
     string mesaj = ViewBag.hata;
     var hasError = !string.IsNullOrEmpty(ViewBag.hata);
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (hasError)
     {
-            <script>
-                $(document).ready(function () {
-                    Swal.fire({
-                        icon: 'info',
-                        title: '@mesaj'
-                    });
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
                 });
-            </script>
+            });
+        </script>
     }
     BayiHata.Icerik = "";
     int id = Convert.ToInt32(ViewBag.id);
@@ -70,7 +70,7 @@
                                             <input name="ID" value="@id" id="ID" type="hidden" />
                                             <div class="row">
                                                 <div class="form-group mb-3 col-6">
-                                                    <label>Ünvan</label>
+                                                    <label>Fatura Ünvanı</label>
                                                     <input type="text" class="form-control" id="Unvan" aria-describedby="emailHelp1" value="@Model.Unvan">
                                                 </div>
                                                 <div class="form-group mb-3 col-6">
@@ -307,6 +307,9 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
+                if (result.status == "success") {
+                    window.history.back();
+                }
                 $("#Unvan").val('');
                 $("#KullaniciAdi").val('');
                 $("#Sifre").val('');

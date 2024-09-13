@@ -1,0 +1,124 @@
+﻿@using VNNB2B.Models.Hata
+@{
+    ViewData["Title"] = "Devam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    SatinAlmaHata.Icerik = "";
+}
+
+<br />
+<div class="col-12">
+    <div class="card">
+        <div class="card-header border-transparent">
+            <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-header">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <h4>Devam Eden Satın Almalar</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content widget-content-area">
+                        <div class="table-responsive" style="font-size:14px;">
+                            <table id="myTable" class="table table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Satın Alma Tarihi</th>
+                                        <th>Onay Tarihi</th>
+                                        <th>Satın Alma No</th>
+                                        <th>Tedarikçi</th>
+                                        <th>Toplam Miktar</th>
+                                        <th>Toplam Tutar</th>
+                                        <th>Belgeyi Oluşturan</th>
+                                        <th>Belgeyi Onaylayan</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    var satirid;
+    var myDataTable;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#myTable', {
+            ajax: {
+                url: '/SatinAlmaTalepApi/SatinAlmaDevamList',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                { data: 'tarih' },
+                { data: 'onayTarihi' },
+                { data: 'satinAlmaNo' },
+                { data: 'tedarikciID' },
+                { data: 'toplamMiktar' },
+                { data: 'toplamTutar' },
+                { data: 'kullaniciID' },
+                { data: 'onaylayanID' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="/SatinAlma/DevamDetay/' + data + '" class="btn btn-info btn-sm" style="margin-right:3px;"><i class="fas fa-eye"></i> </a>'
+                    }
+                }
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            paging: false,
+            scrollY: '120vh',
+            scrollCollapse: true,
+            ordering: false,
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        initializeDataTable();
+    })
+</script>

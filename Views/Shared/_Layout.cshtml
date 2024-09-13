@@ -20,7 +20,7 @@
 </head>
 <body class="hold-transition dark-mode layout-top-nav">
     <div class="wrapper">
-        <nav class="main-header navbar navbar-expand-md navbar-dark navbar-dark">
+        <nav class="main-header navbar navbar-expand-md navbar-dark">
             <div class="container" style="margin-left:0px;">
                 <a href="#" class="navbar-brand">
                     <img src="/Resimler/vnnlogotrans.png" width="190" height="60">
@@ -78,10 +78,18 @@
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Sipariş</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/Siparis/Yeni" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:green"></i>
                                             Yeni Sipariş Aç
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Siparis/Kaydedilmemis" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Kayıt Bekleyen Siparişler
                                         </p>
                                     </a>
                                 </li>
@@ -142,6 +150,14 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="/Siparis/Teslimatlar" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:black"></i>
+                                            Teslimat Belgeleri
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="/Urunler/Stok" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:black"></i>
@@ -179,7 +195,15 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/SatinAlma/Bekleyen" class="nav-link">
+                                        <p>
+                                            <i class="fa fa-circle nav-icon" style="color:green"></i>
+                                            Onay Bekleyen Satın Almalar
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/SatinAlma/Devam" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:black"></i>
                                             Devam Eden Satın Almalar
@@ -187,7 +211,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/SatinAlma/Kısmi" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:black"></i>
                                             Kısmi Kabul Satın Almalar
@@ -195,7 +219,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/SatinAlma/MalKabul" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:green"></i>
                                             Mal Kabul Oluştur
@@ -203,7 +227,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/SatinAlma/Sayim" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:darkred"></i>
                                             Sayım Yap
@@ -219,7 +243,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/SatinAlma/Gecmis" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:black"></i>
                                             Geçmiş Satın Almalar
@@ -301,7 +325,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/Depo/Kısmi" class="nav-link">
+                                    <a href="/Depo/Kismi" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:black"></i>
                                             Kısmi Sevk Edilen İş Emirleri
@@ -639,7 +663,6 @@
                             </a>
                         </li>
                     </ul>
-
                 </div>
 
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">

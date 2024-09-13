@@ -27,7 +27,7 @@
 
 <div class="row">
     <div class="col-3">
-        <div class="card">
+        <div class="card" style="background-color:#94723C; color:black;">
             <div class="card-header border-transparent">
                 <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">
@@ -40,9 +40,6 @@
                         </div>
                         <div class="widget-content widget-content-area">
                             <form id="UrunForm">
-                                <label style="margin-top:10px; margin-bottom:-5px;">Ürün Kategori</label>
-                                @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Seçiniz...", new { @class = "form-control select2", id = "UrunKategoriID" })
-
                                 <label style="margin-top:10px; margin-bottom:-5px;">Ürün Türü <span style="color:darkred">*</span></label>
                                 @Html.DropDownList("UrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Seçiniz...", new { @class = "form-control select2", id = "UrunTuruID" })
 
@@ -54,6 +51,21 @@
 
                                 <label style="margin-top:10px; margin-bottom:-5px;">Ürün Marka <span style="color:darkred">*</span></label>
                                 <input type="text" class="form-control" id="UrunAciklama">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Kritik Stok Miktarı <span style="color:darkred">*</span></label>
+                                <input type="number" class="form-control" id="KritikStokMiktari">
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Birim <span style="color:darkred">*</span></label>
+                                @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control select2", id = "BirimID" })
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Resim Yükle</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="imagee" name="imagee">
+                                    <label class="custom-file-label" for="customFile">Resim Seç</label>
+                                </div>
+
+                                <label style="margin-top:10px; margin-bottom:-5px;">Bayi Paneli Kategori</label>
+                                @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Bayi Paneli Kategori Seçiniz...", new { @class = "form-control select2", id = "UrunKategoriID" })
 
                                 <label style="margin-top:10px; margin-bottom:-5px;">Birim KG</label>
                                 <input type="text" class="form-control" id="BirimKG">
@@ -73,17 +85,7 @@
                                 <label style="margin-top:10px; margin-bottom:-5px;" class="form-label">USD Fiyat</label>
                                 <input type="text" class="form-control" id="FiyatUSD">
 
-                                <label style="margin-top:10px; margin-bottom:-5px;">Kritik Stok Miktarı <span style="color:darkred">*</span></label>
-                                <input type="number" class="form-control" id="KritikStokMiktari">
-
-                                <label style="margin-top:10px; margin-bottom:-5px;">Birim <span style="color:darkred">*</span></label>
-                                @Html.DropDownList("BirimID", (List<SelectListItem>)ViewBag.birim, "Birim Seçiniz...", new { @class = "form-control select2", id = "BirimID" })
-
-                                <label style="margin-top:10px; margin-bottom:-5px;">Resim Yükle</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="imagee" name="imagee">
-                                    <label class="custom-file-label" for="customFile">Resim Seç</label>
-                                </div><div class="form-group">
+                                <div class="form-group">
                                     <label style="margin-top:10px; margin-bottom:-5px;">Ürün Özellikleri:</label>
                                     @foreach (var ozellik in ViewBag.ozellikler)
                                     {
@@ -115,7 +117,7 @@
                                     <h4>Ürünler</h4>
                                 </div>
                                 <div class="col">
-                                    @Html.DropDownList("fUrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Kategori Filtrele", new { @class = "form-control basic", id = "fUrunKategoriID" })
+                                    @Html.DropDownList("fUrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Bayi Paneli Kategori Filtrele", new { @class = "form-control basic", id = "fUrunKategoriID" })
                                 </div>
                                 <div class="col">
                                     @Html.DropDownList("fUrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Filtrele", new { @class = "form-control basic", id = "fUrunTuruID" })
@@ -131,7 +133,7 @@
                             </div>
                         </div>
                         <div class="widget-content widget-content-area">
-                            <div class="table-responsive" style="font-size:12px;">
+                            <div class="table-responsive" style="font-size:14px;">
                                 <table id="myTable" class="table table-hover" style="width:100%">
                                     <thead>
                                         <tr>
@@ -165,6 +167,7 @@
     var secilen;
     var myDataTable;
     function initializeDataTable() {
+
         myDataTable = new DataTable('#myTable', {
             ajax: {
                 url: '/UrunApi/UrunList',
@@ -199,100 +202,78 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="/Urunler/Detay/' + data + '" class="btn btn-primary mb-2 mr-2 btn-rounded"><i class="fas fa-eye"></i></a>' +
-                            '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded"><i class="fas fa-trash"></i></button>';
+                        return '<div class="row"><div class="col-6"><a href="/Urunler/Detay/' + data + '" class="btn btn-primary mb-2 mr-2 btn-rounded btn-sm"><i class="fas fa-eye"></i></a></div>' + '<div class="col-6"><a href="#" onclick="sil(' + data + ')" class="btn btn-danger mb-2 mr-2 btn-rounded btn-sm"><i class="fas fa-trash"></i></a></div></div>';
                     }
                 }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
-            paging: false,
+            paging: true,
+            pageLength: 25,
             scrollY: '120vh',
             scrollCollapse: true,
             ordering: false,
             initComplete: function (settings, json) {
-                $(document).on('mouseenter', 'td img.img-thumbnail', function () {
-                    var imgElement = $(this);
-                    var id = imgElement.attr('id').split('_')[1];
+                loadImages();
+            }
+        });
 
-                    if (imgElement.attr('src') === '') {
-                        $.ajax({
-                            url: '/UrunApi/GetResim',
-                            method: 'POST',
-                            data: { id: id },
-                            success: function (imageData) {
-                                imgElement.attr('src', 'data:image/jpeg;base64,' + imageData);
-                            },
-                            error: function (xhr, status, error) {
-                                imgElement.attr('src', '/Resimler/vnnlogotrans.png');
-                            }
-                        });
-                    }
-                });
+        myDataTable.on('draw', function () {
+            loadImages();
+        });
 
-                $('#searchUrunAciklama').on('keyup', function () {
-                    var searchValue = normalizeTurkishCharacters(this.value);
-                    myDataTable.column(3).search(searchValue, true, false, true).draw();
-                });
+        $('#searchUrunAciklama').on('keyup', function () {
+            var searchValue = this.value;
+            myDataTable.column(4).search(searchValue).draw();
+            loadImages();
+        });
 
-                $('#searchUrunAdi').on('keyup', function () {
-                    var searchValue = normalizeTurkishCharacters(this.value);
-                    myDataTable.column(4).search(searchValue, true, false, true).draw();
-                });
+        $('#searchUrunAdi').on('keyup', function () {
+            var searchValue = this.value;
+            myDataTable.column(5).search(searchValue).draw();
+            loadImages();
+        });
 
-                $('#fUrunTuruID').on('change', function () {
-                    var selectedText = $("#fUrunTuruID option:selected").text();
-                    if (selectedText !== "Ürün Türü Filtrele") {
-                        myDataTable.column(1).search(normalizeTurkishCharacters(selectedText), true, false, true).draw();
-                    }
-                    else {
-                        myDataTable.column(1).search('').draw();
-                    }
-                });
+        $('#fUrunTuruID').on('change', function () {
+            var selectedText = $("#fUrunTuruID option:selected").text();
+            if (selectedText !== "Ürün Türü Filtrele") {
+                myDataTable.column(1).search(selectedText).draw();
+                loadImages();
+            } else {
+                myDataTable.column(1).search('').draw();
+            }
+        });
 
-                $('#fUrunKategoriID').on('change', function () {
-                    var selectedText = $("#fUrunKategoriID option:selected").text();
-
-                    if (selectedText !== "Kategori Filtrele") {
-                        myDataTable.column(2).search(normalizeTurkishCharacters(selectedText), true, false, true).draw();
-                    }
-                    else {
-                        myDataTable.column(2).search('').draw();
-                    }
-                });
+        $('#fUrunKategoriID').on('change', function () {
+            var selectedText = $("#fUrunKategoriID option:selected").text();
+            if (selectedText !== "Bayi Paneli Kategori Filtrele") {
+                myDataTable.column(2).search(selectedText).draw();
+                loadImages();
+            } else {
+                myDataTable.column(2).search('').draw();
             }
         });
     }
-    function normalizeTurkishCharacters(text) {
-        if (!text) return text;
+    function loadImages() {
+        $('td img.img-thumbnail').each(function () {
+            var imgElement = $(this);
+            var id = imgElement.attr('id').split('_')[1];
 
-        return text
-            .replace(/ç/g, 'c')
-            .replace(/Ç/g, 'C')
-            .replace(/ğ/g, 'g')
-            .replace(/Ğ/g, 'G')
-            .replace(/ı/g, 'i')
-            .replace(/İ/g, 'I')
-            .replace(/ö/g, 'o')
-            .replace(/Ö/g, 'O')
-            .replace(/ş/g, 's')
-            .replace(/Ş/g, 'S')
-            .replace(/ü/g, 'u')
-            .replace(/Ü/g, 'U')
-            .replace(/\s+/g, ' ')
-            .trim();
-    }
-    function loadImages(data) {
-        data.forEach(function (item) {
-            $.ajax({
-                url: '/UrunApi/GetResim',
-                method: 'POST',
-                data: { id: item.id },
-                success: function (imageData) {
-                    $('#img_' + item.id).attr('src', 'data:image/jpeg;base64,' + imageData);
-                }
-            });
+            if (imgElement.attr('src') === '') {
+                $.ajax({
+                    url: '/UrunApi/GetResim',
+                    method: 'POST',
+                    data: { id: id },
+                    xhrFields: {
+                        responseType: 'blob' // Blob tipi ile yanıt alın
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        imgElement.attr('src', url); // Blob URL'yi kullanarak resmi yükle
+                    }
+                });
+            }
         });
     }
     function tabloGuncelle() {

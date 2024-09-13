@@ -24,7 +24,7 @@
 }
 <br />
 @*Sipariş*@
-<div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
+<div class="row" id="siparis" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
             <div class="inner">
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="col-lg-12 col-12">
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white;">
+        <a href="/Siparis/Yeni" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white;">
             YENİ SİPARİŞ AÇ
         </a>
         <a href="/Siparis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
@@ -54,7 +54,8 @@
         </a>
         <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> TEKLİF HAZIRLA</a>
         <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> CHECK LİST HAZIRLA</a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> TESLİMAT OLUŞTUR</a>
+        <a href="/Siparis/Teslimat" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> TESLİMAT OLUŞTUR</a>
+        <a href="/Siparis/Teslimatlar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> TESLİMAT BELGELERİ</a>
         <a href="/Urunler/Stok" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> STOK DURUMU</a>
         <a href="/Siparis/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ SİPARİŞLER
@@ -67,6 +68,7 @@
                 <div class="small-box bg-info">
                     <div class="inner">
                         <h3>0</h3>
+                        <h5>14.000.000,00 ₺</h5>
                         <p>GÜNLÜK SİPARİŞLER</p>
                     </div>
                     <div class="icon">
@@ -79,6 +81,7 @@
                 <div class="small-box bg-success">
                     <div class="inner">
                         <h3>0</h3>
+                        <h5>14.000.000,00 ₺</h5>
                         <p>HAFTALIK SİPARİŞLER</p>
                     </div>
                     <div class="icon">
@@ -91,6 +94,7 @@
                 <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>0</h3>
+                        <h5>14.000.000,00 ₺</h5>
                         <p>AYLIK SİPARİŞLER</p>
                     </div>
                     <div class="icon">
@@ -103,6 +107,7 @@
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3>0</h3>
+                        <h5>14.000.000,00 ₺</h5>
                         <p>YILLIK SİPARİŞLER</p>
                     </div>
                     <div class="icon">
@@ -115,7 +120,7 @@
     </div>
 </div>
 @*Satın Alma*@
-<div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
+<div class="row" id="satinalma" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
             <div class="inner">
@@ -129,18 +134,22 @@
             SATIN ALMA TALEPLERİ
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a class="btn btn-xs" href="/SatinAlma/Bekleyen" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
+            ONAY BEKLEYEN SATIN ALMALAR
+            <span class="right badge badge-danger">0</span>
+        </a>
+        <a class="btn btn-xs" href="/SatinAlma/Devam" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN SATIN ALMALAR
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a class="btn btn-xs" href="/SatinAlma/Kısmi" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             KISMİ KABUL SATIN ALMALAR
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> MAL KABUL OLUŞTUR</a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> SAYIM YAP </a>
+        <a class="btn btn-xs" href="/SatinAlma/MalKabul" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> MAL KABUL OLUŞTUR</a>
+        <a class="btn btn-xs" href="/SatinAlma/Sayim" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> SAYIM YAP </a>
         <a href="/Urunler/Stok" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> STOK DURUMU</a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a class="btn btn-xs" href="/SatinAlma/Gecmis" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ SATIN ALMALAR
             <span class="right badge badge-danger">0</span>
         </a>
@@ -151,6 +160,7 @@
                 <div class="small-box bg-info">
                     <div class="inner">
                         <h3>0</h3>
+                        <h5>10.000,00 ₺</h5>
                         <p>GÜNLÜK SATIN ALMALAR</p>
                     </div>
                     <div class="icon">
@@ -163,6 +173,7 @@
                 <div class="small-box bg-success">
                     <div class="inner">
                         <h3>0</h3>
+                        <h5>10.000,00 ₺</h5>
                         <p>HAFTALIK SATIN ALMALAR</p>
                     </div>
                     <div class="icon">
@@ -175,6 +186,7 @@
                 <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>0</h3>
+                        <h5>10.000,00 ₺</h5>
                         <p>HAFTALIK SATIN ALMALAR</p>
                     </div>
                     <div class="icon">
@@ -187,6 +199,7 @@
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3>0</h3>
+                        <h5>10.000,00 ₺</h5>
                         <p>YILLIK SATIN ALMALAR</p>
                     </div>
                     <div class="icon">
@@ -199,7 +212,7 @@
     </div>
 </div>
 @*Üretim*@
-<div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
+<div class="row" id="uretim" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
             <div class="inner">
@@ -281,7 +294,7 @@
     </div>
 </div>
 @*Depo*@
-<div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
+<div class="row" id="depo" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
             <div class="inner">
@@ -364,7 +377,7 @@
     </div>
 </div>
 @*Boya*@
-<div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
+<div class="row" id="boya" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
             <div class="inner">
@@ -446,7 +459,7 @@
     </div>
 </div>
 @*Döşeme*@
-<div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
+<div class="row" id="doseme" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
             <div class="inner">
@@ -528,7 +541,7 @@
     </div>
 </div>
 @*Ambalaj*@
-<div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
+<div class="row" id="ambalaj" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
             <div class="inner">
@@ -613,7 +626,7 @@
     </div>
 </div>
 @*Sevkiyat*@
-<div class="row" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
+<div class="row" id="sevkiyat" style="background-color:white; border-radius:10px; padding:10px; margin:5px; margin-bottom:15px;">
     <div class="col-lg-12 col-12">
         <div class="small-box bg-dark">
             <div class="inner">
@@ -639,6 +652,7 @@
                 YÜKLEMEYE HAZIR SİPARİŞLER
                 <span class="right badge badge-danger">0</span>
             </a>
+            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white;"> SİPARİŞ ÜRÜNÜ KAYDIR </a>
             <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white;"> HAMMADDE VE HIRDAVAT SEVK ET </a>
             <a href="/Urunler/Stok" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> STOK DURUMU </a>
             <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">

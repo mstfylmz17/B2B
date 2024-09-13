@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "YH";
+    ViewData["Title"] = "Teslimat";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,6 +23,7 @@
     SiparisHata.Icerik = "";
 }
 <br />
+
 <div class="card">
     <div class="card-header border-transparent">
         <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -30,7 +31,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Yüklemeye Hazır Siparişler</h4>
+                            <h4>Teslimat Oluştur</h4>
                         </div>
                     </div>
                 </div>
@@ -46,9 +47,11 @@
                                     <th>Sipariş Miktarı</th>
                                     <th>Kalan Miktar</th>
                                     <th>Renk / Deri / Notlar</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
+                        <button onclick="uyari()" class="btn btn-primary mb-2 mr-2 btn-rounded" style="float:right;">Teslimat Oluştur</button>
                     </div>
                 </div>
             </div>
@@ -66,7 +69,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/SiparisApi/YHList',
+                url: '/SiparisApi/YukHazirList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -89,6 +92,13 @@
                 { data: 'miktar' },
                 { data: 'teslimAdet' },
                 { data: 'aciklama' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<input style="width: 10px; height: 10px; transform: scale(4); " type="checkbox" class="select-checkbox" id="ch-' + data + '" value="' + data + '"><label for="ch-' + data + '" style="margin-left:15px; margin-bottom:5px;"> Seç</label>';
+                    },
+                    orderable: false
+                },
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
@@ -108,4 +118,53 @@
     $(document).ready(function () {
         initializeDataTable();
     })
+    function uyari() {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Seçilen Ürünler İçin Teslimat Belgesi Oluşturulacak!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Oluştur!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                Gonder();
+            }
+        })
+    }
+    function Gonder(){
+        var selectedIds = [];
+        $('.select-checkbox:checked').each(function () {
+            selectedIds.push($(this).val());
+        });
+        if (selectedIds.length > 0) {
+            $.ajax({
+                url: '/SiparisApi/TeslimatOlustur',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(selectedIds),
+                success: function (result) {
+                    swal.fire({
+                        title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                        text: result.message,
+                        type: result.status === "success" ? 'success' : 'warning',
+                        confirmButtonText: 'Tamam'
+                    });
+                    if (result.status == "success") {
+                        tabloGuncelle();
+                    }
+                }
+            });
+        }
+        else {
+            Swal.fire({
+                title: 'Uyarı',
+                text: 'Lütfen en az bir ürün seçin.',
+                icon: 'warning',
+                confirmButtonText: 'Tamam'
+            });
+        }
+    }
 </script>

@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "YH";
+    ViewData["Title"] = "Kaydedilmemis";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -22,6 +22,7 @@
     }
     SiparisHata.Icerik = "";
 }
+
 <br />
 <div class="card">
     <div class="card-header border-transparent">
@@ -30,7 +31,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Yüklemeye Hazır Siparişler</h4>
+                            <h4>Kaydedilmeyen Siparişler</h4>
                         </div>
                     </div>
                 </div>
@@ -39,13 +40,13 @@
                         <table id="myTable" class="table table-hover" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Sipariş No</th>
                                     <th>Bayi Adı</th>
-                                    <th>Ürün Adı</th>
                                     <th>Sipariş Tarihi</th>
-                                    <th>Sipariş Miktarı</th>
-                                    <th>Kalan Miktar</th>
-                                    <th>Renk / Deri / Notlar</th>
+                                    <th>Sipariş No</th>
+                                    <th>Toplam Sipariş Miktarı</th>
+                                    <th>Sipariş Tutarı</th>
+                                    <th>Sipariş Durumu</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -66,7 +67,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/SiparisApi/YHList',
+                url: '/SiparisApi/KaydedilmeyenList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -82,13 +83,18 @@
                 }
             },
             columns: [
-                { data: 'siparisID' },
                 { data: 'bayiID' },
-                { data: 'urunID' },
                 { data: 'siparisTarihi' },
-                { data: 'miktar' },
-                { data: 'teslimAdet' },
-                { data: 'aciklama' },
+                { data: 'siparisNo' },
+                { data: 'toplamAdet' },
+                { data: 'toplamTutar' },
+                { data: 'siparisDurum' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="/Siparis/YeniDetay/' + data + '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>'
+                    }
+                }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"

@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "YH";
+    ViewData["Title"] = "Teslimatlar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,6 +23,7 @@
     SiparisHata.Icerik = "";
 }
 <br />
+
 <div class="card">
     <div class="card-header border-transparent">
         <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -30,7 +31,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Yüklemeye Hazır Siparişler</h4>
+                            <h4>Teslimat Belgeleri</h4>
                         </div>
                     </div>
                 </div>
@@ -39,13 +40,12 @@
                         <table id="myTable" class="table table-hover" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Sipariş No</th>
+                                    <th>Teslimat No</th>
                                     <th>Bayi Adı</th>
-                                    <th>Ürün Adı</th>
-                                    <th>Sipariş Tarihi</th>
-                                    <th>Sipariş Miktarı</th>
-                                    <th>Kalan Miktar</th>
-                                    <th>Renk / Deri / Notlar</th>
+                                    <th>Kayıt Tarihi</th>
+                                    <th>Teslimat Miktarı</th>
+                                    <th>Belge Durumu</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -66,7 +66,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/SiparisApi/YHList',
+                url: '/SiparisApi/TeslimatList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -82,13 +82,18 @@
                 }
             },
             columns: [
-                { data: 'siparisID' },
+                { data: 'teslimatNo' },
                 { data: 'bayiID' },
-                { data: 'urunID' },
-                { data: 'siparisTarihi' },
+                { data: 'kayitTarihi' },
                 { data: 'miktar' },
-                { data: 'teslimAdet' },
-                { data: 'aciklama' },
+                { data: 'tamamlanmaDurum' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="/Siparis/TeslimatDetay/' + data + '" class="btn btn-primary btn-sm" ><i class="fas fa-eye"></i></a>';
+                    },
+                    orderable: false
+                },
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
@@ -108,4 +113,53 @@
     $(document).ready(function () {
         initializeDataTable();
     })
+    function uyari() {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Seçilen Ürünler İçin Teslimat Belgesi Oluşturulacak!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Oluştur!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                Gonder();
+            }
+        })
+    }
+    function Gonder() {
+        var selectedIds = [];
+        $('.select-checkbox:checked').each(function () {
+            selectedIds.push($(this).val());
+        });
+        if (selectedIds.length > 0) {
+            $.ajax({
+                url: '/SiparisApi/TeslimatOlustur',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(selectedIds),
+                success: function (result) {
+                    swal.fire({
+                        title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                        text: result.message,
+                        type: result.status === "success" ? 'success' : 'warning',
+                        confirmButtonText: 'Tamam'
+                    });
+                    if (result.status == "success") {
+                        tabloGuncelle();
+                    }
+                }
+            });
+        }
+        else {
+            Swal.fire({
+                title: 'Uyarı',
+                text: 'Lütfen en az bir ürün seçin.',
+                icon: 'warning',
+                confirmButtonText: 'Tamam'
+            });
+        }
+    }
 </script>

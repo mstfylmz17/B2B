@@ -1,7 +1,5 @@
 ﻿using DataAccessLayer.Concrate;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using VNNB2B.Controllers.Api;
 using VNNB2B.Models.Hata;
 
 namespace VNNB2B.Controllers
@@ -51,9 +49,23 @@ namespace VNNB2B.Controllers
                 if (bayi.KDVDurum == true) ViewBag.kdv = "10"; else ViewBag.kdv = "0";
                 string kdvbilgi = "";
                 if (bayi.KDVBilgi != null) kdvbilgi = bayi.KDVBilgi.ToString();
-                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString() + kdvbilgi;
+                ViewBag.iskonto = Convert.ToInt32(bayi.IskontoOran).ToString() + " (" + kdvbilgi + ")";
                 ViewBag.id = id;
                 ViewBag.hata = SiparisHata.Icerik;
+                return View();
+            }
+        }
+        public IActionResult Kismi()
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            if (Cerez == null && Cerez == "")
+            {
+                LoginHata.Icerik = "Lütfen Giriş Yapınız...";
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.hata = DepoHata.Icerik;
                 return View();
             }
         }

@@ -3,20 +3,88 @@ using EntityLayer.Concrate;
 using EntityLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Processing;
+using VNNB2B.Models;
 
 namespace VNNB2B.Controllers.Api
 {
     public class UrunApiController : Controller
     {
         private readonly Context c;
-        public UrunApiController(Context context)
+        private readonly IWebHostEnvironment _env;
+        public UrunApiController(Context context, IWebHostEnvironment env)
         {
             c = context;
+            _env = env;
         }
         [HttpPost]
         public async Task<IActionResult> UrunList()
         {
-            var veri = c.Urunlers
+            var veri = await c.Urunlers
+                .Where(v => v.Durum == true)
+                .OrderByDescending(v => v.ID)
+                .Select(x => new DtoUrunler
+                {
+                    ID = x.ID,
+                    UrunKodu = x.UrunKodu ?? "",
+                    UrunAdi = x.UrunAdi ?? "",
+                    UrunAciklama = x.UrunAciklama ?? "",
+                    KritikStokMiktari = x.KritikStokMiktari.ToString() ?? "",
+                    Birim = c.Birimlers.FirstOrDefault(b => b.ID == x.BirimID).BirimAdi ?? "",
+                    UrunKategori = c.UrunKategoris.FirstOrDefault(k => k.ID == x.UrunKategoriID).Adi ?? "",
+                    UrunTuru = c.UrunTurlaris.FirstOrDefault(t => t.ID == x.UrunTuruID).UrunGrubuAdi ?? "",
+                    StokMiktari = c.UrunStoklaris
+                        .Where(s => s.UrunID == x.ID && s.Durum == true)
+                        .Sum(s => s.StokMiktari)
+                        .ToString(),
+                    Durum = (c.UrunStoklaris
+                            .Where(s => s.UrunID == x.ID && s.Durum == true)
+                            .Sum(s => s.StokMiktari) < x.KritikStokMiktari) ? "Red" : "Normal"
+                })
+                .ToListAsync();
+            return Json(veri.OrderBy(v => v.ID));
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetResim(int id)
+        {
+            var urun = await c.Urunlers.FindAsync(id);
+            if (urun == null || urun.Resim == null)
+            {
+                return NotFound();
+            }
+            return File(urun.Resim, "image/jpeg");
+        }
+        //Resim Küçültme
+        private async Task<byte[]> CompressImageAsync(byte[] imageBytes, int width, int height, int quality)
+        {
+            using (var inputStream = new MemoryStream(imageBytes))
+            using (var outputStream = new MemoryStream())
+            {
+                using (var image = await Image.LoadAsync(inputStream))
+                {
+                    image.Mutate(x => x.Resize(new ResizeOptions
+                    {
+                        Mode = ResizeMode.Max,
+                        Size = new Size(width, height)
+                    }));
+
+                    var encoder = new JpegEncoder
+                    {
+                        Quality = quality // 0-100 arası kalite (daha düşük kalite, daha küçük boyut)
+                    };
+
+                    await image.SaveAsJpegAsync(outputStream, encoder);
+                }
+
+                return outputStream.ToArray();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> SonUrun()
+        {
+            var veri = await c.Urunlers
                 .Where(v => v.Durum == true)
                 .OrderByDescending(v => v.ID)
                 .Select(x => new DtoUrunler
@@ -37,13 +105,14 @@ namespace VNNB2B.Controllers.Api
                             .Where(s => s.ID == x.ID && s.Durum == true && s.StokMiktari > 0)
                             .Sum(s => s.StokMiktari) < x.KritikStokMiktari) ? "Red" : "Normal"
                 })
-                .ToList();
-            return Json(veri.OrderBy(v => v.ID));
+                .FirstOrDefaultAsync();
+            return Json(veri);
         }
         [HttpPost]
-        public async Task<IActionResult> GetResim(int id)
+        public async Task<IActionResult> GetResimText(int id)
         {
-            var urun = c.Urunlers.Find(id);
+            var i = await c.SatinAlmaTalepleri.FirstOrDefaultAsync(v => v.ID == id);
+            var urun = await c.Urunlers.FindAsync(i.UrunID);
             if (urun == null || urun.Resim == null)
             {
                 return NotFound();
@@ -76,6 +145,33 @@ namespace VNNB2B.Controllers.Api
             return Json(ham.OrderBy(v => v.ID));
         }
         [HttpPost]
+        public async Task<IActionResult> KategoriUrunleriList()
+        {
+            var veri = await c.Urunlers
+                .Where(v => v.Durum == true && v.UrunTuruID == 3)
+                .OrderByDescending(v => v.ID)
+                .Select(x => new DtoUrunler
+                {
+                    ID = x.ID,
+                    UrunKodu = x.UrunKodu ?? "",
+                    UrunAdi = x.UrunAdi ?? "",
+                    UrunAciklama = x.UrunAciklama ?? "",
+                    KritikStokMiktari = x.KritikStokMiktari.ToString() ?? "",
+                    Birim = c.Birimlers.FirstOrDefault(b => b.ID == x.BirimID).BirimAdi ?? "",
+                    UrunKategori = c.UrunKategoris.FirstOrDefault(k => k.ID == x.UrunKategoriID).Adi ?? "",
+                    UrunTuru = c.UrunTurlaris.FirstOrDefault(t => t.ID == x.UrunTuruID).UrunGrubuAdi ?? "",
+                    StokMiktari = c.UrunStoklaris
+                        .Where(s => s.ID == x.ID && s.Durum == true && s.StokMiktari > 0)
+                        .Sum(s => s.StokMiktari)
+                        .ToString(),
+                    Durum = (c.UrunStoklaris
+                            .Where(s => s.ID == x.ID && s.Durum == true && s.StokMiktari > 0)
+                            .Sum(s => s.StokMiktari) < x.KritikStokMiktari) ? "Red" : "Normal"
+                })
+                .ToListAsync();
+            return Json(veri.OrderBy(v => v.ID));
+        }
+        [HttpPost]
         public async Task<IActionResult> UrunEkle(Urunler d, IFormFile imagee, string FiyatTL, string FiyatUSD, List<int> UrunOzellikleri)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
@@ -105,6 +201,10 @@ namespace VNNB2B.Controllers.Api
                         kat.Boyut = d.Boyut;
                         kat.PaketAdet = d.PaketAdet;
                         kat.BirimID = d.BirimID;
+                        kat.Durum = true;
+                        c.Urunlers.Add(kat);
+                        c.SaveChanges();
+                        var kaydedilen = c.Urunlers.OrderByDescending(v => v.ID).FirstOrDefault(v => v.Durum == true);
                         if (imagee != null)
                         {
                             using (MemoryStream memoryStream = new MemoryStream())
@@ -112,13 +212,11 @@ namespace VNNB2B.Controllers.Api
                                 await imagee.CopyToAsync(memoryStream);
                                 byte[] bytes = memoryStream.ToArray();
 
-                                kat.Resim = bytes;
+                                var compressedImage = await CompressImageAsync(bytes, 800, 600, 95);
+                                kaydedilen.Resim = compressedImage;
+                                c.SaveChanges();
                             }
                         }
-                        kat.Durum = true;
-                        c.Urunlers.Add(kat);
-                        c.SaveChanges();
-                        var kaydedilen = c.Urunlers.OrderByDescending(v => v.ID).FirstOrDefault(v => v.Durum == true);
                         foreach (var v in UrunOzellikleri)
                         {
                             if (v != null && v > 0)
@@ -204,7 +302,7 @@ namespace VNNB2B.Controllers.Api
                 {
                     var ozelliktanim = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikleriID);
                     var ozellikturu = c.UrunOzelikTurlaris.FirstOrDefault(a => a.ID == ozelliktanim.UrunOzellikTurlariID);
-                    ozellik += ozellikturu.OzellikAdi.ToString() + " - " + ozelliktanim.OzellikAdi.ToString();
+                    ozellik += ozellikturu.OzellikAdi.ToString() + " / " + ozelliktanim.OzellikAdi.ToString() + "<br/>";
                 }
                 DtoUrunStoklari list = new DtoUrunStoklari();
                 var urun = c.Urunlers.FirstOrDefault(v => v.ID == id);
@@ -268,7 +366,9 @@ namespace VNNB2B.Controllers.Api
                             await imagee.CopyToAsync(memoryStream);
                             byte[] bytes = memoryStream.ToArray();
 
-                            kat.Resim = bytes;
+                            var compressedImage = await CompressImageAsync(bytes, 800, 600, 95);
+                            kat.Resim = compressedImage;
+                            c.SaveChanges();
                         }
                     }
                     try
@@ -466,7 +566,7 @@ namespace VNNB2B.Controllers.Api
                     s.OnayAciklama = "";
                     s.Durum = true;
                     s.SiparisDurum = "Sipariş Bayi Onay Bekliyor...";
-                    s.SiparisNo = kul.BayiKodu + " " + c.Siparis.Count().ToString() + 1;
+                    s.SiparisNo = kul.BayiKodu + " " + (c.Siparis.Count() + 1).ToString();
                     s.BayiOnay = false;
                     c.Siparis.Add(s);
                     c.SaveChanges();
@@ -492,6 +592,7 @@ namespace VNNB2B.Controllers.Api
                     i.Aciklama = model.Aciklama;
                     i.BirimFiyat = birimfiyat;
                     i.SatirToplam = birimfiyat * model.Miktar;
+                    i.TeslimAdet = 0;
                     i.Durum = true;
                     if (bayi.KDVDurum == true)
                     {
@@ -506,6 +607,7 @@ namespace VNNB2B.Controllers.Api
 
                     bool stokdurum = false;
                     int? stokid = 0;
+                    int stid = 0;
                     foreach (var v in model.Ozellikler)
                     {
                         if (v.OzellikAdi != null)
@@ -520,11 +622,35 @@ namespace VNNB2B.Controllers.Api
                                 {
                                     if (b.UrunAltOzellikleriID == ozellikid) { stokdurum = true; stokid = b.UrunStokID; } else { stokdurum = false; break; }
                                 }
+                                if (stokdurum == true)
+                                {
+                                    x.StokMiktari -= sipicid.Miktar;
+                                }
                             }
 
                         }
                     }
+                    if (stokdurum == false)
+                    {
+                        List<UrunOzellikleri> oz = new List<UrunOzellikleri>();
+                        foreach (var x in model.Ozellikler)
+                        {
+                            UrunOzellikleri o = new UrunOzellikleri();
+                            o.UrunAltOzellikleriID = Convert.ToInt32(x.OzellikAdi);
+                            oz.Add(o);
+                        }
+                        UrunStoklari st = new UrunStoklari();
+                        st.UrunID = sipicid.UrunID;
+                        st.StokTarihi = DateTime.Now;
+                        st.StokMiktari = -sipicid.Miktar;
+                        st.Durum = true;
+                        c.UrunStoklaris.Add(st);
+                        c.SaveChanges();
+                        stid = Convert.ToInt32(c.UrunStoklaris.OrderByDescending(v => v.ID).FirstOrDefault().ID);
 
+                        Formuller f = new Formuller(c);
+                        f.stokozellikleri(oz, stid);
+                    }
                     foreach (var x in model.Ozellikler)
                     {
                         int ozellikid = Convert.ToInt32(x.OzellikAdi);
@@ -534,6 +660,10 @@ namespace VNNB2B.Controllers.Api
                         if (stokdurum == true)
                         {
                             so.UrunStoklariID = stokid;
+                        }
+                        else
+                        {
+                            so.UrunStoklariID = stid;
                         }
                         so.UrunAltOzellikID = ozellikid;
                         so.Durum = true;
@@ -584,6 +714,7 @@ namespace VNNB2B.Controllers.Api
                         i.Aciklama = model.Aciklama;
                         i.BirimFiyat = birimfiyat;
                         i.SatirToplam = birimfiyat * model.Miktar;
+                        i.TeslimAdet = 0;
                         i.Durum = true;
                         if (bayi.KDVDurum == true)
                         {
@@ -598,6 +729,7 @@ namespace VNNB2B.Controllers.Api
 
                         bool stokdurum = false;
                         int? stokid = 0;
+                        int stid = 0;
                         foreach (var v in model.Ozellikler)
                         {
                             if (v.OzellikAdi != null)
@@ -612,9 +744,34 @@ namespace VNNB2B.Controllers.Api
                                     {
                                         if (b.UrunAltOzellikleriID == ozellikid) { stokdurum = true; stokid = b.UrunStokID; } else { stokdurum = false; break; }
                                     }
+                                    if (stokdurum == true)
+                                    {
+                                        x.StokMiktari -= sipicid.Miktar;
+                                    }
                                 }
 
                             }
+                        }
+                        if (stokdurum == false)
+                        {
+                            List<UrunOzellikleri> oz = new List<UrunOzellikleri>();
+                            foreach (var x in model.Ozellikler)
+                            {
+                                UrunOzellikleri o = new UrunOzellikleri();
+                                o.UrunAltOzellikleriID = Convert.ToInt32(x.OzellikAdi);
+                                oz.Add(o);
+                            }
+                            UrunStoklari st = new UrunStoklari();
+                            st.UrunID = sipicid.UrunID;
+                            st.StokTarihi = DateTime.Now;
+                            st.StokMiktari = -sipicid.Miktar;
+                            st.Durum = true;
+                            c.UrunStoklaris.Add(st);
+                            c.SaveChanges();
+                            stid = Convert.ToInt32(c.UrunStoklaris.OrderByDescending(v => v.ID).FirstOrDefault().ID);
+
+                            Formuller f = new Formuller(c);
+                            f.stokozellikleri(oz, stid);
                         }
 
                         foreach (var x in model.Ozellikler)
@@ -626,6 +783,10 @@ namespace VNNB2B.Controllers.Api
                             if (stokdurum == true)
                             {
                                 so.UrunStoklariID = stokid;
+                            }
+                            else
+                            {
+                                so.UrunStoklariID = stid;
                             }
                             so.UrunAltOzellikID = ozellikid;
                             so.Durum = true;
@@ -673,6 +834,7 @@ namespace VNNB2B.Controllers.Api
 
         public class SepetEkleModel
         {
+            public int SiparisID { get; set; }
             public int ID { get; set; }
             public string? Aciklama { get; set; }
             public int? Miktar { get; set; }

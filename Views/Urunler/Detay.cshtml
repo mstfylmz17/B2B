@@ -74,8 +74,8 @@
                                             <input name="ID" value="@id" id="ID" type="hidden" />
                                             <div class="row">
                                                 <div class="form-group col-6">
-                                                    <label class="form-label">Ürün Kategori</label>
-                                                    @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Ürün Kategori : " + Model.UrunKategori, new { @class = "form-control select2", id = "UrunKategoriID" })
+                                                    <label class="form-label">Bayi Paneli Kategori</label>
+                                                    @Html.DropDownList("UrunKategoriID", (List<SelectListItem>)ViewBag.kat, "Bayi Paneli Kategori : " + Model.UrunKategori, new { @class = "form-control select2", id = "UrunKategoriID" })
                                                 </div>
                                                 <div class="form-group col-6">
                                                     <label class="form-label">Ürün Türü</label>
@@ -89,7 +89,7 @@
                                                 </div>
                                                 <div class="form-group col-4">
                                                     <label class="form-label">Ürün Marka</label>
-                                                    <input type="text" class="form-control" id="UrunMarkatxt" value="@Model.UrunAciklama">
+                                                    <input type="text" class="form-control" id="UrunAciklamatxt" value="@Model.UrunAciklama">
                                                 </div>
                                                 <div class="form-group col-4">
                                                     <label class="form-label">Ürün Adı</label>
@@ -175,11 +175,9 @@
                                             <table id="myTable" class="table table-hover" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>Sipariş No</th>
                                                         <th>Stok Tarihi</th>
                                                         <th>Stok Miktarı</th>
-                                                        <th>Ahşap Rengi</th>
-                                                        <th>Deri Rengi</th>
+                                                        <th>Stok Özellikleri</th>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -257,7 +255,6 @@
                 }
             },
             columns: [
-                { data: 'siparisNo' },
                 { data: 'stokTarihi' },
                 { data: 'stokMiktari' },
                 { data: 'urunOzellikleriID' },
@@ -345,6 +342,9 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
+                if (result.status == "success") {
+                    window.history.back();
+                }
                 $("#UrunKategoriID").val('');
                 $("#UrunTuruID").val('');
                 $("#UrunKodutxt").val('');
