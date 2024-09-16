@@ -6,17 +6,17 @@ using VNNB2B.Models;
 
 namespace VNNB2B.Controllers.Api
 {
-    public class BoyaApiController : Controller
+    public class DosemeApiController : Controller
     {
         private readonly Context c;
-        public BoyaApiController(Context context)
+        public DosemeApiController(Context context)
         {
             c = context;
         }
         [HttpPost]
         public IActionResult IsEmirleri()
         {
-            var veri = c.BoyaIsEmirleris.Where(v => v.Durum == true && v.GorulduMu != true).OrderByDescending(v => v.ID).ToList();
+            var veri = c.DosemeIsEmirleris.Where(v => v.Durum == true && v.GorulduMu != true).OrderByDescending(v => v.ID).ToList();
             List<DtoDepoIsEmirleri> ham = new List<DtoDepoIsEmirleri>();
             foreach (var x in veri)
             {
@@ -46,7 +46,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult DevamList()
         {
-            var veri = c.BoyaIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.BitirmeDurum == false).OrderByDescending(v => v.ID).ToList();
+            var veri = c.DosemeIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.BitirmeDurum == false).OrderByDescending(v => v.ID).ToList();
             List<DtoDepoIsEmirleri> ham = new List<DtoDepoIsEmirleri>();
             foreach (var x in veri)
             {
@@ -70,9 +70,9 @@ namespace VNNB2B.Controllers.Api
                     stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
                 }
                 list.Ozellikleri = stozellik;
-                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenKullanici).AdSoyad.ToString();
+                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenPersonel).AdSoyad.ToString();
                 list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
-                if (x.BaslamaDurum == true) list.BaslamaDurum = "Boya Başladı..."; else list.BaslamaDurum = "Boyaya Alınmayı Bekliyor...";
+                if (x.BaslamaDurum == true) list.BaslamaDurum = "Döşeme Başladı..."; else list.BaslamaDurum = "Döşemeye Alınmayı Bekliyor...";
                 ham.Add(list);
             }
             return Json(ham);
@@ -80,7 +80,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult GecmisList()
         {
-            var veri = c.BoyaIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.BitirmeDurum == true).OrderByDescending(v => v.ID).ToList();
+            var veri = c.DosemeIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.BitirmeDurum == true).OrderByDescending(v => v.ID).ToList();
             List<DtoDepoIsEmirleri> ham = new List<DtoDepoIsEmirleri>();
             foreach (var x in veri)
             {
@@ -113,7 +113,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult AlList()
         {
-            var veri = c.BoyaIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.BitirmeDurum == false && v.KalanAdet > 0).OrderByDescending(v => v.ID).ToList();
+            var veri = c.DosemeIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.BitirmeDurum == false && v.KalanAdet > 0).OrderByDescending(v => v.ID).ToList();
             List<DtoDepoIsEmirleri> ham = new List<DtoDepoIsEmirleri>();
             foreach (var x in veri)
             {
@@ -137,9 +137,9 @@ namespace VNNB2B.Controllers.Api
                     stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
                 }
                 list.Ozellikleri = stozellik;
-                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenKullanici).AdSoyad.ToString();
+                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenPersonel).AdSoyad.ToString();
                 list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
-                if (x.BaslamaDurum == true) list.BaslamaDurum = "Boya Başladı..."; else list.BaslamaDurum = "Boyaya Alınmayı Bekliyor...";
+                if (x.BaslamaDurum == true) list.BaslamaDurum = "Döşeme Başladı..."; else list.BaslamaDurum = "Döşemeye Alınmayı Bekliyor...";
                 ham.Add(list);
             }
             return Json(ham);
@@ -147,7 +147,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult CikarList()
         {
-            var veri = c.BoyaIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.BitirmeDurum == false && v.BaslamaDurum == true && v.IslemdekiAdet > 0).OrderByDescending(v => v.ID).ToList();
+            var veri = c.DosemeIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.BitirmeDurum == false && v.BaslamaDurum == true && v.IslemdekiAdet > 0).OrderByDescending(v => v.ID).ToList();
             List<DtoDepoIsEmirleri> ham = new List<DtoDepoIsEmirleri>();
             foreach (var x in veri)
             {
@@ -170,9 +170,9 @@ namespace VNNB2B.Controllers.Api
                     stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
                 }
                 list.Ozellikleri = stozellik;
-                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenKullanici).AdSoyad.ToString();
+                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenPersonel).AdSoyad.ToString();
                 list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
-                if (x.BaslamaDurum == true) list.BaslamaDurum = "Boya Başladı..."; else list.BaslamaDurum = "Boyaya Alınmayı Bekliyor...";
+                if (x.BaslamaDurum == true) list.BaslamaDurum = "Döşeme Başladı..."; else list.BaslamaDurum = "Döşemeye Alınmayı Bekliyor...";
                 ham.Add(list);
             }
             return Json(ham);
@@ -180,7 +180,7 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult KismiList()
         {
-            var veri = c.BoyaIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.IslemdekiAdet > 0 && v.BitirmeDurum == false).OrderByDescending(v => v.ID).ToList();
+            var veri = c.DosemeIsEmirleris.Where(v => v.Durum == true && v.GorulduMu == true && v.IslemdekiAdet > 0 && v.BitirmeDurum == false).OrderByDescending(v => v.ID).ToList();
             List<DtoDepoIsEmirleri> ham = new List<DtoDepoIsEmirleri>();
             foreach (var x in veri)
             {
@@ -204,7 +204,7 @@ namespace VNNB2B.Controllers.Api
                     stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
                 }
                 list.Ozellikleri = stozellik;
-                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenKullanici).AdSoyad.ToString();
+                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenPersonel).AdSoyad.ToString();
                 list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
                 list.GidenAdet = Convert.ToDecimal(x.GelenAdet).ToString();
                 ham.Add(list);
@@ -217,23 +217,23 @@ namespace VNNB2B.Controllers.Api
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
-            var isemri = c.BoyaIsEmirleris.FirstOrDefault(v => v.ID == id);
+            var isemri = c.DosemeIsEmirleris.FirstOrDefault(v => v.ID == id);
             isemri.OkunmaTarih = DateTime.Now;
-            isemri.GorenKullanici = kulid;
+            isemri.GorenPersonel = kulid;
             isemri.GorulduMu = true;
             c.SaveChanges();
             result = new { status = "success", message = "İş Emri Okundu Olarak İşaretlendi..." };
             return Json(result);
         }
         [HttpPost]
-        public IActionResult BoyaAl(int id, int miktar)
+        public IActionResult DosemeAl(int id, int miktar)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
             if (miktar != null && id != null)
             {
-                var isemri = c.BoyaIsEmirleris.FirstOrDefault(v => v.ID == id);
+                var isemri = c.DosemeIsEmirleris.FirstOrDefault(v => v.ID == id);
                 if (isemri.GelenAdet >= miktar && (isemri.KalanAdet >= miktar))
                 {
                     var sipic = c.SiparisIceriks.FirstOrDefault(v => v.ID == isemri.SiparisIcerikID);
@@ -248,7 +248,7 @@ namespace VNNB2B.Controllers.Api
                         }
                         isemri.KullaniciID = kulid;
                         c.SaveChanges();
-                        return Json(new { status = "success", message = "Boyaya Alma Başarılı...", redirectUrl = Url.Action("DevamList") });
+                        return Json(new { status = "success", message = "Döşemeye Alma Başarılı...", redirectUrl = Url.Action("DevamList") });
                     }
                     else
                     {
@@ -267,27 +267,19 @@ namespace VNNB2B.Controllers.Api
             return Json(result);
         }
         [HttpPost]
-        public IActionResult BoyaCikar(int id, int miktar, string Istasyon)
+        public IActionResult AmbalajCikar(int id, int miktar)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
             int kulid = Convert.ToInt32(Cerez);
             var result = new { status = "error", message = "İşlem Başarısız..." };
-            if (miktar != null && id != null && Istasyon != null)
+            if (miktar != null && id != null)
             {
-                var isemri = c.BoyaIsEmirleris.FirstOrDefault(v => v.ID == id);
+                var isemri = c.DosemeIsEmirleris.FirstOrDefault(v => v.ID == id);
                 if (isemri.GelenAdet >= miktar && ((isemri.IslemdekiAdet + isemri.KalanAdet) >= miktar))
                 {
                     var sipic = c.SiparisIceriks.FirstOrDefault(v => v.ID == isemri.SiparisIcerikID);
-                    if (Istasyon == "Döşeme")
-                    {
-                        Formuller f = new Formuller(c);
-                        f.DosemeSevk(id, miktar);
-                    }
-                    else
-                    {
-                        Formuller f = new Formuller(c);
-                        f.AmbalajSevk(id, kulid, "Boya", miktar);
-                    }
+                    Formuller f = new Formuller(c);
+                    f.AmbalajSevk(id, kulid, "Döşeme", miktar);
                     isemri.IslemdekiAdet -= miktar;
                     isemri.GidenAdet += miktar;
                     if (isemri.GelenAdet == isemri.GidenAdet)
@@ -297,7 +289,7 @@ namespace VNNB2B.Controllers.Api
                         isemri.KullaniciID = kulid;
                     }
                     c.SaveChanges();
-                    return Json(new { status = "success", message = "Boyadan Çıkarma Başarılı...", redirectUrl = Url.Action("DevamList") });
+                    return Json(new { status = "success", message = "Döşemeden Çıkarma Başarılı...", redirectUrl = Url.Action("DevamList") });
                 }
                 else
                 {

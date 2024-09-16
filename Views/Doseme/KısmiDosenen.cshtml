@@ -1,8 +1,9 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Devam";
+    ViewData["Title"] = "KısmiDosenen";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 @{
     string mesaj = ViewBag.hata;
@@ -20,7 +21,7 @@
             });
         </script>
     }
-    BoyaHata.Icerik = "";
+    DosemeHata.Icerik = "";
 }
 <br />
 <div class="card">
@@ -30,7 +31,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Devam Eden İş Emirleri</h4>
+                            <h4>Kısmi Dosenen İş Emirleri</h4>
                         </div>
                     </div>
                 </div>
@@ -43,12 +44,11 @@
                                     <th>Ürün Resmi</th>
                                     <th>Ürün Kodu</th>
                                     <th>Ürün Adı</th>
-                                    <th>Boyanacak Miktar</th>
+                                    <th>Gelen Miktar</th>
                                     <th>Kalan Miktar</th>
                                     <th>Sipariş Özellikleri</th>
                                     <th>Gören Personel</th>
                                     <th>Görülme Tarihi</th>
-                                    <th>Durum</th>
                                 </tr>
                             </thead>
                         </table>
@@ -69,7 +69,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/BoyaApi/DevamList',
+                url: '/DosemeApi/KismiList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -99,7 +99,6 @@
                 { data: 'ozellikleri' },
                 { data: 'gorenKullanici' },
                 { data: 'okunmaTarih' },
-                { data: 'baslamaDurum' },
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"

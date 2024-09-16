@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Concrate;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using VNNB2B.Models.Hata;
 
 namespace VNNB2B.Controllers
@@ -121,6 +122,32 @@ namespace VNNB2B.Controllers
             }
             else
             {
+                List<SelectListItem> urungrubu = (from x in c.UrunTurlaris.Where(x => x.Durum == true).ToList().OrderBy(v => v.SiraNo)
+                                                  select new SelectListItem
+                                                  {
+                                                      Text = x.UrunGrubuAdi.ToString(),
+                                                      Value = x.ID.ToString()
+                                                  }).ToList();
+
+                ViewBag.urungrubu = urungrubu;
+
+                List<SelectListItem> birim = (from x in c.Birimlers.Where(x => x.Durum == true).ToList()
+                                              select new SelectListItem
+                                              {
+                                                  Text = x.BirimAdi.ToString(),
+                                                  Value = x.ID.ToString()
+                                              }).ToList();
+
+                ViewBag.birim = birim;
+
+                List<SelectListItem> ozellikler = (from x in c.UrunOzelikTurlaris.Where(x => x.Durum == true).ToList().OrderBy(v => v.OzellikAdi)
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.OzellikAdi.ToString(),
+                                                       Value = x.ID.ToString()
+                                                   }).OrderBy(v => v.Text).ToList();
+
+                ViewBag.ozellikler = ozellikler;
                 ViewBag.hata = UrunHata.Icerik;
                 return View();
             }

@@ -24,10 +24,14 @@ namespace VNNB2B.Controllers.Api
             list.KismiTeslimSiparis = c.Siparis.Where(v => v.Durum == true && v.OnayDurum == true && v.TeslimDurum != true && v.ToplamTeslimEdilen > 0).Count();
             list.GecmisSiparis = c.Siparis.Where(v => v.Durum == true && v.OnayDurum == true && v.TeslimDurum == true).Count();
 
-            list.GunlukSiparis = c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value > DateTime.Today).Count();
-            list.HaftalikSiparis = c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value > DateTime.Today).Count();
-            list.AylikSiparis = c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value.Month == DateTime.Now.Month).Count();
-            list.YillikSiparis = c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value.Year == DateTime.Now.Year).Count();
+            list.GunlukSiparis = c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value > DateTime.Today && v.OnayDurum == true).Count();
+            list.GunlukSiparisTop = Convert.ToDecimal(c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value > DateTime.Today && v.OnayDurum == true).Sum(v => v.ToplamTutar)).ToString("N2") + " ₺";
+            list.HaftalikSiparis = c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value > DateTime.Today && v.OnayDurum == true).Count();
+            list.HaftalikSiparisTop = Convert.ToDecimal(c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value > DateTime.Today && v.OnayDurum == true).Sum(v => v.ToplamTutar)).ToString("N2") + " ₺";
+            list.AylikSiparis = c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value.Month == DateTime.Now.Month && v.OnayDurum == true).Count();
+            list.AylikSiparisTop = Convert.ToDecimal(c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value.Month == DateTime.Now.Month && v.OnayDurum == true).Sum(v => v.ToplamTutar)).ToString("N2") + " ₺";
+            list.YillikSiparis = c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value.Year == DateTime.Now.Year && v.OnayDurum == true).Count();
+            list.YillikSiparisTop = Convert.ToDecimal(c.Siparis.Where(v => v.Durum == true && v.SiparisTarihi.Value.Year == DateTime.Now.Year && v.OnayDurum == true).Sum(v => v.ToplamTutar)).ToString("N2") + " ₺";
 
 
             //Satın Alma

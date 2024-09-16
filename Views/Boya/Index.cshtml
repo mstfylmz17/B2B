@@ -43,7 +43,7 @@
                                     <th>Ürün Resmi</th>
                                     <th>Ürün Kodu</th>
                                     <th>Ürün Adı</th>
-                                    <th>Sipariş Miktarı</th>
+                                    <th>Boyanacak Miktar</th>
                                     <th>Sipariş Özellikleri</th>
                                     <th></th>
                                 </tr>
@@ -84,9 +84,9 @@
             columns: [
                 { data: 'siparisNo' },
                 {
-                    data: 'resim',
+                    data: 'urunID',
                     render: function (data, type, full, meta) {
-                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" />';
                     }
                 },
                 { data: 'urunKodu' },
@@ -96,14 +96,45 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="#" onclick="sil(' + data + ')" class="btn btn-info btn-sm" style="margin-right:3px;"><i class="fas fa-eye"></i> </a>'
+                        return '<a href="#" onclick="sil(' + data + ')" class="btn btn-info btn-sm" style="margin-right:3px;"><i class="fas fa-check"></i> </a>'
                     }
                 }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
             ordering: false,
+            initComplete: function (settings, json) {
+                loadImages();
+            }
+        });
+        myDataTable.on('draw', function () {
+            loadImages();
+        });
+    }
+    function loadImages() {
+        $('td img.img-thumbnail').each(function () {
+            var imgElement = $(this);
+            var id = imgElement.attr('id').split('_')[1];
+
+            if (imgElement.attr('src') === '') {
+                $.ajax({
+                    url: '/UrunApi/GetResim',
+                    method: 'POST',
+                    data: { id: id },
+                    xhrFields:
+                    {
+                        responseType: 'blob' // Blob tipi ile yanıt alın
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        imgElement.attr('src', url); // Blob URL'yi kullanarak resmi yükle
+                    }
+                });
+            }
         });
     }
     function tabloGuncelle() {

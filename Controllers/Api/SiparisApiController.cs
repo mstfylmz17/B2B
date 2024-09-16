@@ -1075,49 +1075,52 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult YukHazirList()
         {
-            var veri = c.SiparisIceriks.Where(v => v.Durum == true && v.YuklemeyeHazir == true).ToList();
+            var veri = c.SiparisIceriks.Where(v => v.Durum == true && v.HazirAdet != null).ToList();
             if (veri.Count() > 0)
             {
                 List<DtoSiparisIcerik> icerikler = new List<DtoSiparisIcerik>();
                 foreach (var x in veri)
                 {
-                    int teslimmi = Convert.ToInt32(c.TeslimatIceriks.Where(v => v.SiparisIcerikID == x.ID && v.Durum == true).Sum(v => v.Miktar));
-                    if (x.TeslimAdet == 0 || x.TeslimAdet < teslimmi)
+                    if (x.HazirAdet > 0)
                     {
-                        var sip = c.Siparis.FirstOrDefault(v => v.ID == x.SiparisID);
-                        if (sip.OnayDurum == true)
+                        int teslimmi = Convert.ToInt32(c.TeslimatIceriks.Where(v => v.SiparisIcerikID == x.ID && v.Durum == true).Sum(v => v.Miktar));
+                        if (x.TeslimAdet == 0 || x.TeslimAdet < teslimmi)
                         {
-                            DtoSiparisIcerik list = new DtoSiparisIcerik();
-                            var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
-                            var urun = c.Urunlers.FirstOrDefault(v => v.ID == x.UrunID);
-                            list.ID = Convert.ToInt32(x.ID);
-                            if (urun != null)
+                            var sip = c.Siparis.FirstOrDefault(v => v.ID == x.SiparisID);
+                            if (sip.OnayDurum == true)
                             {
-                                list.UrunID = "";
-                                if (urun.UrunKodu != null) list.UrunID = urun.UrunKodu.ToString() + " / ";
-                                if (urun.UrunAdi != null) list.UrunID += urun.UrunAdi.ToString();
+                                DtoSiparisIcerik list = new DtoSiparisIcerik();
+                                var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+                                var urun = c.Urunlers.FirstOrDefault(v => v.ID == x.UrunID);
+                                list.ID = Convert.ToInt32(x.ID);
+                                if (urun != null)
+                                {
+                                    list.UrunID = "";
+                                    if (urun.UrunKodu != null) list.UrunID = urun.UrunKodu.ToString() + " / ";
+                                    if (urun.UrunAdi != null) list.UrunID += urun.UrunAdi.ToString();
+                                }
+                                string bayiadi = "";
+                                if (bayi != null)
+                                {
+                                    if (bayi.BayiKodu != null) { bayiadi += bayi.BayiKodu.ToString(); }
+                                    if (bayi.KullaniciAdi != null) bayiadi += " - " + bayi.KullaniciAdi.ToString();
+                                }
+                                list.BayiID = bayiadi;
+                                list.SiparisID = sip.SiparisNo.ToString();
+                                if (sip.SiparisTarihi != null) list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("d"); else list.SiparisTarihi = "";
+                                list.Miktar = x.Miktar.ToString();
+                                if (x.TeslimAdet != null) list.TeslimAdet = x.TeslimAdet.ToString(); else list.TeslimAdet = "0";
+                                var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.ID && v.Durum == true).ToList();
+                                foreach (var v in ozellik)
+                                {
+                                    var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
+                                    if (o.UrunOzellikTurlariID == 6) list.DeriRengi = o.OzellikAdi.ToString(); else if (o.UrunOzellikTurlariID == 7) { if (o != null) list.AhsapRengi = o.OzellikAdi.ToString(); else list.AhsapRengi = ""; }
+                                }
+                                if (list.DeriRengi != null) list.Aciklama += "Deri Rengi - " + list.DeriRengi.ToString() + " / ";
+                                if (list.AhsapRengi != null) list.Aciklama += "Ahşap Rengi - " + list.AhsapRengi.ToString() + " / ";
+                                if (x.Aciklama != null) list.Aciklama += "Not (Açıklama) - " + x.Aciklama.ToString();
+                                icerikler.Add(list);
                             }
-                            string bayiadi = "";
-                            if (bayi != null)
-                            {
-                                if (bayi.BayiKodu != null) { bayiadi += bayi.BayiKodu.ToString(); }
-                                if (bayi.KullaniciAdi != null) bayiadi += " - " + bayi.KullaniciAdi.ToString();
-                            }
-                            list.BayiID = bayiadi;
-                            list.SiparisID = sip.SiparisNo.ToString();
-                            if (sip.SiparisTarihi != null) list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("d"); else list.SiparisTarihi = "";
-                            list.Miktar = x.Miktar.ToString();
-                            if (x.TeslimAdet != null) list.TeslimAdet = x.TeslimAdet.ToString(); else list.TeslimAdet = "0";
-                            var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.ID && v.Durum == true).ToList();
-                            foreach (var v in ozellik)
-                            {
-                                var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
-                                if (o.UrunOzellikTurlariID == 6) list.DeriRengi = o.OzellikAdi.ToString(); else if (o.UrunOzellikTurlariID == 7) { if (o != null) list.AhsapRengi = o.OzellikAdi.ToString(); else list.AhsapRengi = ""; }
-                            }
-                            if (list.DeriRengi != null) list.Aciklama += "Deri Rengi - " + list.DeriRengi.ToString() + " / ";
-                            if (list.AhsapRengi != null) list.Aciklama += "Ahşap Rengi - " + list.AhsapRengi.ToString() + " / ";
-                            if (x.Aciklama != null) list.Aciklama += "Not (Açıklama) - " + x.Aciklama.ToString();
-                            icerikler.Add(list);
                         }
                     }
                 }

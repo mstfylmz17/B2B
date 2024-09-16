@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Devam";
+    ViewData["Title"] = "Gecmis";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,7 +20,7 @@
             });
         </script>
     }
-    BoyaHata.Icerik = "";
+    DosemeHata.Icerik = "";
 }
 <br />
 <div class="card">
@@ -30,7 +30,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Devam Eden İş Emirleri</h4>
+                            <h4>Geçmiş İş Emirleri</h4>
                         </div>
                     </div>
                 </div>
@@ -43,12 +43,10 @@
                                     <th>Ürün Resmi</th>
                                     <th>Ürün Kodu</th>
                                     <th>Ürün Adı</th>
-                                    <th>Boyanacak Miktar</th>
-                                    <th>Kalan Miktar</th>
+                                    <th>Boyanan Miktar</th>
                                     <th>Sipariş Özellikleri</th>
-                                    <th>Gören Personel</th>
-                                    <th>Görülme Tarihi</th>
-                                    <th>Durum</th>
+                                    <th>İşlemi Yapan Personel</th>
+                                    <th>Bitiş Tarihi</th>
                                 </tr>
                             </thead>
                         </table>
@@ -69,7 +67,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/BoyaApi/DevamList',
+                url: '/DosemeApi/GecmisList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -95,11 +93,9 @@
                 { data: 'urunKodu' },
                 { data: 'urunAdi' },
                 { data: 'gelenAdet' },
-                { data: 'islemdekiAdet' },
                 { data: 'ozellikleri' },
-                { data: 'gorenKullanici' },
-                { data: 'okunmaTarih' },
-                { data: 'baslamaDurum' },
+                { data: 'kullanici' },
+                { data: 'bitisTarihi' },
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"

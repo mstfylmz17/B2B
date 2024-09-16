@@ -20,7 +20,7 @@
             });
         </script>
     }
-    BoyaHata.Icerik = "";
+    DosemeHata.Icerik = "";
 }
 <br />
 <div class="card">
@@ -69,7 +69,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/BoyaApi/DevamList',
+                url: '/DosemeApi/DevamList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {

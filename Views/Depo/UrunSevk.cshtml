@@ -33,6 +33,17 @@
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                             <h4>Hammadde & Hırdavatlar Listesi</h4>
                         </div>
+                        <div class="col">
+                            @Html.DropDownList("fUrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Filtrele", new { @class = "form-control basic", id = "fUrunTuruID" })
+                        </div>
+                        <div class="col">
+                            <input type="text" id="searchUrunAciklama" class="form-control" placeholder="Ürün Marka Ara">
+                        </div>
+                        <div class="col">
+                            <input type="text" id="searchUrunAdi" class="form-control" placeholder="Ürün Adı Ara">
+                        </div>
+                        <br />
+                        <br />
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
@@ -44,6 +55,7 @@
                                     <th>Ürün Türü</th>
                                     <th>Ürün Kodu</th>
                                     <th>Ürün Adı</th>
+                                    <th>Marka</th>
                                     <th>Kritik Stok Miktarı</th>
                                     <th>Güncel Stok</th>
                                     <th></th>
@@ -71,12 +83,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="/DepoApi/UrunSevk" method="post" enctype="multipart/form-data">
+            <form id="UrunCikarForm">
                 <div class="modal-body">
-                    <input id="urunid" type="hidden" name="id" />
+                    <input id="id" type="hidden" name="id" />
                     <div class="form-group mb-3">
                         <label>Miktar</label>
-                        <input type="text" class="form-control" id="Miktar" name="Miktar">
+                        <input type="text" class="form-control" id="Adet" name="Adet">
                     </div>
                     <div class="form-group mb-3">
                         <label>Açıklama</label>
@@ -84,7 +96,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger" style="float:right;">Çıkar</button>
+                    <button type="button" onclick="UrunCikar()" class="btn btn-danger" style="float:right;">Çıkar</button>
                 </div>
             </form>
         </div>
@@ -114,14 +126,15 @@
             },
             columns: [
                 {
-                    data: 'resim',
+                    data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" />';
                     }
                 },
                 { data: 'urunTuru' },
                 { data: 'urunKodu' },
                 { data: 'urunAdi' },
+                { data: 'urunAciklama' },
                 { data: 'kritikStokMiktari' },
                 { data: 'stokMiktari' },
                 {
@@ -134,12 +147,65 @@
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
+            paging: true,
+            pageLength: 25,
+            scrollY: '120vh',
+            scrollCollapse: true,
+            ordering: false,
             rowCallback: function (row, data, index) {
                 if (data.kritikStokMiktari >= data.stokMiktari) {
                     $(row).addClass('table-danger');
                 }
             },
-            ordering: false,
+            initComplete: function (settings, json) {
+                loadImages();
+            }
+        });
+        myDataTable.on('draw', function () {
+            loadImages();
+        });
+
+        $('#searchUrunAciklama').on('keyup', function () {
+            var searchValue = this.value;
+            myDataTable.column(4).search(searchValue).draw();
+            loadImages();
+        });
+
+        $('#searchUrunAdi').on('keyup', function () {
+            var searchValue = this.value;
+            myDataTable.column(3).search(searchValue).draw();
+            loadImages();
+        });
+
+        $('#fUrunTuruID').on('change', function () {
+            var selectedText = $("#fUrunTuruID option:selected").text();
+            if (selectedText !== "Ürün Türü Filtrele") {
+                myDataTable.column(1).search(selectedText).draw();
+                loadImages();
+            } else {
+                myDataTable.column(1).search('').draw();
+            }
+        });
+    }
+    function loadImages() {
+        $('td img.img-thumbnail').each(function () {
+            var imgElement = $(this);
+            var id = imgElement.attr('id').split('_')[1];
+
+            if (imgElement.attr('src') === '') {
+                $.ajax({
+                    url: '/UrunApi/GetResim',
+                    method: 'POST',
+                    data: { id: id },
+                    xhrFields: {
+                        responseType: 'blob' // Blob tipi ile yanıt alın
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        imgElement.attr('src', url); // Blob URL'yi kullanarak resmi yükle
+                    }
+                });
+            }
         });
     }
     function tabloGuncelle() {
@@ -153,6 +219,30 @@
     })
     function onayla(element) {
         urunid = element;
-        $("#urunid").val(element);
+        $("#id").val(element);
+    }
+    function UrunCikar() {
+        var formData = {
+            id: urunid,
+            Adet: $("#Adet").val(),
+            Aciklama: $("#Aciklama").val(),
+        };
+        $.ajax({
+            type: "POST",
+            url: '/DepoApi/UrunSevk',
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                if (result.status == "success") {
+                    tabloGuncelle();
+                }
+            }
+        });
     }
 </script>

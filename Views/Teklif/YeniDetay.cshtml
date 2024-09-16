@@ -1,0 +1,665 @@
+﻿@using VNNB2B.Models.Hata
+@{
+    ViewData["Title"] = "YeniDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    table.table-tab {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        table.table-tab th, table.table-tab td {
+            border: 2px double #B17F2C;
+        }
+
+        table.table-tab th {
+            background-color: #f8f9fa;
+            color: #B17F2C;
+            border-top: 2px solid #B17F2C;
+        }
+
+        table.table-tab td {
+            background-color: white;
+            color: #B17F2C;
+        }
+
+        table.table-tab thead th {
+            border-top: 2px solid #B17F2C;
+        }
+
+    table.dataTable tbody tr {
+        height: 25px;
+    }
+
+    table.dataTable tbody td {
+        line-height: 25px;
+        vertical-align: middle;
+    }
+</style>
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    TeklifHata.Icerik = "";
+    int id = Convert.ToInt32(ViewBag.id);
+}
+
+<br />
+
+<div class="col-lg-12">
+    <div class="card" style="background-color:white;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <div class="card-body" style="font-size:16px;">
+                        <table class=" table-tab" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>BAYİ ADI</th>
+                                    <th id="txtfirmaadi"></th>
+                                </tr>
+                                <tr>
+                                    <th>TEKLİF NO</th>
+                                    <th id="txtsiparisno"></th>
+                                </tr>
+                                <tr>
+                                    <th>TEKLİF TARİHİ</th>
+                                    <th id="txtsiparistarihi"></th>
+                                </tr>
+                                <tr>
+                                    <th>TEKLİF DURUMU</th>
+                                    <th id="txtsiparisdurum"></th>
+                                </tr>
+                                <tr>
+                                    <th>ONAYLAYAN YETKİLİ</th>
+                                    <th id="txtkullanici"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12">
+                    <div style="margin:10px;">
+                        <a href="#" data-toggle="modal" data-target="#urunler" class="btn btn-primary btn-sm">Ürün Seç</a>
+                        <a href="/TeklifApi/SiparisYeniOnay/@id" class="btn btn-success btn-sm">Kaydet</a>
+                        <a href="#" class="btn btn-info btn-sm"> <i class="fas fa-print"></i> Yazdır</a>
+                    </div>
+                    <div style="font-size:12px;">
+                        <table class="table table-bordered" id="sepettable">
+                            <thead>
+                                <tr style="background-color:#B17F2C">
+                                    <th style="width:15%;">
+                                        <center>
+                                            Ürün Resmi
+                                        </center>
+                                    </th>
+                                    <th style="width:5%;">
+                                        <center>
+                                            Ürün Kodu
+                                        </center>
+                                    </th>
+                                    <th style="width:10%;">
+                                        <center>
+                                            Ürün Adı
+                                        </center>
+                                    </th>
+                                    <th style="width:5%;"><center>Adet</center></th>
+                                    <th style="width:13%;"><center>Ahşap Rengi</center></th>
+                                    <th style="width:13%;"><center>Deri Rengi</center></th>
+                                    <th style="width:13%;">
+                                        <center>
+                                            Özel Not
+                                        </center>
+                                    </th>
+                                    <th style="width:9%;">
+                                        <center>
+                                            Birim Fiyat
+                                        </center>
+                                    </th>
+                                    <th style="width:9%;">
+                                        <center>
+                                            Toplam Fiyat
+                                        </center>
+                                    </th>
+                                    <th style="width:8%;"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card-body">
+                                <table class="table-tab">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM TEKLİF ADEDİ</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamadet"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM TEKLİF PARÇA ADEDİ</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamparcaadet"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM TEKLİF M3</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamm3"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">TOPLAM TEKLİF KG</th>
+                                            <th style="width:50%; text-align: center;" id="txttoplamkg"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card-body">
+                                <table class="table-tab">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:50%;">ARA TOPLAM</th>
+                                            <th style="width:50%; text-align: center;" id="txtaratoplam"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%;">BAYİ İSKONTO % @ViewBag.iskonto</th>
+                                            <th style="width:50%; text-align: center;" id="txtiskontotoplam"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%; background-color:lightgray;">İNDİRİMLİ FİYAT</th>
+                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtindirimlifiyat"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%; background-color:lightgray;">KDV TOPLAM % @ViewBag.kdv</th>
+                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtkdvtoplam"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:50%; background-color:lightgray;">GENEL TOPLAM</th>
+                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtgeneltoplam"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="urunler">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ürün Seçimi</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" style="font-size:14px;">
+                    <table id="myTable" class="table table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Resim</th>
+                                <th>Ürün Kategori</th>
+                                <th>Ürün Kodu</th>
+                                <th>Ürün Marka</th>
+                                <th>Ürün Adı</th>
+                                <th>Güncel Stok</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Ürün Özellikleri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <center><img class="product-image" id="UrunResmi" width="350" loading="lazy" /></center>
+                    </div>
+                    <div class="col-6">
+                        <form id="productForm">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" onclick="Sepet()" style="float:right;">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    var urunid;
+    var satirid = 0;
+    var myDataTable;
+    var myDataTable2;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#sepettable', {
+            ajax: {
+                url: '/TeklifApi/SiparisDetay/@id',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                {
+                    data: 'resim',
+                    render: function (data, type, full, meta) {
+                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                    }
+                },
+                {
+                    data: 'urunKodu',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'urunAciklama',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        return '<input type="number" style="text-align:center; width: 100%; box-sizing: border-box; padding: 4px; margin: 0;" class="miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
+                    }
+                },
+                {
+                    data: 'ahsapRengi',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'deriRengi',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'aciklama',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'birimFiyat',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'satirToplam',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<div class="row"><div class="col-6"><button class="btn btn-info btn-xs" style="margin-right:2px; float:left;" type="button" onclick="SatirNo(' + data + ')"> Güncelle</a></div>' + '<div class="col-6"><button type="button" onclick="sil(' + data + ')" style="float:right;" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button></div></div>'
+                    }
+                }
+            ],
+            ordering: false,
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            searching: false,
+            lengthChange: false,
+            paging: false,
+            info: false,
+        });
+
+        myDataTable2 = new DataTable('#myTable', {
+            ajax: {
+                url: '/UrunApi/KategoriUrunleriList',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" />';
+                    }
+                },
+                { data: 'urunKategori' },
+                { data: 'urunKodu' },
+                { data: 'urunAciklama' },
+                { data: 'urunAdi' },
+                { data: 'stokMiktari' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="#" onclick="openProductModal(' + data + ')" class="btn btn-success mb-2 mr-2 btn-rounded btn-sm"><i class="fas fa-check-circle"></i></a>'
+                    }
+                }
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            paging: true,
+            pageLength: 25,
+            scrollY: '120vh',
+            scrollCollapse: true,
+            ordering: false,
+            initComplete: function (settings, json) {
+                loadImages();
+            }
+        });
+
+        myDataTable2.on('draw', function () {
+            loadImages();
+        });
+    }
+    function loadImages() {
+        $('td img.img-thumbnail').each(function () {
+            var imgElement = $(this);
+            var id = imgElement.attr('id').split('_')[1];
+
+            if (imgElement.attr('src') === '') {
+                $.ajax({
+                    url: '/UrunApi/GetResim',
+                    method: 'POST',
+                    data: { id: id },
+                    xhrFields:
+                    {
+                        responseType: 'blob' // Blob tipi ile yanıt alın
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        imgElement.attr('src', url); // Blob URL'yi kullanarak resmi yükle
+                    }
+                });
+            }
+        });
+    }
+    function SatirNo(element) {
+        satirid = element;
+        AddForm();
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        if (myDataTable2) {
+            myDataTable2.destroy();
+        }
+        Bilgiler();
+        initializeDataTable();
+        location.reload();
+    }
+    $(document).ready(function () {
+        Bilgiler();
+        initializeDataTable();
+    })
+    function sil(element) {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Kayıt Silinecek!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                submitForm(element);
+            }
+        })
+    }
+    function submitForm(element) {
+        $.ajax({
+            type: "POST",
+            url: "/TeklifApi/SYSSepetSil/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
+    function AddForm() {
+        var element = satirid;
+        var formData = {
+            ID: element,
+            Miktar: $("#mik-" + element).val(),
+        };
+        $.ajax({
+            type: "POST",
+            url: '/TeklifApi/SYSSepetGuncelle',
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                if (result.status == "success") {
+                    tabloGuncelle();
+                }
+            }
+        });
+    }
+    function SepetOnay() {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Sipariş Onaylanacak!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Onayla!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                SepetOnayPost();
+            }
+        })
+    }
+    function Bilgiler() {
+        $.ajax({
+            type: "POST",
+            url: "/TeklifApi/SiparisDetayBilgi",
+            data: { id: @id },
+            success: function (x) {
+                $("#txttoplamadet").text(x.toplamAdet);
+                $("#txtaratoplam").text(x.araToplam);
+                $("#txtgeneltoplam").text(x.toplamTutar);
+                $("#txtiskontotoplam").text(x.istoktoToplam);
+                $("#txtkdvtoplam").text(x.kdvToplam);
+                $("#txtsiparisno").text(x.siparisNo);
+                $("#txtsiparistarihi").text(x.siparisTarihi);
+                $("#txtsiparisdurum").text(x.siparisDurum);
+                $("#txtkullanici").text(x.kullanici);
+                $("#txtindirimlifiyat").text(x.indirimlifiyat);
+                $("#txtfirmaadi").text(x.unvan + " / " + x.firmaAdi);
+                $("#txtyetkili").text(x.yetkili);
+                $("#txttelefon").text(x.telefon);
+                $("#txtadres").text(x.adres);
+                $("#txttoplamparcaadet").text(x.toplamparcaadet);
+                $("#txttoplamm3").text(x.toplamm3);
+                $("#txttoplamkg").text(x.toplamkg);
+            }
+        });
+    }
+    function openProductModal(productId) {
+        urunid = productId;
+        $.ajax({
+            url: '/UrunApi/UrunDetay/' + productId,
+            method: 'POST',
+            success: function (data) {
+                $('#productModal').modal('show');
+
+                $('#productModalLabel').text(data.urunKodu + " - " + data.urunAdi);
+
+                $("#UrunResmi").attr("src", data.resim);
+
+                $('#productForm').empty();
+                $('#productForm').append(`
+                                                                                                                                                                                                                                                <div class="form-group">
+                                                                                                                                                                                                                                                            <label style="margin-bottom:-5px;" for="Miktar">ADET</label>
+                                                                                                                                                                                                                                                    <input id="Miktar" class="form-control" type="number" maxlength="2" />
+                                                                                                                                                                                                                                                    </div><br/>
+                                                                                                                                                                                                                                        `);
+
+                data.urunOzellikleri.forEach(function (ozellik) {
+                    $('#productForm').append(`
+                                                                                                                                                                                                                                       <div class="form-group">
+                                                                                                                                                                                                                                         <label style="margin-bottom:-5px;" for="${ozellik.id}">${ozellik.urunOzellikTanimi}</label>
+                                                                                                                                                                                                                                         <select class="form-control" id="${ozellik.id}">x
+                                                                                                                                                                                                                                            <option>Yükleniyor...</option>
+                                                                                                                                                                                                                                         </select>
+                                                                                                                                                                                                                                       </div><br/>`);
+
+                    fetchOzellikDegerleri(ozellik.id);
+                });
+                $('#productForm').append(`
+                                                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                                                                <label style="margin-bottom:-5px;" for="Aciklama">AÇIKLAMA / EXPLANATION <br/></label>
+                                                                                                                                                                                                                                                <textarea rows="3" class="form-control" id="Aciklama" placeholder="Lütfen Ürün İle İlgili Özel Notlarınızı Yazınız..."></textarea>
+                                                                                                                                                                                                                                        </div><br/>
+                                                                                                                                                                                                                                `);
+            },
+            error: function () {
+                alert('Ürün bilgileri alınamadı.');
+            }
+        });
+    }
+    function fetchOzellikDegerleri(ozellikId) {
+        $.ajax({
+            url: '/UrunApi/UrunAltOzellikleri/' + ozellikId,
+            method: 'POST',
+            success: function (data) {
+                var $select = $('#' + ozellikId);
+                $select.empty();
+                $select.append(`<option value="0">Seçiniz...</option>`);
+                data.forEach(function (deger) {
+                    $select.append(`<option value="${deger.id}">${deger.ozellikAdi}</option>`);
+                });
+            },
+            error: function () {
+                alert('Özellik değerleri alınamadı.');
+            }
+        });
+    }
+    document.getElementById('Miktar').addEventListener('input', function (e) {
+        if (this.value.length > 2) {
+            this.value = this.value.slice(0, 3);
+        }
+    });
+    function Sepet() {
+
+        var formDataa = {
+            Aciklama: $('#Aciklama').val(),
+            Miktar: $('#Miktar').val(),
+            ID: urunid,
+            SiparisID: @id,
+            ozellikler: []
+        };
+
+        $('#productForm select').each(function () {
+            var ozellikId = $(this).attr('id');
+            var ozellikDeger = $(this).val();
+            formDataa.ozellikler.push({
+                UrunOzellikTurlariID: ozellikId,
+                OzellikAdi: ozellikDeger,
+            });
+        });
+
+        $.ajax({
+            type: "POST",
+            url: '/TeklifApi/SYSSepetEkle',
+            data: JSON.stringify(formDataa),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                $('#productModal').modal('hide');
+                $('#urunler').modal('hide');
+                tabloGuncelle();
+
+            },
+            error: function () {
+                swal.fire({
+                    title: result.status === "error" ? 'Başarısız!' : 'Üzgünüm Bir Hata Oldu :( Lütfen Tekrar Deneyiniz.!!',
+                    confirmButtonText: 'Tamam'
+                });
+            }
+        });
+    }
+</script>

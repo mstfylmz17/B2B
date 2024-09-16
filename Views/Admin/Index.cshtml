@@ -38,28 +38,28 @@
         </a>
         <a href="/Siparis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
             ONAY BEKLEYEN SİPARİŞLER
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtonaybekleyensiparis">0</span>
         </a>
         <a href="/Siparis/Devam" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN SİPARİŞLER
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtdevamedensiparis">0</span>
         </a>
         <a href="/Siparis/KT" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             KISMİ TESLİM SİPARİŞLER
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtkismiteslimsiparis">0</span>
         </a>
         <a href="/Siparis/YH" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             YÜKLEMEYE HAZIR SİPARİŞLER
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtyuklemeyehazirsiparis">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> TEKLİF HAZIRLA</a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> CHECK LİST HAZIRLA</a>
+        <a href="/Teklif" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> TEKLİF HAZIRLA</a>
+        <a href="/Check" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> CHECK LİST HAZIRLA</a>
         <a href="/Siparis/Teslimat" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> TESLİMAT OLUŞTUR</a>
         <a href="/Siparis/Teslimatlar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> TESLİMAT BELGELERİ</a>
         <a href="/Urunler/Stok" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> STOK DURUMU</a>
         <a href="/Siparis/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ SİPARİŞLER
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtgecmissiparis">0</span>
         </a>
     </div>
     <div class="col-lg-12 col-12">
@@ -67,8 +67,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>0</h3>
-                        <h5>14.000.000,00 ₺</h5>
+                        <h3 id="txtgunluksiparis">0</h3>
+                        <h5 id="txtgunluksiparistut">0,00 ₺</h5>
                         <p>GÜNLÜK SİPARİŞLER</p>
                     </div>
                     <div class="icon">
@@ -80,8 +80,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>0</h3>
-                        <h5>14.000.000,00 ₺</h5>
+                        <h3 id="txthaftaliksiparis">0</h3>
+                        <h5 id="txthaftaliksiparistop">0,00 ₺</h5>
                         <p>HAFTALIK SİPARİŞLER</p>
                     </div>
                     <div class="icon">
@@ -93,8 +93,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>0</h3>
-                        <h5>14.000.000,00 ₺</h5>
+                        <h3 id="txtayliksiparis">0</h3>
+                        <h5 id="txtayliksiparistop">0,00 ₺</h5>
                         <p>AYLIK SİPARİŞLER</p>
                     </div>
                     <div class="icon">
@@ -106,8 +106,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>0</h3>
-                        <h5>14.000.000,00 ₺</h5>
+                        <h3 id="txtyilliksiparis">0</h3>
+                        <h5 id="txtyilliksiparistop">0,00 ₺</h5>
                         <p>YILLIK SİPARİŞLER</p>
                     </div>
                     <div class="icon">
@@ -400,7 +400,7 @@
         </a>
         <a href="/Boya/Al" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ BOYAYA AL </a>
         <a href="/Boya/Cikar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> ÜRÜNÜ BOYADAN ÇIKAR </a>
-        <a href="/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a href="/Boya/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
@@ -468,21 +468,21 @@
         </div>
     </div>
     <div class="col-lg-12 col-12">
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
+        <a href="/Doseme" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
             YENİ İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a href="/Doseme/Devam" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a href="/Doseme/KısmiDosenen" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             KISMİ DÖŞENEN İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ DÖŞEMEYE AL </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white;"> ÜRÜNÜ DÖŞEMEDEN ÇIKAR </a>
-        <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a href="/Doseme/Al" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ DÖŞEMEYE AL </a>
+        <a href="/Doseme/Cikar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white;"> ÜRÜNÜ DÖŞEMEDEN ÇIKAR </a>
+        <a href="/Doseme/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ İŞ EMİRLERİ
             <span class="right badge badge-danger">0</span>
         </a>
@@ -551,22 +551,22 @@
     </div>
     <div class="col-lg-12 col-12">
         <div class="col-12">
-            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
+            <a href="/Ambalaj" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
                 YENİ İŞ EMİRLERİ
                 <span class="right badge badge-danger">0</span>
             </a>
-            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+            <a href="/Ambalaj/Devam" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
                 DEVAM EDEN İŞ EMİRLERİ
                 <span class="right badge badge-danger">0</span>
             </a>
-            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+            <a href="/Ambalaj/KısmiAmbalaj" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
                 KISMİ AMBALAJ İŞ EMİRLERİ
                 <span class="right badge badge-danger">0</span>
             </a>
-            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> ÜRÜN ETİKETİ YAZDIR </a>
-            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ AMBALAJA AL </a>
-            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white;"> ÜRÜNÜ AMBALAJDAN ÇIKAR </a>
-            <a class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+            <a href="/Ambalaj/Etiket" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> ÜRÜN ETİKETİ YAZDIR </a>
+            <a href="/Ambalaj/Al" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ AMBALAJA AL </a>
+            <a href="/Ambalaj/Cikar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white;"> ÜRÜNÜ AMBALAJDAN ÇIKAR </a>
+            <a href="/Ambalaj/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
                 GEÇMİŞ İŞ EMİRLERİ
                 <span class="right badge badge-danger">0</span>
             </a>
@@ -714,3 +714,37 @@
         </div>
     </div>
 </div>
+
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    $(document).ready(function () {
+        Bilgiler();
+    })
+    function Bilgiler() {
+        $.ajax({
+            type: "POST",
+            url: "/BilgiApi/Bilgiler",
+            success: function (x) {
+                $("#txtonaybekleyensiparis").text(x.onayBekleyenSiparis);
+                $("#txtonaybekleyensiparis").text(x.devamEdenSiparis);
+                $("#txtkismiteslimsiparis").text(x.kismiTeslimSiparis);
+                $("#txtgecmissiparis").text(x.gecmisSiparis);
+                $("#txtgunluksiparis").text(x.gunlukSiparis);
+                $("#txtgunluksiparistut").text(x.gunlukSiparisTop);
+                $("#txthaftaliksiparis").text(x.haftalikSiparis);
+                $("#txthaftaliksiparistop").text(x.haftalikSiparisTop);
+                $("#txtayliksiparis").text(x.aylikSiparis);
+                $("#txtayliksiparistop").text(x.aylikSiparisTop);
+                $("#txtyilliksiparis").text(x.yillikSiparis);
+                $("#txtyilliksiparistop").text(x.yillikSiparisTop);
+                //$("#txtayliksiparistop").text(x.aylikSiparisTop);
+                //$("#txtayliksiparistop").text(x.aylikSiparisTop);
+            }
+        });
+    }
+</script>

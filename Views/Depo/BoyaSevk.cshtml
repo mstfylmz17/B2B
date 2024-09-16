@@ -47,6 +47,7 @@
                                     <th>Ürün Resmi</th>
                                     <th>Ürün Adı - Kodu</th>
                                     <th>Üretilecek Miktar</th>
+                                    <th>Kalan Miktar</th>
                                     <th>İstenilen Özellikler</th>
                                     <th></th>
                                 </tr>
@@ -77,7 +78,7 @@
                 <div class="modal-body">
                     <input id="id" type="hidden" name="id" />
                     <div class="form-group mb-3">
-                        <label>Sevk Edilen Mitkar</label>
+                        <label>Sevk Edilen Miktar</label>
                         <input type="number" class="form-control" id="miktar" name="miktar">
                     </div>
                 </div>
@@ -95,7 +96,7 @@
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/DepoApi/DevamList',
+                url: '/DepoApi/AlList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -122,6 +123,7 @@
                 },
                 { data: 'urunKodu' },
                 { data: 'gelenAdet' },
+                { data: 'kalanAdet' },
                 { data: 'ozellikleri' },
                 {
                     data: 'id',

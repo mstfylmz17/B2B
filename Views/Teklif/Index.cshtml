@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Yeni";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,7 +20,7 @@
             });
         </script>
     }
-    SiparisHata.Icerik = "";
+    TeklifHata.Icerik = "";
 }
 
 <br />
@@ -32,7 +32,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Kaydedilmeyen Siparişler</h4>
+                            <h4>Tüm Teklifler</h4>
                         </div>
                     </div>
                 </div>
@@ -42,11 +42,10 @@
                             <thead>
                                 <tr>
                                     <th>Bayi Adı</th>
-                                    <th>Sipariş Tarihi</th>
-                                    <th>Sipariş No</th>
+                                    <th>Teklif Tarihi</th>
+                                    <th>Teklif No</th>
                                     <th>Toplam Sipariş Miktarı</th>
-                                    <th>Sipariş Tutarı</th>
-                                    <th>Sipariş Durumu</th>
+                                    <th>Teklif Tutarı</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -64,7 +63,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Bayi Seçimi (Yeni Sipariş)</h4>
+                            <h4>Bayi Seçimi (Yeni Teklif)</h4>
                         </div>
                     </div>
                 </div>
@@ -144,7 +143,7 @@
 
         myDataTable2 = new DataTable('#myTable2', {
             ajax: {
-                url: '/SiparisApi/KaydedilmeyenList',
+                url: '/TeklifApi/TeklifList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -169,7 +168,7 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="/Siparis/YeniDetay/' + data + '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>'
+                        return '<a href="/Teklif/YeniDetay/' + data + '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>'
                     }
                 }
             ],
@@ -197,7 +196,7 @@
     function BayiSec(element) {
         swal.fire({
             title: 'Emin Misin?',
-            text: "Seçilen Bayi İçin Sipariş Kaydı Oluşturulacak!",
+            text: "Seçilen Bayi İçin Teklif Belgesi Oluşturulacak!",
             type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Evet, Oluştur!',
@@ -213,7 +212,7 @@
     function submitForm(element) {
         $.ajax({
             type: "POST",
-            url: "/Siparis/YeniSiparis/" + element,
+            url: "/Teklif/YeniTeklif/" + element,
             dataType: "json",
             success: function (result) {
                 swal.fire({

@@ -66,15 +66,6 @@ namespace VNNB2B.Controllers
 
                 ViewBag.birim = birim;
 
-                List<SelectListItem> urunler = (from v in c.Urunlers.Where(v => v.Durum == true).ToList()
-                                                select new SelectListItem
-                                                {
-                                                    Text = v.UrunKodu.ToString() + " - " + v.UrunAdi.ToString(),
-                                                    Value = v.ID.ToString()
-                                                }).ToList();
-
-                ViewBag.urunler = urunler;
-
                 ViewBag.hata = SatinAlmaHata.Icerik;
                 return View();
             }

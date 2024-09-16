@@ -1,6 +1,6 @@
 ﻿@using VNNB2B.Models.Hata
 @{
-    ViewData["Title"] = "Devam";
+    ViewData["Title"] = "Cikar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,6 +23,7 @@
     BoyaHata.Icerik = "";
 }
 <br />
+
 <div class="card">
     <div class="card-header border-transparent">
         <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -30,7 +31,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Devam Eden İş Emirleri</h4>
+                            <h4>Boyadan Çıkarılabilir İş Emirleri</h4>
                         </div>
                     </div>
                 </div>
@@ -43,12 +44,9 @@
                                     <th>Ürün Resmi</th>
                                     <th>Ürün Kodu</th>
                                     <th>Ürün Adı</th>
-                                    <th>Boyanacak Miktar</th>
-                                    <th>Kalan Miktar</th>
+                                    <th>Çıkarılabilecek Miktar</th>
                                     <th>Sipariş Özellikleri</th>
-                                    <th>Gören Personel</th>
-                                    <th>Görülme Tarihi</th>
-                                    <th>Durum</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -59,17 +57,52 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">İş Emrini Boyadan Çıkar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <input id="id" type="hidden" name="id" />
+                    <div class="form-group">
+                        <label>Sevk Edilecek İstason</label>
+                        <select class="form-control select2" style="width: 100%;" id="Istasyon">
+                            <option selected="selected">İstasyon Seçiniz...</option>
+                            <option>Döşeme</option>
+                            <option>Ambalaj</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Boyadan Çıkarılacak Miktar</label>
+                        <input type="number" class="form-control" id="miktar" name="miktar">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="SevkEt()" style="float:right;">Onayla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
+    var satir = 0;
     var myDataTable;
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
             ajax: {
-                url: '/BoyaApi/DevamList',
+                url: '/BoyaApi/CikarList',
                 method: 'POST',
                 dataSrc: '',
                 error: function (xhr, error, thrown) {
@@ -94,12 +127,14 @@
                 },
                 { data: 'urunKodu' },
                 { data: 'urunAdi' },
-                { data: 'gelenAdet' },
                 { data: 'islemdekiAdet' },
                 { data: 'ozellikleri' },
-                { data: 'gorenKullanici' },
-                { data: 'okunmaTarih' },
-                { data: 'baslamaDurum' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="#"  onclick="onayla(' + data + ')" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-fill-drip"></i> </a>'
+                    }
+                }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
@@ -147,4 +182,33 @@
     $(document).ready(function () {
         initializeDataTable();
     })
+    function onayla(element) {
+        satir = element;
+        $("#id").val(element);
+    }
+    function SevkEt() {
+        var element = satir;
+        var formData = {
+            id: $("#id").val(),
+            miktar: $("#miktar").val(),
+            Istasyon: $("#Istasyon").val(),
+        };
+        $.ajax({
+            type: "POST",
+            url: '/BoyaApi/BoyaCikar',
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                if (result.status == "success") {
+                    tabloGuncelle();
+                }
+            }
+        });
+    }
 </script>
