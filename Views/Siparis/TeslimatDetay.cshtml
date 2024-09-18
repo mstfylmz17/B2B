@@ -75,8 +75,9 @@
                         </p>
                         <hr />
                         <div style="float:right;">
-                        <a href="#" class="btn btn-info tn-sm"><i class="fas fa-print"></i> Yazdır</a>
-                        <a href="#" class="btn btn-primary tn-sm" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-truck"></i> Teslim Et</a></div>
+                            <a href="#" class="btn btn-info tn-sm"><i class="fas fa-print"></i> Yazdır</a>
+                            <a href="#" class="btn btn-primary tn-sm" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-truck"></i> Teslim Et</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,6 +103,7 @@
                                             <th>Ürün Adı</th>
                                             <th>Sipariş No</th>
                                             <th>Sipariş Miktarı</th>
+                                            <th>Hazır Miktar</th>
                                             <th>Teslim Edilen Miktar</th>
                                             <th>Kalan Miktar</th>
                                             <th>Renk / Deri / Notlar</th>
@@ -123,35 +125,37 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                <div class="col-6" style="float:left;">
-                <strong><i class="fas fa-truck mr-1"></i> Araç Bilgileri</strong>
+                    <div class="col-6" style="float:left;">
+                        <strong><i class="fas fa-truck mr-1"></i> Araç Bilgileri</strong>
 
-                <p class="text-muted" id="txtplaka">
-                    Araç Plaka :
-                </p>
-                <p class="text-muted" id="txtTeslimEden">
-                    Teslim Eden :
-                </p>
-                <p class="text-muted" id="txtTeslimAlan">
-                    Teslim Alan :
-                </p>
+                        <p class="text-muted" id="txtplaka">
+                            Araç Plaka :
+                        </p>
+                        <p class="text-muted" id="txtTeslimEden">
+                            Teslim Eden :
+                        </p>
+                        <p class="text-muted" id="txtTeslimAlan">
+                            Teslim Alan :
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="col-6" style="float:right;">
+                        <strong><i class="fas fa-box mr-1"></i> Koli Bilgileri</strong>
+
+                        <p class="text-muted" id="txttopurun">
+                            Toplam Ürün Adedi :
+                        </p>
+                        <p class="text-muted" id="txttopparca">
+                            Toplam Parça Adedi :
+                        </p>
+                        <p class="text-muted" id="txttopm3">
+                            Toplam M3 :
+                        </p>
+                        <p class="text-muted" id="txttopKG">
+                            Toplam KG :
+                        </p>
+                    </div>
                 </div>
-                <hr>
-                <div class="col-6" style="float:right;">
-                <strong><i class="fas fa-box mr-1"></i> Koli Bilgileri</strong>
-
-                <p class="text-muted" id="txttopurun">
-                    Toplam Ürün Adedi :
-                </p>
-                <p class="text-muted" id="txttopparca">
-                    Toplam Parça Adedi :
-                </p>
-                <p class="text-muted" id="txttopm3">
-                    Toplam M3 :
-                </p>
-                <p class="text-muted" id="txttopKG">
-                    Toplam KG :
-                </p></div></div>
             </div>
         </div>
     </div>
@@ -166,7 +170,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="/SiparisApi/TeslimOnayla" method="post" enctype="multipart/form-data">
+            <form>
                 <div class="modal-body">
                     <input id="ID" type="hidden" name="ID" value="@id" />
                     <div class="form-group mb-3">
@@ -195,7 +199,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" style="float:right;">Teslim Et</button>
+                    <button type="button" onclick="TeslimForm(@id)" class="btn btn-success" style="float:right;">Teslim Et</button>
                 </div>
             </form>
         </div>
@@ -208,6 +212,7 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
+    var teslimdurum = 0;
     var myDataTable;
     function initializeDataTable() {
         myDataTable = new DataTable('#myTable', {
@@ -231,10 +236,16 @@
                 { data: 'urunID' },
                 { data: 'siparisID' },
                 { data: 'siparisMiktari' },
+                { data: 'hazirMiktar' },
                 {
                     data: 'id',
                     render: function (data, type, row, meta) {
-                        return '<input type="number" style="text-align:center; width: 100%; box-sizing: border-box; padding: 4px; margin: 0;" class="miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
+                        if (teslimdurum == 0) {
+                            return '<input type="number" style="text-align:center; width: 100%; box-sizing: border-box; padding: 4px; margin: 0;" class="miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
+                        }
+                        else {
+                            return '' + row.miktar + '';
+                        }
                     }
                 },
                 { data: 'kalanMiktar' },
@@ -242,7 +253,12 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<div class="row"><div class="col-6"><button class="btn btn-info btn-xs" style="margin-right:2px; float:left;" type="button" onclick="AddForm(' + data + ')"> Güncelle</a></div>' + '<div class="col-6"><button type="button" onclick="sil(' + data + ')" style="float:right;" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button></div></div>'
+                        if (teslimdurum == 0) {
+                            return '<div class="row"><div class="col-6"><button class="btn btn-info btn-xs" style="margin-right:2px; float:left;" type="button" onclick="AddForm(' + data + ')"> Güncelle</a></div>' + '<div class="col-6"><button type="button" onclick="sil(' + data + ')" style="float:right;" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button></div></div>'
+                        }
+                        else {
+                            return '<div></div>';
+                        }
                     }
                 }
             ],
@@ -321,33 +337,68 @@
             }
         });
     }
+    function TeslimForm(element) {
+        var formData = {
+            ID: element,
+            TeslimatTarihi: $("#TeslimatTarihi").val(),
+            TeslimEden: $("#TeslimEden").val(),
+            TeslimAlan: $("#TeslimAlan").val(),
+            AracPlaka: $("#AracPlaka").val(),
+            TeslimSekli: $("#TeslimSekli").val(),
+            TeslimAdres: $("#TeslimAdres").val(),
+        };
+        $.ajax({
+            type: "POST",
+            url: '/SiparisApi/TeslimOnayla',
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                if (result.status == "success") {
+                    tabloGuncelle();
+                    $("#TeslimatTarihi").val() = "";
+                    $("#TeslimEden").val() = "";
+                    $("#TeslimAlan").val() = "";
+                    $("#AracPlaka").val() = "";
+                    $("#TeslimSekli").val() = "";
+                    $("#TeslimAdres").val() = "";
+                }
+            }
+        });
+    }
+    function Bilgiler() {
+        $.ajax({
+            type: "POST",
+            url: "/SiparisApi/TeslimatDetayBilgi",
+            data: { id: @id },
+            success: function (x) {
+                if (x.aracPlaka != null && x.aracPlaka.length > 0) {
+                    teslimdurum = 1;
+                }
+                $("#txtplaka").text("Araç Plaka :" + x.aracPlaka);
+                $("#txtTeslimEden").text("Teslim Eden :" + x.teslimEden);
+                $("#txtTeslimAlan").text("Tesalim Alan :" + x.teslimAlan);
+                $("#txttopurun").text("Toplam Ürün Adedi :" + x.toplamAdet);
+                $("#txttopparca").text("Toplam Parça :" + x.toplamParca);
+                $("#txttopm3").text("Toplam M3 :" + x.toplamM3);
+                $("#txttopKG").text("Toplam KG :" + x.toplamKG);
 
-        function Bilgiler() {
-                        $.ajax({
-                            type: "POST",
-                            url: "/SiparisApi/TeslimatDetayBilgi",
-                            data: { id: @id },
-                            success: function (x) {
-                                console.log(x);
-                                $("#txtplaka").text("Araç Plaka :"+x.aracPlaka);
-                                $("#txtTeslimEden").text("Teslim Eden :"+x.teslimEden);
-                                $("#txtTeslimAlan").text("Tesalim Alan :"+x.teslimAlan);
-                                $("#txttopurun").text("Toplam Ürün Adedi :"+x.toplamAdet);
-                                $("#txttopparca").text("Toplam Parça :"+x.toplamParca);
-                                $("#txttopm3").text("Toplam M3 :"+x.toplamM3);
-                                $("#txttopKG").text("Toplam KG :"+x.toplamKG);
+                $("#txtmusteriadi").text("Müşteri Adı :" + x.musteriAdi);
+                $("#txtfaturaunvan").text("Fatura Ünvanı :" + x.faturaUnvan);
+                $("#txttelefon").text("Telefon :" + x.telefon);
+                $("#txtadres").text("Adres :" + x.adres);
+                $("#txtkullanici").text("Hazırlayan :" + x.kullaniciID);
+                $("#txtteslimatno").text("Teslimat No :" + x.teslimatNo);
+                $("#txttarih").text("Teslimat Tarihi :" + x.teslimatTarihi);
+                $("#txtteslimatsekli").text("Teslimat Şekli :" + x.teslimSekli);
+                $("#txttesadres").text("Teslimat Adresi :" + x.teslimAdres);
 
-                                $("#txtmusteriadi").text("Müşteri Adı :"+x.musteriAdi);
-                                $("#txtfaturaunvan").text("Fatura Ünvanı :"+x.faturaUnvan);
-                                $("#txttelefon").text("Telefon :"+x.telefon);
-                                $("#txtadres").text("Adres :"+x.adres);
-                                $("#txtkullanici").text("Hazırlayan :"+x.kullaniciID);
-                                $("#txtteslimatno").text("Teslimat No :"+x.teslimatNo);
-                                $("#txttarih").text("Teslimat Tarihi :"+x.teslimatTarihi);
-                                $("#txtteslimatsekli").text("Teslimat Şekli :"+x.teslimSekli);
-                                $("#txttesadres").text("Teslimat Adresi :"+x.teslimAdres);
-
-                            }
-                        });
-                    }
+            }
+        });
+    }
 </script>

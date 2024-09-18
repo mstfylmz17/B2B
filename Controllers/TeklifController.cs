@@ -55,11 +55,11 @@ namespace VNNB2B.Controllers
                 s.OnayAciklama = "";
                 s.Durum = false;
                 s.SiparisDurum = "Teklif Onay Bekliyor...";
-                s.SiparisNo = bayi.BayiKodu + " " + (c.Siparis.Count() + 1).ToString();
+                s.SiparisNo = bayi.BayiKodu + " - T - " + (c.Teklifs.Count() + 1).ToString();
                 s.BayiOnay = true;
                 c.Teklifs.Add(s);
                 c.SaveChanges();
-                var sonsip = c.Siparis.OrderByDescending(v => v.ID).FirstOrDefault(v => v.BayiID == id);
+                var sonsip = c.Teklifs.OrderByDescending(v => v.ID).FirstOrDefault(v => v.BayiID == id);
                 TeklifHata.Icerik = "Teklif Kaydı Oluşturuldu...";
                 return Json(new { status = "success", message = "Teklif Kaydı Oluşturuldu", redirectUrl = Url.Action("YeniDetay", new { id = sonsip.ID }) });
                 //return RedirectToAction("YeniDetay", new { id = sonsip.ID });

@@ -44,7 +44,7 @@
                                     <th>Bayi Adı</th>
                                     <th>Teklif Tarihi</th>
                                     <th>Teklif No</th>
-                                    <th>Toplam Sipariş Miktarı</th>
+                                    <th>Toplam Teklif Miktarı</th>
                                     <th>Teklif Tutarı</th>
                                     <th></th>
                                 </tr>
@@ -56,6 +56,7 @@
         </div>
     </div>
 </div>
+
 <div class="card">
     <div class="card-header border-transparent">
         <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -86,7 +87,6 @@
         </div>
     </div>
 </div>
-
 
 <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -164,7 +164,6 @@
                 { data: 'siparisNo' },
                 { data: 'toplamAdet' },
                 { data: 'toplamTutar' },
-                { data: 'siparisDurum' },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {

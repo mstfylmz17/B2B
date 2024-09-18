@@ -17,8 +17,44 @@
     <link rel="stylesheet" href="/Tema/plugins/bs-stepper/css/bs-stepper.min.css">
     <link rel="stylesheet" href="/Tema/plugins/dropzone/min/dropzone.min.css">
     <link rel="stylesheet" href="/Tema/dist/css/adminlte.min.css">
+
+    <style>
+        table.table-tab {
+            border-collapse: collapse;
+            border-color:black;
+            width: 100%;
+        }
+
+            table.table-tab th, table.table-tab td {
+                border: 2px double #B17F2C;
+            }
+
+            table.table-tab th {
+                background-color: #f8f9fa;
+                color: #B17F2C;
+                border-top: 2px solid #B17F2C;
+            }
+
+            table.table-tab td {
+                background-color: white;
+                color: #B17F2C;
+            }
+
+            table.table-tab thead th {
+                border-top: 2px solid #B17F2C;
+            }
+
+        table.dataTable tbody tr {
+            height: 25px;
+        }
+
+        table.dataTable tbody td {
+            line-height: 25px;
+            vertical-align: middle;
+        }
+    </style>
 </head>
-<body class="hold-transition dark-mode layout-top-nav">
+<body class="hold-transitione dark-mode layout-top-nav">
     <div class="wrapper">
         <nav class="main-header navbar navbar-expand-md navbar-dark">
             <div class="container" style="margin-left:0px;">
@@ -122,14 +158,6 @@
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:darkblue"></i>
                                             Teklif Hazırla
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/Check" class="nav-link">
-                                        <p>
-                                            <i class="fa fa-circle nav-icon" style="color:darkblue"></i>
-                                            Check List Hazırla
                                         </p>
                                     </a>
                                 </li>

@@ -53,7 +53,6 @@
             <span class="right badge badge-danger" id="txtyuklemeyehazirsiparis">0</span>
         </a>
         <a href="/Teklif" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> TEKLİF HAZIRLA</a>
-        <a href="/Check" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> CHECK LİST HAZIRLA</a>
         <a href="/Siparis/Teslimat" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> TESLİMAT OLUŞTUR</a>
         <a href="/Siparis/Teslimatlar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> TESLİMAT BELGELERİ</a>
         <a href="/Urunler/Stok" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> STOK DURUMU</a>
@@ -132,26 +131,26 @@
         <a class="btn btn-xs" href="/SatinAlma" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> YENİ SATIN ALMA AÇ</a>
         <a class="btn btn-xs" href="/SatinAlma/Talepler" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
             SATIN ALMA TALEPLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtsatinalmatalepleri">0</span>
         </a>
         <a class="btn btn-xs" href="/SatinAlma/Bekleyen" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
             ONAY BEKLEYEN SATIN ALMALAR
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtonaybekleyensatinalma">0</span>
         </a>
         <a class="btn btn-xs" href="/SatinAlma/Devam" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN SATIN ALMALAR
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtdevamedensatinalma">0</span>
         </a>
         <a class="btn btn-xs" href="/SatinAlma/Kısmi" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             KISMİ KABUL SATIN ALMALAR
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtkismisatinalma">0</span>
         </a>
         <a class="btn btn-xs" href="/SatinAlma/MalKabul" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> MAL KABUL OLUŞTUR</a>
         <a class="btn btn-xs" href="/SatinAlma/Sayim" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> SAYIM YAP </a>
         <a href="/Urunler/Stok" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> STOK DURUMU</a>
         <a class="btn btn-xs" href="/SatinAlma/Gecmis" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ SATIN ALMALAR
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtgecmissatinalma">0</span>
         </a>
     </div>
     <div class="col-lg-12 col-12">
@@ -159,8 +158,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>0</h3>
-                        <h5>10.000,00 ₺</h5>
+                        <h3 id="txtgunluksatinalma">0</h3>
+                        <h5 id="txtgunluksatinalmatop">10.000,00 ₺</h5>
                         <p>GÜNLÜK SATIN ALMALAR</p>
                     </div>
                     <div class="icon">
@@ -172,8 +171,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>0</h3>
-                        <h5>10.000,00 ₺</h5>
+                        <h3 id="txthaftaliksatinalma">0</h3>
+                        <h5 id="txthaftaliksatinalmatop">10.000,00 ₺</h5>
                         <p>HAFTALIK SATIN ALMALAR</p>
                     </div>
                     <div class="icon">
@@ -185,9 +184,9 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>0</h3>
-                        <h5>10.000,00 ₺</h5>
-                        <p>HAFTALIK SATIN ALMALAR</p>
+                        <h3 id="txtayliksatinalma">0</h3>
+                        <h5 id="txtayliksatinalmatop">10.000,00 ₺</h5>
+                        <p>AYLIK SATIN ALMALAR</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-wallet"></i>
@@ -198,8 +197,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>0</h3>
-                        <h5>10.000,00 ₺</h5>
+                        <h3 id="txtyilliksatinalma">0</h3>
+                        <h5 id="txtyilliksatinalmatop">10.000,00 ₺</h5>
                         <p>YILLIK SATIN ALMALAR</p>
                     </div>
                     <div class="icon">
@@ -305,22 +304,22 @@
     <div class="col-lg-12 col-12">
         <a class="btn btn-xs" href="/Depo" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
             YENİ İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtisemridepo">0</span>
         </a>
         <a class="btn btn-xs" href="/Depo/Devam" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtdevamdepo">0</span>
         </a>
-        <a class="btn btn-xs" href="/Depo/Kısmi" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
+        <a class="btn btn-xs" href="/Depo/Kismi" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             KISMİ SEVK EDİLEN İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtkismidepo">0</span>
         </a>
         <a class="btn btn-xs" href="/Depo/BoyaSevk" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> ÜRÜNÜ BOYAYA ÇIKAR </a>
         <a class="btn btn-xs" href="/Depo/UrunSevk" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> HAMMADDE & HIRDAVAT ÇIKAR </a>
         <a href="/Urunler/Stok" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; "> STOK DURUMU </a>
         <a class="btn btn-xs" href="/Depo/Gecmis" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtgecmisdepo">0</span>
         </a>
     </div>
     <div class="col-lg-12 col-12">
@@ -328,7 +327,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txtgunlukdepo">0</h3>
                         <p>GÜNLÜK FAB. SEVK EDİLENLER</p>
                     </div>
                     <div class="icon">
@@ -340,7 +339,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txthaftalikdepo">0</h3>
                         <p>HAFTALIK FAB. SEVK EDİLENLER</p>
                     </div>
                     <div class="icon">
@@ -352,8 +351,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>0</h3>
-                        <p>HAFTALIK FAB. SEVK EDİLENLER</p>
+                        <h3 id="txtaylikdepo">0</h3>
+                        <p> AYLIK FAB. SEVK EDİLENLER</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-warehouse"></i>
@@ -364,7 +363,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txtyillikdepo">0</h3>
                         <p>YILLIK FAB. SEVK EDİLENLER</p>
                     </div>
                     <div class="icon">
@@ -388,21 +387,21 @@
     <div class="col-lg-12 col-12">
         <a href="/Boya" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
             YENİ İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtyeniboya">0</span>
         </a>
         <a href="/Boya/Devam" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtdevamboya">0</span>
         </a>
         <a href="/Boya/KısmiBoyanan" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             KISMİ BOYANAN İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtkismiboya">0</span>
         </a>
         <a href="/Boya/Al" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ BOYAYA AL </a>
         <a href="/Boya/Cikar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white; "> ÜRÜNÜ BOYADAN ÇIKAR </a>
         <a href="/Boya/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtgecmisboya">0</span>
         </a>
     </div>
     <div class="col-lg-12 col-12">
@@ -410,7 +409,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txtgunlukboya">0</h3>
                         <p>GÜNLÜK BOYANANLAR</p>
                     </div>
                     <div class="icon">
@@ -422,7 +421,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txthaftalıkboya">0</h3>
                         <p>HAFTALIK BOYANANLAR</p>
                     </div>
                     <div class="icon">
@@ -434,8 +433,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>0</h3>
-                        <p>HAFTALIK BOYANANLAR</p>
+                        <h3 id="txtaylikboya">0</h3>
+                        <p>AYLIK BOYANANLAR</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-fill-drip"></i>
@@ -446,7 +445,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txtyillikboya">0</h3>
                         <p>YILLIK BOYANANLAR</p>
                     </div>
                     <div class="icon">
@@ -470,21 +469,21 @@
     <div class="col-lg-12 col-12">
         <a href="/Doseme" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
             YENİ İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtyenidoseme">0</span>
         </a>
         <a href="/Doseme/Devam" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             DEVAM EDEN İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtdevamdoseme">0</span>
         </a>
         <a href="/Doseme/KısmiDosenen" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             KISMİ DÖŞENEN İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtkismidoseme">0</span>
         </a>
         <a href="/Doseme/Al" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ DÖŞEMEYE AL </a>
         <a href="/Doseme/Cikar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white;"> ÜRÜNÜ DÖŞEMEDEN ÇIKAR </a>
         <a href="/Doseme/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
             GEÇMİŞ İŞ EMİRLERİ
-            <span class="right badge badge-danger">0</span>
+            <span class="right badge badge-danger" id="txtgecmisdoseme">0</span>
         </a>
     </div>
     <div class="col-lg-12 col-12">
@@ -492,7 +491,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txtgunlukdoseme">0</h3>
                         <p>GÜNLÜK DÖŞEMELER</p>
                     </div>
                     <div class="icon">
@@ -504,7 +503,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txthaftalikdoseme">0</h3>
                         <p>HAFTALIK DÖŞEMELER</p>
                     </div>
                     <div class="icon">
@@ -516,8 +515,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>0</h3>
-                        <p>HAFTALIK DÖŞEMELER</p>
+                        <h3 id="txtaylikdoseme">0</h3>
+                        <p>AYLIK DÖŞEMELER</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-bookmark"></i>
@@ -528,7 +527,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txtyillikdoseme">0</h3>
                         <p>YILLIK DÖŞEMELER</p>
                     </div>
                     <div class="icon">
@@ -553,22 +552,22 @@
         <div class="col-12">
             <a href="/Ambalaj" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; ">
                 YENİ İŞ EMİRLERİ
-                <span class="right badge badge-danger">0</span>
+                <span class="right badge badge-danger" id="txtyeniambalaj">0</span>
             </a>
             <a href="/Ambalaj/Devam" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
                 DEVAM EDEN İŞ EMİRLERİ
-                <span class="right badge badge-danger">0</span>
+                <span class="right badge badge-danger" id="txtdevamambalaj">0</span>
             </a>
             <a href="/Ambalaj/KısmiAmbalaj" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
                 KISMİ AMBALAJ İŞ EMİRLERİ
-                <span class="right badge badge-danger">0</span>
+                <span class="right badge badge-danger" id="txtkismiambalaj">0</span>
             </a>
             <a href="/Ambalaj/Etiket" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkblue; color:white; "> ÜRÜN ETİKETİ YAZDIR </a>
             <a href="/Ambalaj/Al" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:green; color:white; "> ÜRÜNÜ AMBALAJA AL </a>
             <a href="/Ambalaj/Cikar" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:darkred; color:white;"> ÜRÜNÜ AMBALAJDAN ÇIKAR </a>
             <a href="/Ambalaj/Gecmis" class="btn btn-xs" style="font-size:15px; margin-bottom:15px; background-color:black; color:white; ">
                 GEÇMİŞ İŞ EMİRLERİ
-                <span class="right badge badge-danger">0</span>
+                <span class="right badge badge-danger" id="txtgecmisambalaj">0</span>
             </a>
         </div>
     </div>
@@ -577,7 +576,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txtgunlukambalaj">0</h3>
                         <p>GÜNLÜK AMBALAJ</p>
                     </div>
                     <div class="icon">
@@ -589,7 +588,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txthaftalikambalaj">0</h3>
                         <p>HAFTALIK AMBALAJ</p>
                     </div>
                     <div class="icon">
@@ -601,8 +600,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>0</h3>
-                        <p>HAFTALIK AMBALAJ</p>
+                        <h3 id="txtaylikambalaj">0</h3>
+                        <p>AYLIK AMBALAJ</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-box"></i>
@@ -613,7 +612,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 id="txtyillikambalaj">0</h3>
                         <p>YILLIK AMBALAJ</p>
                     </div>
                     <div class="icon">
@@ -730,8 +729,10 @@
             type: "POST",
             url: "/BilgiApi/Bilgiler",
             success: function (x) {
+                console.log(x);
+                //Sipariş
                 $("#txtonaybekleyensiparis").text(x.onayBekleyenSiparis);
-                $("#txtonaybekleyensiparis").text(x.devamEdenSiparis);
+                $("#txtdevamedensiparis").text(x.devamEdenSiparis);
                 $("#txtkismiteslimsiparis").text(x.kismiTeslimSiparis);
                 $("#txtgecmissiparis").text(x.gecmisSiparis);
                 $("#txtgunluksiparis").text(x.gunlukSiparis);
@@ -742,8 +743,58 @@
                 $("#txtayliksiparistop").text(x.aylikSiparisTop);
                 $("#txtyilliksiparis").text(x.yillikSiparis);
                 $("#txtyilliksiparistop").text(x.yillikSiparisTop);
-                //$("#txtayliksiparistop").text(x.aylikSiparisTop);
-                //$("#txtayliksiparistop").text(x.aylikSiparisTop);
+                $("#txtyuklemeyehazirsiparis").text(x.yuklemeyeHazirSip);
+                //Satın Alma
+                $("#txtsatinalmatalepleri").text(x.satinAlmaTalepleri);
+                $("#txtonaybekleyensatinalma").text(x.onayBekleyenSatinAlma);
+                $("#txtdevamedensatinalma").text(x.devamEdenSatinAlma);
+                $("#txtkismisatinalma").text(x.kismiKabulSatinAlma);
+                $("#txtgecmissatinalma").text(x.gecmisSatinAlma);
+                $("#txtgunluksatinalma").text(x.gunlukSatinAlmas);
+                $("#txtgunluksatinalmatop").text(x.gunlukSatinAlmasTop);
+                $("#txthaftaliksatinalma").text(x.haftalikSatinAlma);
+                $("#txthaftaliksatinalmatop").text(x.haftalikSatinAlmaTop);
+                $("#txtayliksatinalma").text(x.aylikSatinAlma);
+                $("#txtayliksatinalmatop").text(x.aylikSatinAlmaTop);
+                $("#txtyilliksatinalma").text(x.yillikSatinAlma);
+                $("#txtyilliksatinalmatop").text(x.yillikSatinAlmaTop);
+                //Depo
+                $("#txtisemridepo").text(x.yeniDepoIsEmri);
+                $("#txtdevamdepo").text(x.devamDepoIsEmri);
+                $("#txtkismidepo").text(x.kismiDepoIsEmri);
+                $("#txtgecmisdepo").text(x.gecmisDepoIsEmri);
+                $("#txtgunlukdepo").text(x.gunlukDepoIsEmri);
+                $("#txthaftalikdepo").text(x.haftalikDepoIsEmri);
+                $("#txtaylikdepo").text(x.aylikDepoIsEmri);
+                $("#txtyillikdepo").text(x.yillikDepoIsEmri);
+                //Boya
+                $("#txtyeniboya").text(x.yeniBoyaIsEmri);
+                $("#txtdevamboya").text(x.devamBoyaIsEmri);
+                $("#txtkismiboya").text(x.kismiBoyaIsEmri);
+                $("#txtgecmisboya").text(x.gecmisBoyaIsEmri);
+                $("#txtgunlukboya").text(x.gunlukBoyaIsEmri);
+                $("#txthaftalıkboya").text(x.haftalikBoyaIsEmri);
+                $("#txtaylikboya").text(x.aylikBoyaIsEmri);
+                $("#txtyillikboya").text(x.yillikBoyaIsEmri);
+                //Döşeme
+                $("#txtyenidoseme").text(x.yeniDosemeIsEmri);
+                $("#txtdevamdoseme").text(x.devamDosemeIsEmri);
+                $("#txtkismidoseme").text(x.kismiDosemeIsEmri);
+                $("#txtgecmisdoseme").text(x.gecmisDosemeIsEmri);
+                $("#txtgunlukdoseme").text(x.gunlukDosemeIsEmri);
+                $("#txthaftalikdoseme").text(x.haftalikDosemeIsEmri);
+                $("#txtaylikdoseme").text(x.aylikDosemeIsEmri);
+                $("#txtyillikdoseme").text(x.yillikDosemeIsEmri);
+                //Ambalaj
+                $("#txtyeniambalaj").text(x.yeniAmbalajIsEmri);
+                $("#txtdevamambalaj").text(x.devamAmbalajIsEmri);
+                $("#txtkismiambalaj").text(x.kismiAmbalajIsEmri);
+                $("#txtgecmisambalaj").text(x.gecmisAmbalajIsEmri);
+                $("#txtgunlukambalaj").text(x.gunlukAmbalajIsEmri);
+                $("#txthaftalikambalaj").text(x.haftalikAmbalajIsEmri);
+                $("#txtaylikambalaj").text(x.aylikAmbalajIsEmri);
+                $("#txtyillikambalaj").text(x.yillikAmbalajIsEmri);
+
             }
         });
     }

@@ -37,23 +37,23 @@
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
-                    <div class="table-responsive">
-                        <table id="myTable" class="table table-hover" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Bayi Adı</th>
-                                    <th>Sipariş Tarihi</th>
-                                    <th>Sipariş No</th>
-                                    <th>Ürün Resmi</th>
-                                    <th>Ürün Adı - Kodu</th>
-                                    <th>Üretilecek Miktar</th>
-                                    <th>Kalan Miktar</th>
-                                    <th>İstenilen Özellikler</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:14px;">
+                        <thead>
+                            <tr style="background-color:#B17F2C">
+                                <th style="width:9%;"><center>Sipariş No</center></th>
+                                <th style="width:10%;"><center>Bayi Adı</center></th>
+                                <th style="width:10%;"><center>Ürün Resmi</center></th>
+                                <th style="width:6%;"><center>Ürün Kodu</center></th>
+                                <th style="width:15%;"><center>Ürün Adı</center></th>
+                                <th style="width:2%;"><center>Üretilecek Adet</center></th>
+                                <th style="width:2%;"><center>Kalan Adet</center></th>
+                                <th style="width:15%;"><center>Ahşap Rengi</center></th>
+                                <th style="width:15%;"><center>Deri Rengi</center></th>
+                                <th style="width:15%;"><center>Özel Not</center></th>
+                                <th style="width:1%;"><center></center></th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -112,19 +112,66 @@
                 }
             },
             columns: [
-                { data: 'bayiID' },
-                { data: 'siparisTarihi' },
-                { data: 'siparisNo' },
+                {
+                    data: 'siparisNo',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'bayiID',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
                 {
                     data: 'urunID',
                     render: function (data, type, full, meta) {
-                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" />';
+                        return '<center><img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" /></center>';
                     }
                 },
-                { data: 'urunKodu' },
-                { data: 'gelenAdet' },
-                { data: 'kalanAdet' },
-                { data: 'ozellikleri' },
+                {
+                    data: 'urunKodu',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'urunAdi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'gelenAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'kalanAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'ahsapRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'deriRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'aciklama',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
@@ -202,6 +249,7 @@
                     confirmButtonText: 'Tamam'
                 });
                 if (result.status == "success") {
+                    $('#modal-lg').modal('hide');
                     tabloGuncelle();
                 }
             }

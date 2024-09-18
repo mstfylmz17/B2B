@@ -33,7 +33,7 @@ namespace VNNB2B.Controllers.Api
                 list.UrunID = grup.Adi + " - " + urun.UrunKodu.ToString() + " - " + urun.UrunAdi.ToString();
                 list.Urun = x.UrunID.ToString();
                 list.Birim = birim.BirimAdi.ToString();
-                list.Tarih = Convert.ToDateTime(x.Tarih).ToString("d");
+                list.Tarih = Convert.ToDateTime(x.Tarih).ToString("dd/MM/yyyy");
                 list.Miktar = Convert.ToDecimal(x.Miktar).ToString("N2");
                 list.TalepEden = x.TalepEden.ToString();
                 if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = "";
@@ -61,7 +61,7 @@ namespace VNNB2B.Controllers.Api
                 list.ID = Convert.ToInt32(x.ID);
                 list.UrunID = urun.UrunKodu.ToString() + " - " + urun.UrunAdi.ToString();
                 list.Birim = birim.BirimAdi.ToString();
-                list.Tarih = Convert.ToDateTime(x.Tarih).ToString("d");
+                list.Tarih = Convert.ToDateTime(x.Tarih).ToString("dd/MM/yyyy");
                 list.Miktar = Convert.ToDecimal(x.Miktar).ToString("N2");
                 list.TalepEden = x.TalepEden.ToString();
                 if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = "";
@@ -363,7 +363,7 @@ namespace VNNB2B.Controllers.Api
                 list.ID = Convert.ToInt32(x.ID);
                 list.KullaniciID = personel.AdSoyad.ToString();
                 list.SatinAlmaNo = x.SatinAlmaNo.ToString();
-                list.Tarih = Convert.ToDateTime(x.Tarih).ToString("d");
+                list.Tarih = Convert.ToDateTime(x.Tarih).ToString("dd/MM/yyyy");
                 if (ted.TedarikciKodu != null) list.TedarikciID = ted.TedarikciKodu.ToString();
                 if (ted.Unvan != null) list.TedarikciID += " - " + ted.Unvan.ToString();
                 if (ted.FirmaAdi != null) list.TedarikciID += " - " + ted.FirmaAdi.ToString();
@@ -430,8 +430,8 @@ namespace VNNB2B.Controllers.Api
                 list.KullaniciID = personel.AdSoyad.ToString();
                 list.OnaylayanID = onaylayan.AdSoyad.ToString();
                 list.SatinAlmaNo = x.SatinAlmaNo.ToString();
-                list.Tarih = Convert.ToDateTime(x.Tarih).ToString("d");
-                list.OnayTarihi = Convert.ToDateTime(x.OnayTarihi).ToString("d");
+                list.Tarih = Convert.ToDateTime(x.Tarih).ToString("dd/MM/yyyy");
+                list.OnayTarihi = Convert.ToDateTime(x.OnayTarihi).ToString("dd/MM/yyyy");
                 if (ted.TedarikciKodu != null) list.TedarikciID = ted.TedarikciKodu.ToString();
                 if (ted.Unvan != null) list.TedarikciID += " - " + ted.Unvan.ToString();
                 if (ted.FirmaAdi != null) list.TedarikciID += " - " + ted.FirmaAdi.ToString();
@@ -536,7 +536,7 @@ namespace VNNB2B.Controllers.Api
             list.ID = Convert.ToInt32(x.ID);
             list.KullaniciID = personel.AdSoyad.ToString();
             list.SatinAlmaNo = x.SatinAlmaNo.ToString();
-            list.Tarih = Convert.ToDateTime(x.Tarih).ToString("d");
+            list.Tarih = Convert.ToDateTime(x.Tarih).ToString("dd/MM/yyyy");
             if (ted.TedarikciKodu != null) list.TedarikciID = ted.TedarikciKodu.ToString();
             if (ted.Unvan != null) list.TedarikciID += " - " + ted.Unvan.ToString();
             if (ted.FirmaAdi != null) list.TedarikciID += " - " + ted.FirmaAdi.ToString();

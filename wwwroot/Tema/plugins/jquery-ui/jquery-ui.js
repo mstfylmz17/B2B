@@ -7957,7 +7957,7 @@ $.extend( Datepicker.prototype, {
 						handled = event.ctrlKey || event.metaKey;
 						break; // current on ctrl or command +home
 				case 37: if ( event.ctrlKey || event.metaKey ) {
-							$.datepicker._adjustDate( event.target, ( isRTL ? +1 : -1 ), "D" );
+							$.datepicker._adjustDate( event.target, ( isRTL ? +1 : -1 ), "dd/MM/yyyy" );
 						}
 						handled = event.ctrlKey || event.metaKey;
 
@@ -7971,12 +7971,12 @@ $.extend( Datepicker.prototype, {
 						// next month/year on alt +left on Mac
 						break;
 				case 38: if ( event.ctrlKey || event.metaKey ) {
-							$.datepicker._adjustDate( event.target, -7, "D" );
+							$.datepicker._adjustDate( event.target, -7, "dd/MM/yyyy" );
 						}
 						handled = event.ctrlKey || event.metaKey;
 						break; // -1 week on ctrl or command +up
 				case 39: if ( event.ctrlKey || event.metaKey ) {
-							$.datepicker._adjustDate( event.target, ( isRTL ? -1 : +1 ), "D" );
+							$.datepicker._adjustDate( event.target, ( isRTL ? -1 : +1 ), "dd/MM/yyyy" );
 						}
 						handled = event.ctrlKey || event.metaKey;
 
@@ -7990,7 +7990,7 @@ $.extend( Datepicker.prototype, {
 						// next month/year on alt +right
 						break;
 				case 40: if ( event.ctrlKey || event.metaKey ) {
-							$.datepicker._adjustDate( event.target, +7, "D" );
+							$.datepicker._adjustDate( event.target, +7, "dd/MM/yyyy" );
 						}
 						handled = event.ctrlKey || event.metaKey;
 						break; // +1 week on ctrl or command +down
@@ -8536,11 +8536,11 @@ $.extend( Datepicker.prototype, {
 				}
 			} else {
 				switch ( format.charAt( iFormat ) ) {
-					case "d":
-						day = getNumber( "d" );
+					case "dd/MM/yyyy":
+						day = getNumber( "dd/MM/yyyy" );
 						break;
-					case "D":
-						getName( "D", dayNamesShort, dayNames );
+					case "dd/MM/yyyy":
+						getName( "dd/MM/yyyy", dayNamesShort, dayNames );
 						break;
 					case "o":
 						doy = getNumber( "o" );
@@ -8706,11 +8706,11 @@ $.extend( Datepicker.prototype, {
 					}
 				} else {
 					switch ( format.charAt( iFormat ) ) {
-						case "d":
-							output += formatNumber( "d", date.getDate(), 2 );
+						case "dd/MM/yyyy":
+							output += formatNumber( "dd/MM/yyyy", date.getDate(), 2 );
 							break;
-						case "D":
-							output += formatName( "D", date.getDay(), dayNamesShort, dayNames );
+						case "dd/MM/yyyy":
+							output += formatName( "dd/MM/yyyy", date.getDay(), dayNamesShort, dayNames );
 							break;
 						case "o":
 							output += formatNumber( "o",
@@ -8772,10 +8772,10 @@ $.extend( Datepicker.prototype, {
 				}
 			} else {
 				switch ( format.charAt( iFormat ) ) {
-					case "d": case "m": case "y": case "@":
+					case "dd/MM/yyyy": case "m": case "y": case "@":
 						chars += "0123456789";
 						break;
-					case "D": case "M":
+					case "dd/MM/yyyy": case "M":
 						return null; // Accept anything
 					case "'":
 						if ( lookAhead( "'" ) ) {
@@ -8855,8 +8855,8 @@ $.extend( Datepicker.prototype, {
 					matches = pattern.exec( offset );
 
 				while ( matches ) {
-					switch ( matches[ 2 ] || "d" ) {
-						case "d" : case "D" :
+					switch ( matches[ 2 ] || "dd/MM/yyyy" ) {
+						case "dd/MM/yyyy" : case "dd/MM/yyyy" :
 							day += parseInt( matches[ 1 ], 10 ); break;
 						case "w" : case "W" :
 							day += parseInt( matches[ 1 ], 10 ) * 7; break;
@@ -9303,7 +9303,7 @@ $.extend( Datepicker.prototype, {
 	_adjustInstDate: function( inst, offset, period ) {
 		var year = inst.selectedYear + ( period === "Y" ? offset : 0 ),
 			month = inst.selectedMonth + ( period === "M" ? offset : 0 ),
-			day = Math.min( inst.selectedDay, this._getDaysInMonth( year, month ) ) + ( period === "D" ? offset : 0 ),
+			day = Math.min( inst.selectedDay, this._getDaysInMonth( year, month ) ) + ( period === "dd/MM/yyyy" ? offset : 0 ),
 			date = this._restrictMinMax( inst, this._daylightSavingAdjust( new Date( year, month, day ) ) );
 
 		inst.selectedDay = date.getDate();

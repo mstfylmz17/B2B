@@ -113,14 +113,16 @@
                                         </center>
                                     </th>
                                     <th style="width:2%;"><center>Adet</center></th>
-                                    <th style="width:13%;"><center>Ahşap Rengi</center></th>
-                                    <th style="width:13%;"><center>Deri Rengi</center></th>
-                                    <th style="width:13%;">
+                                    <th style="width:2%;"><center>Teslim Adet</center></th>
+                                    <th style="width:2%;"><center>Kalan Adet</center></th>
+                                    <th style="width:12%;"><center>Ahşap Rengi</center></th>
+                                    <th style="width:12%;"><center>Deri Rengi</center></th>
+                                    <th style="width:12%;">
                                         <center>
                                             Özel Not
                                         </center>
                                     </th>
-                                    <th style="width:10%;">
+                                    <th style="width:9%;">
                                         <center>
                                             Birim Fiyat
                                         </center>
@@ -192,6 +194,7 @@
                     </div>
                     <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#dosya"><i class="fas fa-file"></i> Onay Dosyasını Gör</a>
                     <a href="/Siparis/YeniDetay/@id" class="btn btn-primary btn-sm" style="margin:5px;">Siparişi Düzenle</a>
+                    <a href="#" onclick="Yazdir()" class="btn btn-info btn-sm" style="margin:5px;"><i class="fas fa-print"></i> Yazdır</a>
                 </div>
             </div>
         </div>
@@ -214,6 +217,37 @@
     </div>
 </div>
 
+<div class="modal fade" id="teslimatmodal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Teslimat Bilgileri</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="widget-content widget-content-area">
+                    <div class="table-responsive">
+                        <table id="tesTable" class="table table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Teslimat No</th>
+                                    <th>Bayi Adı</th>
+                                    <th>Kayıt Tarihi</th>
+                                    <th>Teslimat Miktarı</th>
+                                    <th>Belge Durumu</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -221,7 +255,9 @@
 
 <script>
     var satirid = 0;
+    var teslimsatirid = 0;
     var myDataTable;
+    var myDataTable2;
     function initializeDataTable() {
         myDataTable = new DataTable('#sepettable', {
             ajax: {
@@ -266,6 +302,23 @@
                     }
                 },
                 {
+                    data: 'teslimAdet',
+                    render: function (data, type, row, meta) {
+                        if (data > 0) {
+                            return '<div style="text-align: center; color:black;"><a href="#" data-toggle="modal" data-target="#teslimatmodal" onclick="TeslimatAc(' + row.id + ')">' + data + '</a></div>';
+                        }
+                        else {
+                            return '<div style="text-align: center; color:black;">' + data + '</div>';
+                        }
+                    }
+                },
+                {
+                    data: 'kalanMiktar',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
                     data: 'ahsapRengi',
                     render: function (data, type, row, meta) {
                         return '<div style="text-align: center; color:black;">' + data + '</div>';
@@ -304,6 +357,51 @@
             lengthChange: false,
             paging: false,
             info: false,
+        });
+    }
+    function TeslimatAc(element) {
+        teslimsatirid = element;
+        if (myDataTable2) {
+            myDataTable2.destroy();
+        }
+        myDataTable2 = new DataTable('#tesTable', {
+            ajax: {
+                url: '/SiparisApi/SeciliTeslimatList/' + element,
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                { data: 'teslimatNo' },
+                { data: 'bayiID' },
+                { data: 'kayitTarihi' },
+                { data: 'miktar' },
+                { data: 'tamamlanmaDurum' },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="/Siparis/TeslimatDetay/' + data + '" target="_blank" class="btn btn-primary btn-sm" ><i class="fas fa-eye"></i></a>';
+                    },
+                    orderable: false
+                },
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
+            ordering: false,
         });
     }
     function tabloGuncelle() {

@@ -11,7 +11,7 @@
 })(function(CodeMirror) {
 "use strict";
 
-CodeMirror.defineMode("d", function(config, parserConfig) {
+CodeMirror.defineMode("dd/MM/yyyy", function(config, parserConfig) {
   var indentUnit = config.indentUnit,
       statementIndentUnit = parserConfig.statementIndentUnit || indentUnit,
       keywords = parserConfig.keywords || {},
@@ -201,7 +201,7 @@ CodeMirror.defineMode("d", function(config, parserConfig) {
                       "out scope struct switch try union unittest version while with";
 
   CodeMirror.defineMIME("text/x-d", {
-    name: "d",
+    name: "dd/MM/yyyy",
     keywords: words("abstract alias align asm assert auto break case cast cdouble cent cfloat const continue " +
                     "debug default delegate delete deprecated export extern final finally function goto immutable " +
                     "import inout invariant is lazy macro module new nothrow override package pragma private " +

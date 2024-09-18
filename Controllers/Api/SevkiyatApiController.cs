@@ -70,7 +70,7 @@ namespace VNNB2B.Controllers.Api
                 }
                 list.Ozellikleri = stozellik;
                 list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenPersonel).AdSoyad.ToString();
-                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
+                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("dd/MM/yyyy");
                 if (x.BaslamaDurum == true) list.BaslamaDurum = "Boya Başladı..."; else list.BaslamaDurum = "Boyaya Alınmayı Bekliyor...";
                 ham.Add(list);
             }
@@ -104,7 +104,7 @@ namespace VNNB2B.Controllers.Api
                 }
                 list.Ozellikleri = stozellik;
                 list.Kullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.KullaniciID).AdSoyad.ToString();
-                list.BitisTarihi = Convert.ToDateTime(x.BitisTarihi).ToString("d");
+                list.BitisTarihi = Convert.ToDateTime(x.BitisTarihi).ToString("dd/MM/yyyy");
                 ham.Add(list);
             }
             return Json(ham);
@@ -137,7 +137,7 @@ namespace VNNB2B.Controllers.Api
                 }
                 list.Ozellikleri = stozellik;
                 list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenPersonel).AdSoyad.ToString();
-                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
+                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("dd/MM/yyyy");
                 if (x.BaslamaDurum == true) list.BaslamaDurum = "Ambalaj Başladı..."; else list.BaslamaDurum = "Ambalaja Alınmayı Bekliyor...";
                 ham.Add(list);
             }
@@ -170,7 +170,7 @@ namespace VNNB2B.Controllers.Api
                 }
                 list.Ozellikleri = stozellik;
                 list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenPersonel).AdSoyad.ToString();
-                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
+                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("dd/MM/yyyy");
                 if (x.BaslamaDurum == true) list.BaslamaDurum = "Ambalaj Başladı..."; else list.BaslamaDurum = "Ambalaja Alınmayı Bekliyor...";
                 ham.Add(list);
             }
@@ -204,7 +204,7 @@ namespace VNNB2B.Controllers.Api
                 }
                 list.Ozellikleri = stozellik;
                 list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenPersonel).AdSoyad.ToString();
-                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
+                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("dd/MM/yyyy");
                 list.GidenAdet = Convert.ToDecimal(x.GelenAdet).ToString();
                 ham.Add(list);
             }

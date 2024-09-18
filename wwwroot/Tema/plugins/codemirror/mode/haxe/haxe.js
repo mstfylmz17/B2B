@@ -471,7 +471,7 @@ CodeMirror.defineMode("hxml", function () {
           style = "keyword a";
         }
 
-        if (stream.peek() == "D") {
+        if (stream.peek() == "dd/MM/yyyy") {
           stream.eat(/[D]/);
           style = "keyword c";
           state.define = true;

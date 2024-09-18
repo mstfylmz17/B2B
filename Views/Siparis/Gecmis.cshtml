@@ -35,18 +35,24 @@
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
-                    <div class="table-responsive">
-                        <table id="myTable" class="table table-hover" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Sipariş Tarihi</th>
-                                    <th>Sipariş No</th>
-                                    <th>Toplam Sipariş Miktarı</th>
-                                    <th>Sipariş Durumu</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:14px;">
+                        <thead>
+                            <tr style="background-color:#B17F2C">
+                                <th style="width:9%;"><center>Sipariş No</center></th>
+                                <th style="width:10%;"><center>Bayi Adı</center></th>
+                                <th style="width:10%;"><center>Ürün Resmi</center></th>
+                                <th style="width:6%;"><center>Ürün Kodu</center></th>
+                                <th style="width:13%;"><center>Ürün Adı</center></th>
+                                <th style="width:2%;"><center>Sipariş Adedi</center></th>
+                                <th style="width:2%;"><center>Hazır Adet</center></th>
+                                <th style="width:2%;"><center>Kalan Adet</center></th>
+                                <th style="width:15%;"><center>Ahşap Rengi</center></th>
+                                <th style="width:15%;"><center>Deri Rengi</center></th>
+                                <th style="width:15%;"><center>Özel Not</center></th>
+                                <th style="width:1%;"><center><i class="fas fa-eye"></i></center></th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -79,18 +85,114 @@
                 }
             },
             columns: [
-                { data: 'siparisTarihi' },
-                { data: 'siparisNo' },
-                { data: 'toplamAdet' },
-                { data: 'siparisDurum' }
+                {
+                    data: 'siparisID',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'bayiID',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'urunID',
+                    render: function (data, type, full, meta) {
+                        return '<center><img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" /></center>';
+                    }
+                },
+                {
+                    data: 'urunKodu',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'urunAciklama',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'miktar',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'hazirAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'teslimAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'ahsapRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'deriRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'aciklama',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<a href="/Siparis/Detay/' + data + '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>'
+                    }
+                }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
-            paging: false,
-            scrollY: '73vh',
+            paging: true,
+            pageLength: 25,
+            scrollY: '120vh',
             scrollCollapse: true,
             ordering: false,
+            initComplete: function (settings, json) {
+                loadImages();
+            }
+        });
+        myDataTable.on('draw', function () {
+            loadImages();
+        });
+    }
+    function loadImages() {
+        $('td img.img-thumbnail').each(function () {
+            var imgElement = $(this);
+            var id = imgElement.attr('id').split('_')[1];
+
+            if (imgElement.attr('src') === '') {
+                $.ajax({
+                    url: '/UrunApi/GetResim',
+                    method: 'POST',
+                    data: { id: id },
+                    xhrFields: {
+                        responseType: 'blob' // Blob tipi ile yanıt alın
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        imgElement.attr('src', url); // Blob URL'yi kullanarak resmi yükle
+                    }
+                });
+            }
         });
     }
     function tabloGuncelle() {

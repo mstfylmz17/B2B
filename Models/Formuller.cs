@@ -244,6 +244,40 @@ namespace VNNB2B.Models
                     c.SaveChanges();
                 }
             }
+            if (tur == "Döşeme")
+            {
+                var depois = c.DosemeIsEmirleris.FirstOrDefault(v => v.ID == id);
+                var varmi = c.AmbalajIsEmirleris.FirstOrDefault(v => v.SiparisIcerikID == depois.SiparisIcerikID && v.Durum == true);
+                if (varmi == null)
+                {
+                    AmbalajIsEmirleri i = new AmbalajIsEmirleri();
+                    i.SiparisID = depois.SiparisID;
+                    i.KullaniciID = null;
+                    i.SiparisIcerikID = depois.SiparisIcerikID;
+                    i.UrunID = depois.UrunID;
+                    i.BaslangicTarihi = null;
+                    i.BitisTarihi = null;
+                    i.BaslamaDurum = false;
+                    i.BitirmeDurum = false;
+                    i.GelenAdet = miktar;
+                    i.KalanAdet = miktar;
+                    i.IslemdekiAdet = 0;
+                    i.GidenAdet = 0;
+                    i.GorenPersonel = null;
+                    i.GorulduMu = false;
+                    i.Durum = true;
+                    c.AmbalajIsEmirleris.Add(i);
+                    c.SaveChanges();
+                }
+                else
+                {
+                    varmi.KalanAdet += miktar;
+                    varmi.GelenAdet += miktar;
+                    varmi.BitirmeDurum = false;
+                    varmi.BaslamaDurum = false;
+                    c.SaveChanges();
+                }
+            }
             mesaj = "Tüm Ürünler Ambalaja Sevk Edildi.";
         }
         public void SevkiyatSevk(int id, int kulid, int miktar)

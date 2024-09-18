@@ -36,23 +36,25 @@
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
-                    <div class="table-responsive">
-                        <table id="myTable" class="table table-hover" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Sipariş No</th>
-                                    <th>Ürün Resmi</th>
-                                    <th>Ürün Kodu</th>
-                                    <th>Ürün Adı</th>
-                                    <th>Gelen Miktar</th>
-                                    <th>Kalan Miktar</th>
-                                    <th>Sipariş Özellikleri</th>
-                                    <th>Gören Personel</th>
-                                    <th>Görülme Tarihi</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:14px;">
+                        <thead>
+                            <tr style="background-color:#B17F2C">
+                                <th style="width:9%;"><center>Sipariş No</center></th>
+                                <th style="width:10%;"><center>Bayi Adı</center></th>
+                                <th style="width:10%;"><center>Ürün Resmi</center></th>
+                                <th style="width:6%;"><center>Ürün Kodu</center></th>
+                                <th style="width:15%;"><center>Ürün Adı</center></th>
+                                <th style="width:2%;"><center>Üretilecek Adet</center></th>
+                                <th style="width:2%;"><center>Gelen Adet</center></th>
+                                <th style="width:2%;"><center>Kalan Adet</center></th>
+                                <th style="width:15%;"><center>Ahşap Rengi</center></th>
+                                <th style="width:15%;"><center>Deri Rengi</center></th>
+                                <th style="width:15%;"><center>Özel Not</center></th>
+                                <th style="width:15%;"><center>Gören Personel</center></th>
+                                <th style="width:15%;"><center>Görülme Tarihi</center></th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -85,20 +87,84 @@
                 }
             },
             columns: [
-                { data: 'siparisNo' },
+                {
+                    data: 'siparisNo',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'bayiID',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
                 {
                     data: 'urunID',
                     render: function (data, type, full, meta) {
-                        return '<img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" />';
+                        return '<center><img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" /></center>';
                     }
                 },
-                { data: 'urunKodu' },
-                { data: 'urunAdi' },
-                { data: 'gelenAdet' },
-                { data: 'islemdekiAdet' },
-                { data: 'ozellikleri' },
-                { data: 'gorenKullanici' },
-                { data: 'okunmaTarih' },
+                {
+                    data: 'urunKodu',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'urunAdi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'gelenAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'kalanAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'ahsapRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'deriRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'aciklama',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'gorenKullanici',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'okunmaTarih',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"

@@ -29,19 +29,44 @@ namespace VNNB2B.Controllers.Api
                 list.SiparisNo = sip.SiparisNo.ToString();
                 list.UrunKodu = urun.UrunKodu.ToString();
                 list.UrunAdi = urun.UrunAdi.ToString();
+                list.SiparisAdet = Convert.ToInt32(sipic.Miktar).ToString();
                 list.GelenAdet = Convert.ToInt32(x.GelenAdet).ToString();
+
+                var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+                string bayiadi = "";
+                if (bayi != null)
+                {
+                    if (bayi.BayiKodu != null) { bayiadi += bayi.BayiKodu.ToString(); }
+                    if (bayi.KullaniciAdi != null) bayiadi += " - " + bayi.KullaniciAdi.ToString();
+                }
+                list.BayiID = bayiadi;
+                if (sip.SiparisTarihi != null) list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("dd/MM/yyyy"); else list.SiparisTarihi = "";
+
                 string stozellik = "";
-                var oz = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
-                foreach (var v in oz)
+                var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
+                foreach (var v in ozellik)
                 {
                     var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
-                    var tur = c.UrunOzelikTurlaris.FirstOrDefault(a => a.ID == o.UrunOzellikTurlariID);
-                    stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
+                    if (o.UrunOzellikTurlariID == 6)
+                    {
+                        if (o != null) list.DeriRengi = o.OzellikAdi.ToString();
+                        else list.DeriRengi = "";
+                    }
+                    else if (o.UrunOzellikTurlariID == 7)
+                    {
+                        list.DeriRengi = "";
+                        if (o != null) list.AhsapRengi = o.OzellikAdi.ToString();
+                        else list.AhsapRengi = "";
+                    }
+                    else
+                    {
+                        list.AhsapRengi = "";
+                    }
                 }
-                list.Ozellikleri = stozellik;
+                list.Aciklama = sipic.Aciklama.ToString();
                 ham.Add(list);
             }
-            return Json(ham);
+            return Json(ham.OrderByDescending(v => v.ID));
         }
         [HttpPost]
         public IActionResult DevamList()
@@ -59,23 +84,45 @@ namespace VNNB2B.Controllers.Api
                 list.SiparisNo = sip.SiparisNo.ToString();
                 list.UrunKodu = urun.UrunKodu.ToString();
                 list.UrunAdi = urun.UrunAdi.ToString();
+                list.SiparisAdet = Convert.ToInt32(sipic.Miktar).ToString();
                 list.GelenAdet = Convert.ToInt32(x.GelenAdet).ToString();
-                list.IslemdekiAdet = Convert.ToInt32(x.GelenAdet - x.GidenAdet).ToString();
+                list.KalanAdet = Convert.ToInt32(x.KalanAdet).ToString();
+
+                var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+                string bayiadi = "";
+                if (bayi != null)
+                {
+                    if (bayi.BayiKodu != null) { bayiadi += bayi.BayiKodu.ToString(); }
+                    if (bayi.KullaniciAdi != null) bayiadi += " - " + bayi.KullaniciAdi.ToString();
+                }
+                list.BayiID = bayiadi;
+                if (sip.SiparisTarihi != null) list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("dd/MM/yyyy"); else list.SiparisTarihi = "";
+
                 string stozellik = "";
-                var oz = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
-                foreach (var v in oz)
+                var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
+                foreach (var v in ozellik)
                 {
                     var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
-                    var tur = c.UrunOzelikTurlaris.FirstOrDefault(a => a.ID == o.UrunOzellikTurlariID);
-                    stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
+                    if (o.UrunOzellikTurlariID == 6)
+                    {
+                        if (o != null) list.DeriRengi = o.OzellikAdi.ToString();
+                        else list.DeriRengi = "";
+                    }
+                    else if (o.UrunOzellikTurlariID == 7)
+                    {
+                        list.DeriRengi = "";
+                        if (o != null) list.AhsapRengi = o.OzellikAdi.ToString();
+                        else list.AhsapRengi = "";
+                    }
+                    else
+                    {
+                        list.AhsapRengi = "";
+                    }
                 }
-                list.Ozellikleri = stozellik;
-                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenKullanici).AdSoyad.ToString();
-                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
-                if (x.BaslamaDurum == true) list.BaslamaDurum = "Boya Başladı..."; else list.BaslamaDurum = "Boyaya Alınmayı Bekliyor...";
+                list.Aciklama = sipic.Aciklama.ToString();
                 ham.Add(list);
             }
-            return Json(ham);
+            return Json(ham.OrderBy(v => v.ID));
         }
         [HttpPost]
         public IActionResult GecmisList()
@@ -93,22 +140,47 @@ namespace VNNB2B.Controllers.Api
                 list.SiparisNo = sip.SiparisNo.ToString();
                 list.UrunKodu = urun.UrunKodu.ToString();
                 list.UrunAdi = urun.UrunAdi.ToString();
-                list.GelenAdet = Convert.ToInt32(x.GelenAdet).ToString();
-                list.IslemdekiAdet = Convert.ToInt32(x.GelenAdet - x.GidenAdet).ToString();
+                list.SiparisAdet = Convert.ToInt32(sipic.Miktar).ToString();
+                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.KullaniciID).KullaniciAdi.ToString();
+                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("dd/MM/yyyy");
+                list.BaslangicTarihi = Convert.ToDateTime(x.BaslangicTarihi).ToString("dd/MM/yyyy");
+                list.BitisTarihi = Convert.ToDateTime(x.BitisTarihi).ToString("dd/MM/yyyy");
+
+                var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+                string bayiadi = "";
+                if (bayi != null)
+                {
+                    if (bayi.BayiKodu != null) { bayiadi += bayi.BayiKodu.ToString(); }
+                    if (bayi.KullaniciAdi != null) bayiadi += " - " + bayi.KullaniciAdi.ToString();
+                }
+                list.BayiID = bayiadi;
+                if (sip.SiparisTarihi != null) list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("dd/MM/yyyy"); else list.SiparisTarihi = "";
+
                 string stozellik = "";
-                var oz = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
-                foreach (var v in oz)
+                var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
+                foreach (var v in ozellik)
                 {
                     var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
-                    var tur = c.UrunOzelikTurlaris.FirstOrDefault(a => a.ID == o.UrunOzellikTurlariID);
-                    stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
+                    if (o.UrunOzellikTurlariID == 6)
+                    {
+                        if (o != null) list.DeriRengi = o.OzellikAdi.ToString();
+                        else list.DeriRengi = "";
+                    }
+                    else if (o.UrunOzellikTurlariID == 7)
+                    {
+                        list.DeriRengi = "";
+                        if (o != null) list.AhsapRengi = o.OzellikAdi.ToString();
+                        else list.AhsapRengi = "";
+                    }
+                    else
+                    {
+                        list.AhsapRengi = "";
+                    }
                 }
-                list.Ozellikleri = stozellik;
-                list.Kullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.KullaniciID).AdSoyad.ToString();
-                list.BitisTarihi = Convert.ToDateTime(x.BitisTarihi).ToString("d");
+                list.Aciklama = sipic.Aciklama.ToString();
                 ham.Add(list);
             }
-            return Json(ham);
+            return Json(ham.OrderBy(v => v.ID));
         }
         [HttpPost]
         public IActionResult AlList()
@@ -126,23 +198,44 @@ namespace VNNB2B.Controllers.Api
                 list.SiparisNo = sip.SiparisNo.ToString();
                 list.UrunKodu = urun.UrunKodu.ToString();
                 list.UrunAdi = urun.UrunAdi.ToString();
-                list.GelenAdet = Convert.ToInt32(x.GelenAdet).ToString();
+                list.GelenAdet = Convert.ToInt32(sipic.Miktar).ToString();
                 list.KalanAdet = Convert.ToInt32(x.KalanAdet).ToString();
+
+                var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+                string bayiadi = "";
+                if (bayi != null)
+                {
+                    if (bayi.BayiKodu != null) { bayiadi += bayi.BayiKodu.ToString(); }
+                    if (bayi.KullaniciAdi != null) bayiadi += " - " + bayi.KullaniciAdi.ToString();
+                }
+                list.BayiID = bayiadi;
+                if (sip.SiparisTarihi != null) list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("dd/MM/yyyy"); else list.SiparisTarihi = "";
+
                 string stozellik = "";
-                var oz = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
-                foreach (var v in oz)
+                var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
+                foreach (var v in ozellik)
                 {
                     var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
-                    var tur = c.UrunOzelikTurlaris.FirstOrDefault(a => a.ID == o.UrunOzellikTurlariID);
-                    stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
+                    if (o.UrunOzellikTurlariID == 6)
+                    {
+                        if (o != null) list.DeriRengi = o.OzellikAdi.ToString();
+                        else list.DeriRengi = "";
+                    }
+                    else if (o.UrunOzellikTurlariID == 7)
+                    {
+                        list.DeriRengi = "";
+                        if (o != null) list.AhsapRengi = o.OzellikAdi.ToString();
+                        else list.AhsapRengi = "";
+                    }
+                    else
+                    {
+                        list.AhsapRengi = "";
+                    }
                 }
-                list.Ozellikleri = stozellik;
-                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenKullanici).AdSoyad.ToString();
-                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
-                if (x.BaslamaDurum == true) list.BaslamaDurum = "Boya Başladı..."; else list.BaslamaDurum = "Boyaya Alınmayı Bekliyor...";
+                list.Aciklama = sipic.Aciklama.ToString();
                 ham.Add(list);
             }
-            return Json(ham);
+            return Json(ham.OrderByDescending(v => v.ID));
         }
         [HttpPost]
         public IActionResult CikarList()
@@ -160,22 +253,45 @@ namespace VNNB2B.Controllers.Api
                 list.SiparisNo = sip.SiparisNo.ToString();
                 list.UrunKodu = urun.UrunKodu.ToString();
                 list.UrunAdi = urun.UrunAdi.ToString();
+                list.SiparisAdet = Convert.ToInt32(sipic.Miktar).ToString();
+                list.GelenAdet = Convert.ToInt32(x.GelenAdet).ToString();
                 list.IslemdekiAdet = Convert.ToInt32(x.IslemdekiAdet).ToString();
+
+                var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+                string bayiadi = "";
+                if (bayi != null)
+                {
+                    if (bayi.BayiKodu != null) { bayiadi += bayi.BayiKodu.ToString(); }
+                    if (bayi.KullaniciAdi != null) bayiadi += " - " + bayi.KullaniciAdi.ToString();
+                }
+                list.BayiID = bayiadi;
+                if (sip.SiparisTarihi != null) list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("dd/MM/yyyy"); else list.SiparisTarihi = "";
+
                 string stozellik = "";
-                var oz = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
-                foreach (var v in oz)
+                var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
+                foreach (var v in ozellik)
                 {
                     var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
-                    var tur = c.UrunOzelikTurlaris.FirstOrDefault(a => a.ID == o.UrunOzellikTurlariID);
-                    stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
+                    if (o.UrunOzellikTurlariID == 6)
+                    {
+                        if (o != null) list.DeriRengi = o.OzellikAdi.ToString();
+                        else list.DeriRengi = "";
+                    }
+                    else if (o.UrunOzellikTurlariID == 7)
+                    {
+                        list.DeriRengi = "";
+                        if (o != null) list.AhsapRengi = o.OzellikAdi.ToString();
+                        else list.AhsapRengi = "";
+                    }
+                    else
+                    {
+                        list.AhsapRengi = "";
+                    }
                 }
-                list.Ozellikleri = stozellik;
-                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenKullanici).AdSoyad.ToString();
-                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
-                if (x.BaslamaDurum == true) list.BaslamaDurum = "Boya Başladı..."; else list.BaslamaDurum = "Boyaya Alınmayı Bekliyor...";
+                list.Aciklama = sipic.Aciklama.ToString();
                 ham.Add(list);
             }
-            return Json(ham);
+            return Json(ham.OrderByDescending(v => v.ID));
         }
         [HttpPost]
         public IActionResult KismiList()
@@ -193,23 +309,47 @@ namespace VNNB2B.Controllers.Api
                 list.SiparisNo = sip.SiparisNo.ToString();
                 list.UrunKodu = urun.UrunKodu.ToString();
                 list.UrunAdi = urun.UrunAdi.ToString();
+                list.SiparisAdet = Convert.ToInt32(sipic.Miktar).ToString();
                 list.GelenAdet = Convert.ToInt32(x.GelenAdet).ToString();
-                list.KalanAdet = Convert.ToInt32(x.KalanAdet + x.IslemdekiAdet).ToString();
+                list.KalanAdet = Convert.ToInt32(x.KalanAdet).ToString();
+                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.KullaniciID).KullaniciAdi.ToString();
+                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("dd/MM/yyyy");
+
+                var bayi = c.Bayilers.FirstOrDefault(v => v.ID == sip.BayiID);
+                string bayiadi = "";
+                if (bayi != null)
+                {
+                    if (bayi.BayiKodu != null) { bayiadi += bayi.BayiKodu.ToString(); }
+                    if (bayi.KullaniciAdi != null) bayiadi += " - " + bayi.KullaniciAdi.ToString();
+                }
+                list.BayiID = bayiadi;
+                if (sip.SiparisTarihi != null) list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("dd/MM/yyyy"); else list.SiparisTarihi = "";
+
                 string stozellik = "";
-                var oz = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
-                foreach (var v in oz)
+                var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.SiparisIcerikID && v.Durum == true).ToList();
+                foreach (var v in ozellik)
                 {
                     var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
-                    var tur = c.UrunOzelikTurlaris.FirstOrDefault(a => a.ID == o.UrunOzellikTurlariID);
-                    stozellik += tur.OzellikAdi.ToString() + " (" + o.OzellikAdi.ToString() + ") , ";
+                    if (o.UrunOzellikTurlariID == 6)
+                    {
+                        if (o != null) list.DeriRengi = o.OzellikAdi.ToString();
+                        else list.DeriRengi = "";
+                    }
+                    else if (o.UrunOzellikTurlariID == 7)
+                    {
+                        list.DeriRengi = "";
+                        if (o != null) list.AhsapRengi = o.OzellikAdi.ToString();
+                        else list.AhsapRengi = "";
+                    }
+                    else
+                    {
+                        list.AhsapRengi = "";
+                    }
                 }
-                list.Ozellikleri = stozellik;
-                list.GorenKullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.GorenKullanici).AdSoyad.ToString();
-                list.OkunmaTarih = Convert.ToDateTime(x.OkunmaTarih).ToString("d");
-                list.GidenAdet = Convert.ToDecimal(x.GelenAdet).ToString();
+                list.Aciklama = sipic.Aciklama.ToString();
                 ham.Add(list);
             }
-            return Json(ham);
+            return Json(ham.OrderBy(v => v.ID));
         }
         [HttpPost]
         public IActionResult Okundu(int id)

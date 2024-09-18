@@ -263,10 +263,10 @@ namespace VNNB2B.Controllers
             list.ToplamTutar = Convert.ToDecimal(sip.ToplamTutar).ToString("N2") + para;
             list.IskontoOran = Convert.ToInt32(bayi.IskontoOran).ToString();
             list.IstoktoToplam = Convert.ToDecimal(sip.IstoktoToplam).ToString("N2") + para;
-            list.TeslimTarihi = Convert.ToDateTime(sip.TeslimTarihi).ToString("d");
+            list.TeslimTarihi = Convert.ToDateTime(sip.TeslimTarihi).ToString("dd/MM/yyyy");
             list.SiparisNo = sip.SiparisNo.ToString();
             list.Yetkili = bayi.Yetkili.ToString() + " - " + bayi.Telefon.ToString();
-            list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("d");
+            list.SiparisTarihi = Convert.ToDateTime(sip.SiparisTarihi).ToString("dd/MM/yyyy");
             if (c.Teslimats.FirstOrDefault(v => v.SiparisID == id) != null) list.TeslimDurum = "Parçalı Teslimat."; else if (sip.TeslimDurum == true) list.TeslimDurum = "Tam Teslim"; else list.TeslimDurum = "Henüz Teslim Edilmedi...";
 
             //İçerik

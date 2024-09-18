@@ -71,7 +71,15 @@
     </h1>
 </div>
 
-<div class="col-lg-12">
+
+<div class="col-lg-12" id="BosSepetDiv">
+    <center>
+        <h4>SEPETTE ÜRÜN BULUNAMADI!! / NO PRODUCT FOUND IN THE CART!!</h4>
+        <br />
+        <a href="/BLogin/Urunler" class="btn btn-dark btn-sm"> ALIŞVERİŞ YAP / SHOP</a>
+    </center>
+</div>
+<div class="col-lg-12" id="SepetDiv">
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -80,21 +88,42 @@
                         <table class=" table-tab" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>SİPARİŞ NO / ORDER NO</th>
-                                    <th id="txtsiparisno"></th>
+                                    <th>
+                                        FATURA ÜNVANI / <span style="font-size:12px;">INVOICE TITLE</span>
+
+                                    </th>
+                                    <th style="color:black;" id="txtunvan"></th>
                                 </tr>
                                 <tr>
-                                    <th>SİPARİŞ TARİHİ / ORDER DATE</th>
-                                    <th id="txtsiparistarihi"></th>
+                                    <th>
+                                        FİRMA ADI / <span style="font-size:12px;">COMPANY NAME</span>
+                                    </th>
+                                    <th style="color:black;" id="txtfirmaadi"></th>
                                 </tr>
                                 <tr>
-                                    <th>SİPARİŞ DURUMU / ORDER STATUS</th>
-                                    <th id="txtsiparisdurum"></th>
+                                    <th>SİPARİŞ NO / <span style="font-size:12px;">ORDER NO</span></th>
+                                    <th style="color:black;" id="txtsiparisno"></th>
                                 </tr>
                                 <tr>
-                                    <th>ONAYLAYAN YETKİLİ / APPROVING AUTHORITY</th>
-                                    <th id="txtkullanici"></th>
+                                    <th>SİPARİŞ TARİHİ / <span style="font-size:12px;">ORDER DATE</span></th>
+                                    <th style="color:black;" id="txtsiparistarihi"></th>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        TESLİMAT ŞEKLİ / <span style="font-size:12px;">
+                                            DELIVERY METHOD
+                                        </span>
+                                    </th>
+                                    <th style="color:black;">
+                                        FABRİKA TESLİM / <span style="font-size:12px;">
+                                            FACTORY DELIVERY
+                                        </span>
+                                    </th>
+                                </tr>
+                                @* <tr>
+                                <th>ONAYLAYAN YETKİLİ / <span style="font-size:12px;">APPROVING AUTHORITY</span></th>
+                                <th id="txtkullanici"></th>
+                                </tr> *@
                             </thead>
                         </table>
                     </div>
@@ -120,9 +149,9 @@
                                         </center>
                                     </th>
                                     <th style="width:5%;"><center>Adet <br /> Amount</center></th>
-                                    <th style="width:13%;"><center>Ahşap Rengi <br /> Wood Color</center></th>
-                                    <th style="width:13%;"><center>Deri Rengi <br /> Skin Color</center></th>
-                                    <th style="width:13%;">
+                                    <th style="width:10%;"><center>Ahşap Rengi <br /> Wood Color</center></th>
+                                    <th style="width:10%;"><center>Deri Rengi <br /> Skin Color</center></th>
+                                    <th style="width:10%;">
                                         <center>
                                             Özel Not
                                             <br />
@@ -131,8 +160,14 @@
                                     </th>
                                     <th style="width:9%;">
                                         <center>
-                                            Birim Fiyat <br />
-                                            Unit Price
+                                            Liste Fiyat <br />
+                                            List Price
+                                        </center>
+                                    </th>
+                                    <th style="width:9%;">
+                                        <center>
+                                            İndirimli Fiyat <br />
+                                            Discounted Price
                                         </center>
                                     </th>
                                     <th style="width:9%;">
@@ -154,20 +189,20 @@
                                 <table class="table-tab">
                                     <thead>
                                         <tr>
-                                            <th style="width:50%;">TOPLAM SİPARİŞ ADEDİ</th>
-                                            <th style="width:50%; text-align: center;" id="txttoplamadet"></th>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ - ADEDİ</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txttoplamadet"></th>
                                         </tr>
                                         <tr>
-                                            <th style="width:50%;">TOPLAM SİPARİŞ PARÇA ADEDİ</th>
-                                            <th style="width:50%; text-align: center;" id="txttoplamparcaadet"></th>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ - PARÇA ADEDİ</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txttoplamparcaadet"></th>
                                         </tr>
                                         <tr>
-                                            <th style="width:50%;">TOPLAM SİPARİŞ M3</th>
-                                            <th style="width:50%; text-align: center;" id="txttoplamm3"></th>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ - M3</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txttoplamm3"></th>
                                         </tr>
                                         <tr>
-                                            <th style="width:50%;">TOPLAM SİPARİŞ KG</th>
-                                            <th style="width:50%; text-align: center;" id="txttoplamkg"></th>
+                                            <th style="width:50%;">TOPLAM SİPARİŞ - KG</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txttoplamkg"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -178,28 +213,24 @@
                                 <table class="table-tab">
                                     <thead>
                                         <tr>
-                                            <th style="width:50%;">TOPLAM SİPARİŞ ADEDİ</th>
-                                            <th style="width:50%; text-align: center;" id="txttoplamadet"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%;">ARA TOPLAM</th>
-                                            <th style="width:50%; text-align: center;" id="txtaratoplam"></th>
+                                            <th style="width:50%;">LİSTE TOPLAM</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txtaratoplam"></th>
                                         </tr>
                                         <tr>
                                             <th style="width:50%;">BAYİ İSKONTO %@ViewBag.iskonto</th>
-                                            <th style="width:50%; text-align: center;" id="txtiskontotoplam"></th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txtiskontotoplam"></th>
                                         </tr>
                                         <tr>
-                                            <th style="width:50%; background-color:lightgray;">İNDİRİMLİ FİYAT</th>
-                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtindirimlifiyat"></th>
+                                            <th style="width:50%; background-color:lightgray;">İSKONTOLU FİYAT</th>
+                                            <th style="width:50%; color:black; background-color:lightgray; text-align: center;" id="txtindirimlifiyat"></th>
                                         </tr>
                                         <tr>
                                             <th style="width:50%; background-color:lightgray;">KDV TOPLAM %@ViewBag.kdv</th>
-                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtkdvtoplam"></th>
+                                            <th style="width:50%; color:black; background-color:lightgray; text-align: center;" id="txtkdvtoplam"></th>
                                         </tr>
                                         <tr>
                                             <th style="width:50%; background-color:lightgray;">GENEL TOPLAM</th>
-                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtgeneltoplam"></th>
+                                            <th style="width:50%; color:black; background-color:lightgray; text-align: center;" id="txtgeneltoplam"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -219,6 +250,7 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
+    var sepetdurum = 0;
     var satirid = 0;
     var myDataTable;
     function initializeDataTable() {
@@ -284,6 +316,12 @@
                 },
                 {
                     data: 'birimFiyat',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'indirimFiyat',
                     render: function (data, type, row, meta) {
                         return '<div style="text-align: center;">' + data + '</div>';
                     }
@@ -422,6 +460,14 @@
             url: "/SiparisApi/SepetIcerik",
             data: { id: @cerez },
             success: function (x) {
+                if (x.siparisNo == null) {
+                    sepetdurum = 1;
+                    $("#BosSepetDiv").css("display", "block");
+                    $("#SepetDiv").css("display", "none");
+                } else {
+                    $("#SepetDiv").css("display", "block");
+                    $("#BosSepetDiv").css("display", "none");
+                }
                 $("#txttoplamadet").text(x.toplamAdet);
                 $("#txtaratoplam").text(x.araToplam);
                 $("#txtgeneltoplam").text(x.toplamTutar);
