@@ -31,60 +31,38 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Ambalajdan Çıkarılabilir İş Emirleri</h4>
+                            <center><h2>AMBALAJDAN ÇIKARILABİLİR İŞ EMİRLERİ</h2></center>
                         </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
-                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:14px;">
+                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:16px;">
                         <thead>
                             <tr style="background-color:#B17F2C">
-                                <th style="width:9%;"><center>Sipariş No</center></th>
-                                <th style="width:10%;"><center>Bayi Adı</center></th>
-                                <th style="width:10%;"><center>Ürün Resmi</center></th>
-                                <th style="width:6%;"><center>Ürün Kodu</center></th>
-                                <th style="width:15%;"><center>Ürün Adı</center></th>
-                                <th style="width:2%;"><center>Üretilecek Adet</center></th>
-                                <th style="width:2%;"><center>Gelen Adet</center></th>
-                                <th style="width:2%;"><center>Çıkarılabilir Adet</center></th>
-                                <th style="width:15%;"><center>Ahşap Rengi</center></th>
-                                <th style="width:15%;"><center>Deri Rengi</center></th>
-                                <th style="width:15%;"><center>Özel Not</center></th>
-                                <th style="width:1%;"><center></center></th>
+                                <th style="width:5%; color:black;"><center>Sipariş Tarihi</center></th>
+                                <th style="width:5%; color:black;"><center>Sipariş No</center></th>
+                                <th style="width:10%; color:black;"><center>Bayi Adı<br />Sipariş Adı</center></th>
+                                <th style="width:10%; color:black;"><center>Ürün Resmi</center></th>
+                                <th style="width:6%; color:black;"><center>Ürün Kodu</center></th>
+                                <th style="width:10%; color:black;"><center>Ürün Adı</center></th>
+                                <th style="width:4%; color:black;"><center>Sipariş <br /> Adedi</center></th>
+                                <th style="width:4%; color:black;"><center>Ambalaja<br />Gelen <br /> Adet</center></th>
+                                <th style="width:4%; color:black;"><center>Ambalajdan<br />Çıkan <br /> Adet</center></th>
+                                <th style="width:4%; color:black;"><center>Ambalajdan<br />Çıkarılabilir <br /> Adet</center></th>
+                                <th style="width:4%; color:black;"><center>Siparişten<br />Kalan <br /> Adet</center></th>
+                                <th style="width:10%; color:black;"><center>Ahşap Rengi</center></th>
+                                <th style="width:10%; color:black;"><center>Deri Rengi</center></th>
+                                <th style="width:10%; color:black;"><center>Özel Not</center></th>
+                                <th style="width:5%; color:black;"><center></center></th>
                             </tr>
                         </thead>
                     </table>
+                    <button onclick="uyari()" class="btn btn-primary mb-2 mr-2 btn-rounded" style="float:right;">Seçilenleri Ambalajdan Çıkar</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="modal-lg">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">İş Emrini Ambalajdan Çıkar</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <div class="modal-body">
-                    <input id="id" type="hidden" name="id" />
-                    <div class="form-group mb-3">
-                        <label>Ambalajdan Çıkarılacak Miktar</label>
-                        <input type="number" class="form-control" id="miktar" name="miktar">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="SevkEt()" style="float:right;">Onayla</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 
 <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -113,6 +91,12 @@
                 }
             },
             columns: [
+                {
+                    data: 'siparisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
                 {
                     data: 'siparisNo',
                     render: function (data, type, full, meta) {
@@ -146,7 +130,7 @@
                 {
                     data: 'siparisAdet',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
@@ -156,7 +140,19 @@
                     }
                 },
                 {
+                    data: 'gidenAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
                     data: 'islemdekiAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-danger" style="font-size:16px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'kalanAdet',
                     render: function (data, type, full, meta) {
                         return '<center>' + data + '</center>';
                     }
@@ -182,8 +178,9 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="#"  onclick="onayla(' + data + ')" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-fill-drip"></i> </a>'
-                    }
+                        return '<center><input style="width: 7px; height: 7px; transform: scale(4);" type="checkbox" class="select-checkbox btn-goruldu" id="ch-' + data + '" value="' + data + '"><div id="text-input-' + data + '" class="text-input" style="display:none;"><input type="text" class="form-control extra-info" /></div></center>';
+                    },
+                    orderable: false
                 }
             ],
             language: {
@@ -195,10 +192,12 @@
             ordering: false,
             initComplete: function (settings, json) {
                 loadImages();
+                attachCheckboxListener();
             }
         });
         myDataTable.on('draw', function () {
             loadImages();
+            attachCheckboxListener();
         });
     }
     function loadImages() {
@@ -232,32 +231,87 @@
     $(document).ready(function () {
         initializeDataTable();
     })
-    function onayla(element) {
-        satir = element;
-        $("#id").val(element);
-    }
-    function SevkEt() {
-        var element = satir;
-        var formData = {
-            id: $("#id").val(),
-            miktar: $("#miktar").val(),
-        };
-        $.ajax({
-            type: "POST",
-            url: '/AmbalajApi/AmbalajCikar',
-            data: formData,
-            dataType: "json",
-            success: function (result) {
-                swal.fire({
-                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
-                    text: result.message,
-                    type: result.status === "success" ? 'success' : 'warning',
-                    confirmButtonText: 'Tamam'
-                });
-                if (result.status == "success") {
-                    tabloGuncelle();
-                }
+    function attachCheckboxListener() {
+        $('.select-checkbox').on('change', function () {
+            var id = $(this).val();
+            if ($(this).is(':checked')) {
+                $('#text-input-' + id).show();
+            } else {
+                $('#text-input-' + id).hide();
+                $('#text-input-' + id + ' input').val('');
             }
         });
+    }
+    function uyari() {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Seçilen Ürünler Ambalajdan Çıkarılacak!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet!',
+            cancelButtonText: 'Hayır!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                Gonder();
+            }
+        })
+    }
+    function Gonder() {
+        var selectedItems = [];
+        var hasEmptyExtraInfo = false;
+
+        $('.select-checkbox:checked').each(function () {
+            var rowId = $(this).val();
+            var extraInfo = $('#text-input-' + rowId).find('.extra-info').val();
+
+            if (!extraInfo || extraInfo.trim() === '') {
+                hasEmptyExtraInfo = true;
+            } else {
+                selectedItems.push({
+                    id: rowId,
+                    extraInfo: extraInfo
+                });
+            }
+        });
+
+        if (hasEmptyExtraInfo) {
+            Swal.fire({
+                title: 'Uyarı',
+                text: 'Tüm satırların yanındaki metin alanları doldurulmalıdır.',
+                icon: 'warning',
+                confirmButtonText: 'Tamam'
+            });
+            return;
+        }
+
+        if (selectedItems.length > 0) {
+            $.ajax({
+                url: '/AmbalajApi/AmbalajCikar',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(selectedItems),
+                success: function (result) {
+                    Swal.fire({
+                        title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                        text: result.message,
+                        icon: result.status === "success" ? 'success' : 'warning',
+                        confirmButtonText: 'Tamam'
+                    });
+                    if (result.status == "success") {
+                        location.reload();
+                    }
+                }
+            });
+        }
+        else {
+            Swal.fire({
+                title: 'Uyarı',
+                text: 'Lütfen en az bir kayıt seçin.',
+                icon: 'warning',
+                confirmButtonText: 'Tamam'
+            });
+        }
     }
 </script>

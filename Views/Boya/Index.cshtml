@@ -30,28 +30,32 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Boyaya Sevk Edilen İş Emirleri</h4>
+                            <center><h2>BOYAYA SEVK EDİLEN İŞ EMİRLERİ</h2></center>
                         </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
-                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:14px;">
+                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:16px;">
                         <thead>
                             <tr style="background-color:#B17F2C">
-                                <th style="width:9%;"><center>Sipariş No</center></th>
-                                <th style="width:10%;"><center>Bayi Adı</center></th>
-                                <th style="width:10%;"><center>Ürün Resmi</center></th>
-                                <th style="width:6%;"><center>Ürün Kodu</center></th>
-                                <th style="width:15%;"><center>Ürün Adı</center></th>
-                                <th style="width:2%;"><center>Sipariş Adedi</center></th>
-                                <th style="width:2%;"><center>Gelen Adedi</center></th>
-                                <th style="width:15%;"><center>Ahşap Rengi</center></th>
-                                <th style="width:15%;"><center>Deri Rengi</center></th>
-                                <th style="width:15%;"><center>Özel Not</center></th>
-                                <th style="width:1%;"><center><i class="fas fa-eye"></i></center></th>
+                                <th style="width:5%; color:black;"><center>Sipariş Tarihi</center></th>
+                                <th style="width:5%; color:black;"><center>Sipariş No</center></th>
+                                <th style="width:10%; color:black;"><center>Bayi Adı<br />Sipariş Adı</center></th>
+                                <th style="width:10%; color:black;"><center>Ürün Resmi</center></th>
+                                <th style="width:6%; color:black;"><center>Ürün Kodu</center></th>
+                                <th style="width:10%; color:black;"><center>Ürün Adı</center></th>
+                                <th style="width:4%; color:black;"><center>Sipariş <br /> Adedi</center></th>
+                                <th style="width:4%; color:black;"><center>Boyaya<br />Gelen <br /> Adet</center></th>
+                                <th style="width:4%; color:black;"><center>Boyadan<br />Çıkan <br /> Adet</center></th>
+                                <th style="width:4%; color:black;"><center>Siparişten<br />Kalan <br /> Adet</center></th>
+                                <th style="width:10%; color:black;"><center>Ahşap Rengi</center></th>
+                                <th style="width:10%; color:black;"><center>Deri Rengi</center></th>
+                                <th style="width:10%; color:black;"><center>Özel Not</center></th>
+                                <th style="width:5%; color:black;"><center><i class="fas fa-eye"></i></center></th>
                             </tr>
                         </thead>
                     </table>
+                    <button onclick="uyari()" class="btn btn-primary mb-2 mr-2 btn-rounded" style="float:right;">Seçilenleri Okundu Olarak İşaretle</button>
                 </div>
             </div>
         </div>
@@ -85,6 +89,12 @@
             },
             columns: [
                 {
+                    data: 'siparisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
                     data: 'siparisNo',
                     render: function (data, type, full, meta) {
                         return '<center>' + data + '</center>';
@@ -117,11 +127,23 @@
                 {
                     data: 'siparisAdet',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
                     data: 'gelenAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'gidenAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'kalanAdet',
                     render: function (data, type, full, meta) {
                         return '<center>' + data + '</center>';
                     }
@@ -147,9 +169,10 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<center><a href="#" onclick="sil(' + data + ')" class="btn btn-info btn-sm btn-goruldu" title="Buradan Kaydı Görüldü işaretlersiniz" style="margin-right:3px;"><i class="fas fa-check"></i> </a></center>'
-                    }
-                }
+                        return '<center><input style="width: 7px; height: 7px; transform: scale(4); " type="checkbox" class="select-checkbox btn-goruldu" id="ch-' + data + '" value="' + data + '"></center>';
+                    },
+                    orderable: false
+                },
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
@@ -160,39 +183,10 @@
             ordering: false,
             initComplete: function (settings, json) {
                 loadImages();
-                addHoverEvent();
             }
         });
         myDataTable.on('draw', function () {
             loadImages();
-            addHoverEvent();
-        });
-    }
-    function addHoverEvent() {
-        $('.btn-goruldu').each(function () {
-            let hasShownToast = false;
-
-            $(this).hover(function () {
-                if (!hasShownToast) {
-                    Swal.fire({
-                        position: 'center',
-                        title: 'Buradan Kaydı Görüldü işaretlersiniz',
-                        icon: 'info',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        backdrop: false,
-                        customClass: {
-                            popup: 'swal2-toast-center',
-                            title: 'swal2-toast-title-black'
-                        },
-                        didOpen: () => {
-                            const swalContainer = document.querySelector('.swal2-container');
-                            swalContainer.style.pointerEvents = 'none';
-                        }
-                    });
-                    hasShownToast = true;
-                }
-            });
         });
     }
     function loadImages() {
@@ -242,20 +236,52 @@
             }
         })
     }
-    function submitForm(element) {
-        $.ajax({
-            type: "POST",
-            url: "/BoyaApi/Okundu/" + element,
-            dataType: "json",
-            success: function (result) {
-                swal.fire({
-                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
-                    text: result.message,
-                    type: result.status === "success" ? 'success' : 'warning',
-                    confirmButtonText: 'Tamam'
-                });
-                tabloGuncelle();
+
+    function uyari() {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Seçilen Ürünler Görüldü Olarak İşaretlenecek!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet!',
+            cancelButtonText: 'Hayır!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                Gonder();
             }
+        })
+    }
+    function Gonder() {
+        var selectedIds = [];
+        $('.select-checkbox:checked').each(function () {
+            selectedIds.push($(this).val());
         });
+        if (selectedIds.length > 0) {
+            $.ajax({
+                url: '/BoyaApi/Okundu',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(selectedIds),
+                success: function (result) {
+                    swal.fire({
+                        title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                        text: result.message,
+                        type: result.status === "success" ? 'success' : 'warning',
+                        confirmButtonText: 'Tamam'
+                    });
+                    tabloGuncelle();
+                }
+            });
+        }
+        else {
+            Swal.fire({
+                title: 'Uyarı',
+                text: 'LÜTFEN EN AZ BİR KAYIT SEÇİN',
+                icon: 'warning',
+                confirmButtonText: 'Tamam'
+            });
+        }
     }
 </script>

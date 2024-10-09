@@ -29,6 +29,41 @@
     BLoginHata.Icerik = "";
 }
 
+
+<style>
+    table.table-tab {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        table.table-tab th, table.table-tab td {
+            border: 2px double #B17F2C;
+        }
+
+        table.table-tab th {
+            background-color: #f8f9fa;
+            color: #B17F2C;
+            border-top: 2px solid #B17F2C;
+        }
+
+        table.table-tab td {
+            background-color: white;
+            color: #B17F2C;
+        }
+
+        table.table-tab thead th {
+            border-top: 2px solid #B17F2C;
+        }
+
+    table.dataTable tbody tr {
+        height: 25px;
+    }
+
+    table.dataTable tbody td {
+        line-height: 25px;
+        vertical-align: middle;
+    }
+</style>
 <div class="content-header">
 
     <h1 class="m-0">
@@ -45,18 +80,20 @@
                 <div style="font-size:14px;">
                     <table class="table table-bordered" id="sepettable">
                         <thead>
-                            <tr>
-                            <tr>
-                                <th>Sipariş No / Order No</th>
+                            <tr style="background-color:#B17F2C">
                                 <th>
-                                    Sipariş Tarihi / Order Date
+                                    SİPARİŞ TARİHİ / ORDER DATE
+                                </th>
+                                <th>SİPARİŞ NO / ORDER NO</th>
+                                <th>SİPARİŞ ADI / ORDER NAME</th>
+                                <th>
+                                    TERMİN TARİHİ / DEADLINE
                                 </th>
                                 <th>
-                                    Sipariş Durumu /
-                                    Order Status
+                                    SİPARİŞ DURUMU /
+                                    ORDER STATUS
                                 </th>
-                                <th>Sipariş Detay / Order Detail</th>
-                            </tr>
+                                <th>SİPARİŞ DETAY / ORDER DETAIL</th>
                             </tr>
                         </thead>
                     </table>
@@ -110,8 +147,10 @@
                 }
             },
             columns: [
-                { data: 'siparisNo' },
                 { data: 'siparisTarihi' },
+                { data: 'siparisNo' },
+                { data: 'siparisBayiAciklama' },
+                { data: 'terminHaftasi' },
                 {
                     data: 'siparisDurum',
                     render: function (data, type, full, meta) {

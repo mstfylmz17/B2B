@@ -1,7 +1,214 @@
-﻿
+﻿@using VNNB2B.Models.Hata
 @{
     ViewData["Title"] = "Hafta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    SiparisHata.Icerik = "";
+}
+<br />
+<div class="card">
+    <div class="card-header border-transparent">
+        <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                            <center><h2>HAFTALIK SİPARİŞLER</h2></center>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-content widget-content-area">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-bordered" style="width:100%; font-size:16px;">
+                            <thead>
+                                <tr style="background-color:#B17F2C">
+                                    <th style="color:black;"><center>SİPARİŞ TARİHİ</center></th>
+                                    <th style="color:black;"><center>SİPARİŞ NO</center></th>
+                                    <th style="color:black;"><center>BAYİ ADI</center></th>
+                                    <th style="color:black;"><center>SİPARİŞ ADI</center></th>
+                                    <th style="color:black;"><center>TOPLAM<br /> SİPARİŞ<br /> MİKTARI</center></th>
+                                    <th style="color:black;"><center>TOPLAM<br />SİPARİŞ<br /> TUTARI</center></th>
+                                    <th style="color:black;"><center>TESLİM<br /> EDİLEN<br /> SİPARİŞ<br /> MİKTARI</center></th>
+                                    <th style="color:black;"><center>TESLİM<br /> EDİLEN<br /> SİPARİŞ<br /> TUTARI</center></th>
+                                    <th style="color:black;"><center>KALAN<br /> SİPARİŞ<br /> MİKTARI</center></th>
+                                    <th style="color:black;"><center>KALAN<br /> SİPARİŞ<br /> TUTARI</center></th>
+                                    <th style="color:black;"><center>SİPARİŞ DURUMU</center></th>
+                                    <th style="color:black;"><center><i class="fas fa-pen"></i></center></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    var myDataTable;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#myTable', {
+            ajax: {
+                url: '/SiparisApi/HaftaList',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                {
+                    data: 'siparisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisNo',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'bayiID',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisBayiAciklama',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'toplamAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'toplamTutar',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'toplamTeslimEdilen',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-warning" style="font-size:14px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'toplamTeslimTutar',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-warning" style="font-size:14px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'kalanMiktar',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-danger" style="font-size:14px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'kalanTutar',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-danger" style="font-size:14px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'siparisDurum',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, full, meta) {
+                        return '<center><a href="/Siparis/Detay/' + data + '" class="btn btn-info btn-sm" style="margin-right:3px;"><i class="fas fa-eye"></i> </a></center>'
+                    }
+                }
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
+            ordering: false,
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        initializeDataTable();
+    })
+    function sil(element) {
+        swal.fire({
+            title: 'EMİN MİSİN?',
+            text: "SİPARİŞ BELGESİ İÇİNDEKİ VERİLERLE BİRLİKTE SİLİNECEK!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                submitForm(element);
+            }
+        })
+    }
+    function submitForm(element) {
+        $.ajax({
+            type: "POST",
+            url: "/SiparisApi/SiparisSil/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
+            }
+        });
+    }
+</script>

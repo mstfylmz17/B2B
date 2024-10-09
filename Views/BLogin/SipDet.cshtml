@@ -66,64 +66,133 @@
         line-height: 25px;
         vertical-align: middle;
     }
+
+    #sepettable, #sepettable th, #sepettable td {
+        border: 1px solid black !important;
+    }
 </style>
 
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
+            <center><h4 style="color:#B17F2C;">SİPARİŞ FORMU / ORDER FORM</h4></center>
             <div class="row">
-                <div class="col-12 col-sm-12">
+                <div class="col-6 col-sm-6">
                     <div class="card-body" style="font-size:16px;">
                         <table class=" table-tab" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">
                                         FATURA ÜNVANI / <span style="font-size:12px;">INVOICE TITLE</span>
                                     </th>
-                                    <th style="color:black;" id="txtunvan"></th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black;" id="txtunvan"></th>
                                 </tr>
                                 <tr>
-                                    <th>
-                                        FİRMA ADI / <span style="font-size:12px;">COMPANY NAME</span>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">
+                                        FİRMA ADI / <span style="font-size:12px; border-color:black;">COMPANY NAME</span>
                                     </th>
-                                    <th style="color:black;" id="txtfirmaadi"></th>
+                                    <th style="color:black; width:22.5%; text-align: center; border-color:black;" id="txtfirmaadi"></th>
+                                </tr>
+                                <tr style="background-color:black; height:20px;">
+                                    <th style="background-color:black; border-color:black; color:black;">B</th>
+                                    <th style="background-color:black; text-align: center; border-color:black;"></th>
                                 </tr>
                                 <tr>
-                                    <th>SİPARİŞ NO / <span style="font-size:12px;">ORDER NO</span></th>
-                                    <th style="color:black;" id="txtsiparisno"></th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">
+                                        SİPARİŞ ADI / <span style="font-size:12px;">ORDER NAME</span>
+                                    </th>
+                                    <th style="color:red;width:22.5%; text-align: center; font-size:16px; border-color:black;" id="txtmusteri"></th>
                                 </tr>
                                 <tr>
-                                    <th>SİPARİŞ TARİHİ / <span style="font-size:12px;">ORDER DATE</span></th>
-                                    <th style="color:black;" id="txtsiparistarihi"></th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">SİPARİŞ NO / <span style="font-size:12px;">ORDER NO</span></th>
+                                    <th style="color:red;width:22.5%; text-align: center; border-color:black;" id="txtsiparisno"></th>
                                 </tr>
                                 <tr>
-                                    <th>SİPARİŞ DURUMU / <span style="font-size:12px;">ORDER STATUS</span></th>
-                                    <th style="color:black;" id="txtsiparisdurum"></th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">SİPARİŞ TARİHİ / <span style="font-size:12px;">ORDER DATE</span></th>
+                                    <th style="color:red; width:22.5%; text-align: center; border-color:black;" id="txtsiparistarihi"></th>
+                                </tr>
+                                <tr style="background-color:black; height:20px;">
+                                    <th style="background-color:black; border-color:black; color:black;">B</th>
+                                    <th style="background-color:black; border-color:black;"></th>
                                 </tr>
                                 <tr>
-                                    <th>ONAYLAYAN YETKİLİ / <span style="font-size:12px;">APPROVING AUTHORITY</span></th>
-                                    <th style="color:black;" id="txtkullanici"></th>
-                                </tr>
-                                <tr>
-                                    <th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">
                                         TESLİMAT ŞEKLİ / <span style="font-size:12px;">
                                             DELIVERY METHOD
                                         </span>
                                     </th>
-                                    <th style="color:black;">
-                                        FABRİKA TESLİM / <span style="font-size:12px;">
-                                            FACTORY DELIVERY
-                                        </span>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black;">
+
+                                        <label id="txtteslimatSekli" style="color:red; border-color:black; height:15px; font-size:17px; font-weight:bold;"></label>
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th>
-                                        TAHMİNİ TESLİMAT TARİHİ / <span style="font-size:12px;">
-                                            ESTIMATED DELIVERY DATE
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">TESLİMAT TARİHİ / <span style="font-size:12px;">DEADLINE</span></th>
+                                    <th style="color:red;width:22.5%; text-align: center; border-color:black;">
+                                        <label id="txtteslimathafta" style="color:red; border-color:black; height:15px; font-size:17px; font-weight:bold;"></label>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">
+                                        TESLİMAT ADRESİ / <span style="font-size:12px;">
+                                            DELIVERY ADDRESS
                                         </span>
                                     </th>
-                                    <th style="color:black;" id="txtteslimtarihi">
+                                    <th style="color:black;width:22.5%; border-color:black; text-align: center;" id="txtadres">
                                     </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6">
+                    <div class="card-body" style="font-size:16px;">
+                        <table class=" table-tab" style="width:100%; border-color:black;">
+                            <thead>
+                                <tr>
+                                    <th style="color:black;width:60%;background-color:#B17F2C; border-color:black;">TOPLAM SİPARİŞ - ADEDİ / <span style="font-size:12px;">TOTAL ORDER - NUMBER</span></th>
+                                    <th style="color:black;width:40%; text-align: center; border-color:black;" id="txttoplamadet"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:60%;background-color:#B17F2C; border-color:black;">TOPLAM SİPARİŞ - PAKET ADEDİ /<span style="font-size:12px;"> TOTAL ORDER - NUMBER OF PACKAGES</span></th>
+                                    <th style="color:black;width:40%; text-align: center; border-color:black;" id="txttoplamparcaadet"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:60%;background-color:#B17F2C; border-color:black;">TOPLAM SİPARİŞ - M3 /<span style="font-size:12px;"> TOTAL ORDER - M3</span></th>
+                                    <th style="color:black;width:40%; text-align: center; border-color:black;" id="txttoplamm3"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:60%;background-color:#B17F2C; border-color:black;">TOPLAM SİPARİŞ - KG /<span style="font-size:12px;"> TOTAL ORDER - KG</span></th>
+                                    <th style="color:black;width:40%; text-align: center; border-color:black;" id="txttoplamkg"></th>
+                                </tr>
+                                <tr style="background-color:black; height:27px;">
+                                    <th style="background-color:black; border-color:black;"></th>
+                                    <th style="background-color:black; border-color:black;" "></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:60%;background-color:#B17F2C; border-color:black;">LİSTE TOPLAM /<span style="font-size:12px;"> LİST TOTAL</span></th>
+                                    <th style="color:black;width:40%; text-align: center; border-color:black;" id="txtaratoplam"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:60%;background-color:#B17F2C; border-color:black;">
+                                        BAYİ İSKONTO /<span style="font-size:12px;"> DEALER DISCOUNT</span>
+                                        %@ViewBag.iskonto
+                                    </th>
+                                    <th style="color:black;width:40%; text-align: center; border-color:black;" id="txtiskontotoplam"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:60%;background-color:#B17F2C; border-color:black;">
+                                        İSKONTOLU FİYAT /<span style="font-size:12px;"> DISCOUNTED PRICE</span>
+                                    </th>
+                                    <th style="color:black;width:40%; text-align: center; border-color:black; color:red; font-weight:bold; font-size:17px;" id="txtindirimlifiyat"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:60%;background-color:#B17F2C; border-color:black;">KDV TOPLAM /<span style="font-size:12px;"> VAT TOTAL</span> %@ViewBag.kdv</th>
+                                    <th style="color:black;width:40%; text-align: center; border-color:black; color:red; font-weight:bold; font-size:17px;" id="txtkdvtoplam"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:60%;background-color:#B17F2C; border-color:black;">GENEL TOPLAM /<span style="font-size:12px;"> GRAND TOTAL</span> </th>
+                                    <th style="color:black;width:40%; text-align: center; border-color:black; color:red; font-weight:bold; font-size:17px;" id="txtgeneltoplam"></th>
                                 </tr>
                             </thead>
                         </table>
@@ -131,117 +200,57 @@
                 </div>
                 <div class="col-12 col-sm-12">
                     <div style="font-size:12px;">
-                        <table class="table table-bordered" id="sepettable">
+                        <table class="table table-bordered" id="sepettable" style=" border-color:black;">
                             <thead>
-                                <tr style="background-color:#B17F2C">
-                                    <th style="width:11%;">
+                                <tr style="background-color:#B17F2C; border-color:black;">
+                                    <th style="width:15%; border-color:black;">
                                         <center>
-                                            ÜRÜN RESMİ <br /> PRODUCT IMAGE
+                                            ÜRÜN RESMİ <br />  <span style="font-size:9px;">PRODUCT IMAGE</span>
                                         </center>
                                     </th>
-                                    <th style="width:10%;">
+                                    <th style="width:5%; border-color:black;">
                                         <center>
-                                            ÜRÜM KODU <br /> PRODUCT CODE
+                                            ÜRÜN KODU Kodu <br />  <span style="font-size:9px;">PRODUCT KODE</span>
                                         </center>
                                     </th>
-                                    <th style="width:18%;">
+                                    <th style="width:10%; border-color:black;">
                                         <center>
-                                            ÜRÜN ADI <br /> PRODUCT NAME
+                                            ÜRÜN ADI <br />  <span style="font-size:9px;">PRODUCT NAME</span>
                                         </center>
                                     </th>
-                                    <th style="width:2%;"><center>ADET <br /> AMOUNT</center></th>
-                                    <th style="width:2%;"><center>TESLİM ADET <br /> DELIVERY QTY</center></th>
-                                    <th style="width:2%;">
-                                        <center>
-                                            KALAN ADET <br />REMAINING QTY
-                                        </center>
-                                    </th>
-                                    <th style="width:10%;"><center>AHŞAP RENGİ <br /> WOOD COLOR</center></th>
-                                    <th style="width:10%;"><center>DERİ RENGİ <br /> SKIN COLOR</center></th>
-                                    <th style="width:10%;">
+                                    <th style="width:5%; border-color:black;"><center>SİPARİŞ ADET <br /> <span style="font-size:9px;">ORDER QTY</span></center></th>
+                                    <th style="width:5%; border-color:black;"><center>TESLİM ADET <br /> <span style="font-size:9px;">DELIVERY QTY</span></center></th>
+                                    <th style="width:5%; border-color:black;"><center>KALAN ADET <br /> <span style="font-size:9px;">REMAINDER QTY</span></center></th>
+                                    <th style="width:10%; border-color:black;"><center>AHŞAP RENGİ <br /> <span style="font-size:9px;">WOOD COLOR</span></center></th>
+                                    <th style="width:10%; border-color:black;"><center>DERİ RENGİ <br />  <span style="font-size:9px;">SKIN COLOR</span></center></th>
+                                    <th style="width:10%; border-color:black;">
                                         <center>
                                             ÖZEL NOT
                                             <br />
-                                            SPECIAL NOTE
+                                            <span style="font-size:9px;">SPECIAL NOTE</span>
                                         </center>
                                     </th>
-                                    <th style="width:7%;">
+                                    <th style="width:9%; border-color:black;">
                                         <center>
                                             LİSTE FİYAT <br />
-                                            LİST PRICE
+                                            <span style="font-size:9px;">LIST PRICE</span>
                                         </center>
                                     </th>
-                                    <th style="width:7%;">
+                                    <th style="width:9%; border-color:black;">
                                         <center>
                                             İNDİRİMLİ FİYAT <br />
-                                            DISCOUNTED PRICE
+                                            <span style="font-size:9px;">DISCOUNTED PRICE</span>
                                         </center>
                                     </th>
-                                    <th style="width:10%;">
+                                    <th style="width:9%; border-color:black;">
                                         <center>
                                             TOPLAM FİYAT<br />
-                                            TOTAL PRICE
+                                            <span style="font-size:9px;">TOTAL PRICE</span>
                                         </center>
                                     </th>
                                 </tr>
                             </thead>
                         </table>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="card-body">
-                                <table class="table-tab">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:50%;">TOPLAM SİPARİŞ - ADEDİ</th>
-                                            <th style="width:50%; color:black; text-align: center;" id="txttoplamadet"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%;">TOPLAM SİPARİŞ - PARÇA ADEDİ</th>
-                                            <th style="width:50%; color:black; text-align: center;" id="txttoplamparcaadet"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%;">TOPLAM SİPARİŞ - M3</th>
-                                            <th style="width:50%; color:black; text-align: center;" id="txttoplamm3"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%;">TOPLAM SİPARİŞ - KG</th>
-                                            <th style="width:50%; color:black; text-align: center;" id="txttoplamkg"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="card-body">
-                                <table class="table-tab">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:50%;">LİSTE TOPLAM</th>
-                                            <th style="width:50%; color:black; text-align: center;" id="txtaratoplam"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%;">BAYİ İSKONTO %@ViewBag.iskonto</th>
-                                            <th style="width:50%; color:black; text-align: center;" id="txtiskontotoplam"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%; background-color:lightgray;">İSKONTOLU FİYAT</th>
-                                            <th style="width:50%; color:black; background-color:lightgray; text-align: center;" id="txtindirimlifiyat"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%; background-color:lightgray;">KDV TOPLAM %@ViewBag.kdv</th>
-                                            <th style="width:50%; color:black; background-color:lightgray; text-align: center;" id="txtkdvtoplam"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%; background-color:lightgray;">GENEL TOPLAM</th>
-                                            <th style="width:50%; color:black; background-color:lightgray; text-align: center;" id="txtgeneltoplam"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -261,21 +270,30 @@
             <div class="modal-body">
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive">
-                        <table id="tesTable" class="table table-hover" style="width:100%">
+                        <table id="tesTable" class="table table-hover" width="100%">
                             <thead>
-                                <tr>
-                                    <th>
-                                        TESLİMAT NO <br /> DELIVERY NO
+                                <tr style="background-color:#B17F2C">
+                                    <th style="width:20%; border-color:black; color:black;">
+                                        <center>
+                                            TESLİMAT TARİHİ
+                                        </center>
                                     </th>
-                                    <th>
-                                        BAYİ ADI <br /> DEALER NAME
+                                    <th style="width:15%; border-color:black; color:black;">
+                                        <center>
+                                            BAYİ ADI
+                                        </center>
                                     </th>
-                                    <th>TESLİMAT TARİHİ <br /> DELIVERY DATE</th>
-                                    <th>
-                                        TESLİMAT MİKTARI <br /> DELIVERY AMOUNT
+                                    <th style="width:10%; border-color:black; color:black;">
+                                        <center>
+                                            TOPLAM TESLİM EDİLEN ÜRÜN ADEDİ
+                                        </center>
                                     </th>
-                                    <th>BELGE DURUMU <br /> DOCUMENT STATUS</th>
-                                    <th></th>
+                                    <th style="width:45%; border-color:black; color:black;">
+                                        <center>
+                                            BELGE DURUMU
+                                        </center>
+                                    </th>
+                                    <th style="width:10%; border-color:black; color:black;"><center></center></th>
                                 </tr>
                             </thead>
                         </table>
@@ -317,7 +335,7 @@
                 {
                     data: 'resim',
                     render: function (data, type, full, meta) {
-                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                        return '<center><img src="' + data + '" class="img-thumbnail" style="width: 100px;" /></center>';
                     }
                 },
                 {
@@ -342,7 +360,7 @@
                     data: 'teslimAdet',
                     render: function (data, type, row, meta) {
                         if (data > 0) {
-                            return '<div style="text-align: center; color:black;"><a href="#" data-toggle="modal" data-target="#teslimatmodal" onclick="TeslimatAc(' + row.id + ')">' + data + '</a></div>';
+                            return '<div style="text-align: center; font-size:20px; color:black;"><a href="#" data-toggle="modal" data-target="#teslimatmodal" onclick="TeslimatAc(' + row.id + ')"><span class="right badge badge-danger">' + data + '</span></a></div>';
                         }
                         else {
                             return '<div style="text-align: center; color:black;">' + data + '</div>';
@@ -437,6 +455,10 @@
                 $("#txttoplamparcaadet").text(x.toplamparcaadet);
                 $("#txttoplamm3").text(x.toplamm3);
                 $("#txttoplamkg").text(x.toplamkg);
+                $("#txttermintarihi").text(x.teslimTarihi);
+                $("#txtmusteri").text(x.siparisBayiAciklama);
+                $("#txtteslimathafta").text(x.terminHaftasi);
+                $("#txtteslimatSekli").text(x.teslimatSekli);
             }
         });
     }
@@ -463,15 +485,34 @@
                 }
             },
             columns: [
-                { data: 'teslimatNo' },
-                { data: 'bayiID' },
-                { data: 'kayitTarihi' },
-                { data: 'miktar' },
-                { data: 'tamamlanmaDurum' },
+                {
+                    data: 'teslimatTarihi',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'bayiID',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'miktar',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'tamamlanmaDurum',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center;">' + data + '</div>';
+                    }
+                },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="#" target="_blank" class="btn btn-primary btn-sm" ><i class="fas fa-eye"></i></a>';
+                        return '<a href="/BLogin/TeslimatDetay/' + data + '" class="btn btn-primary btn-sm" ><i class="fas fa-eye"></i></a>';
                     },
                     orderable: false
                 },
@@ -479,10 +520,9 @@
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
+            lengthChange: false,
             paging: false,
-            scrollY: '73vh',
-            scrollCollapse: true,
-            ordering: false,
+            info: false,
         });
     }
 </script>

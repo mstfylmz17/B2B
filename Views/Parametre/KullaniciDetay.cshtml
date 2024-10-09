@@ -34,7 +34,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Kullanıcı Düzenle</h4>
+                                    <center><h2>KULLANICI KARTI DÜZENLE</h2></center>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Şifre Değiştir</h4>
+                                    <center><h2>ŞİFRE DEĞİŞTİR</h2></center>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Kullanıcı Yetki Ekle</h4>
+                                    <center><h2>KULLANICIYA PANEL YETKİSİ EKLE</h2></center>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                             <form id="YetkiForm">
                                 <input name="KullaniciID" id="KullaniciID" value="@id" type="hidden" />
                                 <div class="form-group mb-3">
-                                    @Html.DropDownList("YetkiTurlariID", (List<SelectListItem>)ViewBag.yetkiler, "Yetki Seçiniz...", new { @class = "form-control basic", id = "YetkiTurlariID" })
+                                    @Html.DropDownList("YetkiTurlariID", (List<SelectListItem>)ViewBag.yetkiler, "PANEL SEÇİNİZ...", new { @class = "form-control basic", id = "YetkiTurlariID" })
                                 </div>
                                 <button type="button" onclick="YetkiEkle()" class="btn btn-primary mt-3">Kaydet</button>
                             </form>
@@ -133,7 +133,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Kullanıcıya Ait Yetiler</h4>
+                                    <center><h2>KULLANICIYA AÇIK PANELLER</h2></center>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                                 <table id="myTable" class="table table-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Yetki Tanımı</th>
+                                            <th>PANEL TANIMI</th>
                                             <th></th>
                                         </tr>
                                     </thead>

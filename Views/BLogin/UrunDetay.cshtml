@@ -186,21 +186,21 @@
                 $('#productForm').empty();
                 //Miktar Bilgisi
                 $('#productForm').append(`
-                                                                                                                                                                                                            <div class="form-group">
-                                                                                                                                                                                                                        <label style="margin-bottom:-5px;" for="Miktar">ADET / PIECE</label>
-                                                                                                                                                                                                                <input id="Miktar" class="form-control" type="number" maxlength="2" />
-                                                                                                                                                                                                                </div><br/>
-                                                                                                                                                                                                    `);
+                                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                                                <label style="margin-bottom:-5px;" for="Miktar">ADET / PIECE</label>
+                                                                                                                                                                                                                        <input id="Miktar" class="form-control" type="number" maxlength="2" />
+                                                                                                                                                                                                                        </div><br/>
+                                                                                                                                                                                                            `);
 
                 // Dinamik olarak özellikleri ekle
                 data.urunOzellikleri.forEach(function (ozellik) {
                     $('#productForm').append(`
-                                                                                                                                                                                                   <div class="form-group">
-                                                                                                                                                                                                     <label style="margin-bottom:-5px;" for="${ozellik.id}">${ozellik.urunOzellikTanimi}</label>
-                                                                                                                                                                                                     <select class="form-control" id="${ozellik.id}">x
-                                                                                                                                                                                                        <option>Yükleniyor...</option>
-                                                                                                                                                                                                     </select>
-                                                                                                                                                                                                   </div><br/>`);
+                                                                                                                                                                                                           <div class="form-group">
+                                                                                                                                                                                                             <label style="margin-bottom:-5px;" for="${ozellik.id}">${ozellik.urunOzellikTanimi}</label>
+                                                                                                                                                                                                             <select class="form-control" id="${ozellik.id}">x
+                                                                                                                                                                                                                <option>Yükleniyor...</option>
+                                                                                                                                                                                                             </select>
+                                                                                                                                                                                                           </div><br/>`);
 
                     // Özellikler için API sorgulaması yap
                     fetchOzellikDegerleri(ozellik.id);
@@ -208,11 +208,11 @@
                 });
                 //Açıklama Nesneleri
                 $('#productForm').append(`
-                                                                                                                                                                                                <div class="form-group">
-                                                                                                                                                                                                            <label style="margin-bottom:-5px;" for="Aciklama">AÇIKLAMA / EXPLANATION <br/></label>
-                                                                                                                                                                                                            <textarea rows="3" class="form-control" id="Aciklama" placeholder="Lütfen Ürün İle İlgili Özel Notlarınızı Yazınız... / Please Write Your Special Notes About the Product..."></textarea>
-                                                                                                                                                                                                    </div><br/>
-                                                                                                                                                                                            `);
+                                                                                                                                                                                                        <div class="form-group">
+                                                                                                                                                                                                                    <label style="margin-bottom:-5px;" for="Aciklama">AÇIKLAMA / EXPLANATION <br/></label>
+                                                                                                                                                                                                                    <textarea rows="3" class="form-control" id="Aciklama" placeholder="Lütfen Ürün İle İlgili Özel Notlarınızı Yazınız... / Please Write Your Special Notes About the Product..."></textarea>
+                                                                                                                                                                                                            </div><br/>
+                                                                                                                                                                                                    `);
             },
             error: function () {
                 alert('Ürün bilgileri alınamadı.');
@@ -263,7 +263,7 @@
         // POST isteği gönder
         $.ajax({
             type: "POST",
-            url: '/UrunApi/SepetEkle',
+            url: '/SiparisApi/SepetEkle',
             data: JSON.stringify(formDataa),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -274,16 +274,11 @@
                     type: result.status === "success" ? 'success' : 'warning',
                     confirmButtonText: 'Tamam'
                 });
-                $('#productModal').modal('hide');
+                if (result.status == "success") {
+                    $('#productModal').modal('hide');
+                    sepetsayigetir();
+                }
             },
-            error: function () {
-                swal.fire({
-                    title: result.status === "error" ? 'Başarısız!' : 'Üzgünüm Bir Hata Oldu :( Lütfen Tekrar Deneyiniz.!!',
-                    confirmButtonText: 'Tamam'
-                });
-            }
         });
-
-        sepetsayigetir();
     }
 </script>

@@ -16,7 +16,7 @@ namespace VNNB2B.Controllers
         public IActionResult Birim()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -30,7 +30,7 @@ namespace VNNB2B.Controllers
         public IActionResult Departman()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -44,7 +44,7 @@ namespace VNNB2B.Controllers
         public IActionResult YetkiTurlari()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -58,7 +58,7 @@ namespace VNNB2B.Controllers
         public IActionResult Kategori()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -72,7 +72,7 @@ namespace VNNB2B.Controllers
         public IActionResult Kullanici()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -95,7 +95,7 @@ namespace VNNB2B.Controllers
         public IActionResult KullaniciDetay(int id)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -110,11 +110,10 @@ namespace VNNB2B.Controllers
                                                   }).ToList();
 
                 ViewBag.departman = departman;
-
-                List<SelectListItem> yetkiler = (from x in c.YetkiTurlaris.Where(x => x.Durum == true).ToList()
+                List<SelectListItem> yetkiler = (from x in c.Panellers.Where(x => x.Durum == true).ToList()
                                                  select new SelectListItem
                                                  {
-                                                     Text = x.YetkiAdi.ToString(),
+                                                     Text = x.PanelAdi.ToString(),
                                                      Value = x.ID.ToString()
                                                  }).ToList();
 
@@ -135,7 +134,7 @@ namespace VNNB2B.Controllers
         public IActionResult Ozellik()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -149,7 +148,7 @@ namespace VNNB2B.Controllers
         public IActionResult OzellikDetay(int id)
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -164,7 +163,7 @@ namespace VNNB2B.Controllers
         public IActionResult UrunTurlari()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");

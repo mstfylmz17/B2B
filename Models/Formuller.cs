@@ -99,7 +99,7 @@ namespace VNNB2B.Models
             sip.AraToplam = toplamtutar;
             if (bayi.KDVDurum == true)
             {
-                decimal kdv = (toplamtutar * 10) / 100;
+                decimal kdv = ((toplamtutar - iskontotoplam) * 10) / 100;
                 sip.KDVToplam = kdv;
                 sip.ToplamTutar = sip.ToplamTutar + kdv;
             }
@@ -113,28 +113,33 @@ namespace VNNB2B.Models
         public void SiparisOnay(int id, int idd)
         {
             var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
-            var icerik = c.SiparisIceriks.Where(v => v.SiparisID == id).ToList();
+            var icerik = c.SiparisIceriks.Where(v => v.SiparisID == id && v.Durum == true).ToList();
 
             foreach (var x in icerik)
             {
-                DepoIsEmirleri i = new DepoIsEmirleri();
-                i.SiparisID = x.SiparisID;
-                i.KullaniciID = null;
-                i.SiparisIcerikID = x.ID;
-                i.UrunID = x.UrunID;
-                i.BaslangicTarihi = null;
-                i.BitisTarihi = null;
-                i.BaslamaDurum = false;
-                i.BitirmeDurum = false;
-                i.GelenAdet = Convert.ToInt32(x.Miktar);
-                i.KalanAdet = Convert.ToInt32(x.Miktar);
-                i.IslemdekiAdet = 0;
-                i.GidenAdet = 0;
-                i.GorenKullanici = null;
-                i.GorulduMu = false;
-                i.Durum = true;
-                c.DepoIsEmirleris.Add(i);
-                c.SaveChanges();
+                if (c.DepoIsEmirleris.FirstOrDefault(v => v.SiparisIcerikID == x.ID && v.Durum == true) == null)
+                {
+                    DepoIsEmirleri i = new DepoIsEmirleri();
+                    i.SiparisID = x.SiparisID;
+                    i.KullaniciID = null;
+                    i.SiparisIcerikID = x.ID;
+                    i.UrunID = x.UrunID;
+                    i.BaslangicTarihi = null;
+                    i.BitisTarihi = null;
+                    i.BaslamaDurum = false;
+                    i.BitirmeDurum = false;
+                    i.SiparisAdet = Convert.ToInt32(x.Miktar);
+                    i.GelenAdet = Convert.ToInt32(x.Miktar);
+                    i.KalanAdet = Convert.ToInt32(x.Miktar);
+                    i.GelenTarih = DateTime.Now;
+                    i.IslemdekiAdet = 0;
+                    i.GidenAdet = 0;
+                    i.GorenKullanici = null;
+                    i.GorulduMu = false;
+                    i.Durum = true;
+                    c.DepoIsEmirleris.Add(i);
+                    c.SaveChanges();
+                }
             }
             mesaj = "Tüm Ürünler Depoya Sevk Edildi.";
         }
@@ -153,9 +158,11 @@ namespace VNNB2B.Models
                 i.BitisTarihi = null;
                 i.BaslamaDurum = false;
                 i.BitirmeDurum = false;
+                i.SiparisAdet = depois.SiparisAdet;
                 i.GelenAdet = miktar;
                 i.KalanAdet = miktar;
                 i.IslemdekiAdet = 0;
+                i.GelenTarih = DateTime.Now;
                 i.GidenAdet = 0;
                 i.GorenKullanici = null;
                 i.GorulduMu = false;
@@ -169,6 +176,7 @@ namespace VNNB2B.Models
                 varmi.GelenAdet += miktar;
                 varmi.BitirmeDurum = false;
                 varmi.BaslamaDurum = false;
+                varmi.GorulduMu = false;
                 c.SaveChanges();
             }
             mesaj = "Tüm Ürünler Depoya Sevk Edildi.";
@@ -188,9 +196,11 @@ namespace VNNB2B.Models
                 i.BitisTarihi = null;
                 i.BaslamaDurum = false;
                 i.BitirmeDurum = false;
+                i.SiparisAdet = depois.SiparisAdet;
                 i.GelenAdet = miktar;
                 i.KalanAdet = miktar;
                 i.IslemdekiAdet = 0;
+                i.GelenTarih = DateTime.Now;
                 i.GidenAdet = 0;
                 i.GorenPersonel = null;
                 i.GorulduMu = false;
@@ -204,8 +214,30 @@ namespace VNNB2B.Models
                 varmi.GelenAdet += miktar;
                 varmi.BitirmeDurum = false;
                 varmi.BaslamaDurum = false;
+                varmi.GorulduMu = false;
                 c.SaveChanges();
             }
+            mesaj = "Tüm Ürünler Döşemeye Sevk Edildi.";
+        }
+        public void DosemeSevkGeri(int id, int miktar)
+        {
+            var depois = c.BoyaIsEmirleris.FirstOrDefault(v => v.ID == id);
+            var varmi = c.DosemeIsEmirleris.FirstOrDefault(v => v.SiparisIcerikID == depois.SiparisIcerikID && v.Durum == true);
+
+            varmi.KalanAdet -= miktar;
+            varmi.GelenAdet -= miktar;
+            varmi.BitirmeDurum = false;
+
+            depois.KalanAdet += miktar;
+            depois.GidenAdet -= miktar;
+            depois.BitirmeDurum = false;
+
+            if (varmi.GelenAdet == 0)
+            {
+                c.DosemeIsEmirleris.Remove(varmi);
+            }
+            c.SaveChanges();
+
             mesaj = "Tüm Ürünler Döşemeye Sevk Edildi.";
         }
         public void AmbalajSevk(int id, int kulid, string tur, int miktar)
@@ -225,8 +257,10 @@ namespace VNNB2B.Models
                     i.BitisTarihi = null;
                     i.BaslamaDurum = false;
                     i.BitirmeDurum = false;
+                    i.SiparisAdet = depois.SiparisAdet;
                     i.GelenAdet = miktar;
                     i.KalanAdet = miktar;
+                    i.GelenTarih = DateTime.Now;
                     i.IslemdekiAdet = 0;
                     i.GidenAdet = 0;
                     i.GorenPersonel = null;
@@ -241,6 +275,7 @@ namespace VNNB2B.Models
                     varmi.GelenAdet += miktar;
                     varmi.BitirmeDurum = false;
                     varmi.BaslamaDurum = false;
+                    varmi.GorulduMu = false;
                     c.SaveChanges();
                 }
             }
@@ -261,6 +296,7 @@ namespace VNNB2B.Models
                     i.BitirmeDurum = false;
                     i.GelenAdet = miktar;
                     i.KalanAdet = miktar;
+                    i.GelenTarih = DateTime.Now;
                     i.IslemdekiAdet = 0;
                     i.GidenAdet = 0;
                     i.GorenPersonel = null;
@@ -275,9 +311,30 @@ namespace VNNB2B.Models
                     varmi.GelenAdet += miktar;
                     varmi.BitirmeDurum = false;
                     varmi.BaslamaDurum = false;
+                    varmi.GorulduMu = false;
                     c.SaveChanges();
                 }
             }
+            mesaj = "Tüm Ürünler Ambalaja Sevk Edildi.";
+        }
+        public void AmbalajSevkGeri(int id, int miktar)
+        {
+            var depois = c.BoyaIsEmirleris.FirstOrDefault(v => v.ID == id);
+            var varmi = c.AmbalajIsEmirleris.FirstOrDefault(v => v.SiparisIcerikID == depois.SiparisIcerikID && v.Durum == true);
+
+            varmi.KalanAdet -= miktar;
+            varmi.GelenAdet -= miktar;
+            varmi.BitirmeDurum = false;
+
+            depois.KalanAdet += miktar;
+            depois.GidenAdet -= miktar;
+            depois.BitirmeDurum = false;
+
+            if (varmi.GelenAdet == 0)
+            {
+                c.AmbalajIsEmirleris.Remove(varmi);
+            }
+            c.SaveChanges();
             mesaj = "Tüm Ürünler Ambalaja Sevk Edildi.";
         }
         public void SevkiyatSevk(int id, int kulid, int miktar)
@@ -295,8 +352,10 @@ namespace VNNB2B.Models
                 i.BitisTarihi = null;
                 i.BaslamaDurum = false;
                 i.BitirmeDurum = false;
+                i.SiparisAdet = depois.SiparisAdet;
                 i.GelenAdet = miktar;
                 i.KalanAdet = miktar;
+                i.GelenTarih = DateTime.Now;
                 i.IslemdekiAdet = 0;
                 i.GidenAdet = 0;
                 i.GorenPersonel = null;
@@ -311,36 +370,82 @@ namespace VNNB2B.Models
                 varmi.GelenAdet += miktar;
                 varmi.BitirmeDurum = false;
                 varmi.BaslamaDurum = false;
+                varmi.GorulduMu = false;
                 c.SaveChanges();
             }
             mesaj = "Tüm Ürünler Sevkiyata Sevk Edildi.";
         }
 
-        //Üretim sevk etme kısmı en son hallet satın almadan taleplerle gelecek 
-        public void UretimSevk(int id, int kulid)
+        public void SipSil()
         {
-            var depois = c.DepoIsEmirleris.FirstOrDefault(v => v.ID == id);
-            BoyaIsEmirleri i = new BoyaIsEmirleri();
-            i.SiparisID = depois.SiparisID;
-            i.KullaniciID = null;
-            i.SiparisIcerikID = depois.SiparisIcerikID;
-            i.UrunID = depois.UrunID;
-            i.BaslangicTarihi = null;
-            i.BitisTarihi = null;
-            i.BaslamaDurum = false;
-            i.BitirmeDurum = false;
-            i.GelenAdet = 0;
-            i.IslemdekiAdet = 0;
-            i.GidenAdet = 0;
-            i.GorenKullanici = null;
-            i.GorulduMu = false;
-            i.Durum = true;
-            c.BoyaIsEmirleris.Add(i);
-            depois.BitirmeDurum = true;
-            depois.BitisTarihi = DateTime.Now;
-            depois.KullaniciID = kulid;
+            var sip = c.Siparis.Where(v => v.Durum == true && v.ToplamAdet <= 0).ToList();
+            foreach (var x in sip)
+            {
+                x.Durum = false;
+                c.SaveChanges();
+            }
+        }
+        public void SiparisSil(int id)
+        {
+            var sip = c.Siparis.FirstOrDefault(v => v.ID == id);
+            var icerik = c.SiparisIceriks.Where(v => v.SiparisID == id).ToList();
+            //İş Emirleri Temizle
+            foreach (var x in icerik)
+            {
+                //Depo Temizle
+                var depo = c.DepoIsEmirleris.Where(v => v.SiparisIcerikID == x.ID).ToList();
+                foreach (var v in depo)
+                {
+                    v.Durum = false;
+                    c.SaveChanges();
+                }
+                //Boya Temizle
+                var boya = c.BoyaIsEmirleris.Where(v => v.SiparisIcerikID == x.ID).ToList();
+                foreach (var v in boya)
+                {
+                    v.Durum = false;
+                    c.SaveChanges();
+                }
+                //Döşeme Temizle
+                var doseme = c.DosemeIsEmirleris.Where(v => v.SiparisIcerikID == x.ID).ToList();
+                foreach (var v in doseme)
+                {
+                    v.Durum = false;
+                    c.SaveChanges();
+                }
+                //Ambalaj Temizle
+                var ambalaj = c.AmbalajIsEmirleris.Where(v => v.SiparisIcerikID == x.ID).ToList();
+                foreach (var v in ambalaj)
+                {
+                    v.Durum = false;
+                    c.SaveChanges();
+                }
+                //Sevkiyat Temizle
+                var sevkiyat = c.SevkiyatIsEmirleris.Where(v => v.SiparisIcerikID == x.ID).ToList();
+                foreach (var v in sevkiyat)
+                {
+                    v.Durum = false;
+                    c.SaveChanges();
+                }
+                x.Durum = false;
+                c.SaveChanges();
+            }
+            //Teslimat Temizle
+            var teslimatlar = c.Teslimats.Where(v => v.SiparisID == id).ToList();
+            foreach (var x in teslimatlar)
+            {
+                var tesicerik = c.TeslimatIceriks.Where(v => v.TeslimatID == x.ID).ToList();
+                foreach (var v in tesicerik)
+                {
+                    v.Durum = false;
+                    c.SaveChanges();
+                }
+                x.Durum = false;
+                c.SaveChanges();
+            }
+            sip.Durum = false;
+            sip.SiparisDurum = "Sipariş İptal Edildi...";
             c.SaveChanges();
-            mesaj = "Tüm Ürünler Depoya Sevk Edildi.";
         }
     }
 }

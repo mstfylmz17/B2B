@@ -1,0 +1,415 @@
+﻿@using VNNB2B.Models.Hata
+@{
+    ViewData["Title"] = "Ay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    AmbalajHata.Icerik = "";
+}
+<br />
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header border-transparent">
+                <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <center><h2>AMBALAJA GELEN AYLIK İŞ EMİRLERİ</h2></center>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <table id="myTable" class="table table-bordered" style="width:100%; font-size:16px;">
+                                <thead>
+                                    <tr style="background-color:#B17F2C">
+                                        <th style="width:5%; color:black;"><center>Sipariş Tarihi</center></th>
+                                        <th style="width:5%; color:black;"><center>Sipariş No</center></th>
+                                        <th style="width:10%; color:black;"><center>Bayi Adı<br />Sipariş Adı</center></th>
+                                        <th style="width:10%; color:black;"><center>Ürün Resmi</center></th>
+                                        <th style="width:6%; color:black;"><center>Ürün Kodu</center></th>
+                                        <th style="width:10%; color:black;"><center>Ürün Adı</center></th>
+                                        <th style="width:4%; color:black;"><center>Sipariş <br /> Adedi</center></th>
+                                        <th style="width:4%; color:black;"><center>Ambalaja<br />Gelen <br /> Adet</center></th>
+                                        <th style="width:4%; color:black;"><center>Ambalajdan<br />Çıkan <br /> Adet</center></th>
+                                        <th style="width:4%; color:black;"><center>Siparişten<br />Kalan <br /> Adet</center></th>
+                                        <th style="width:10%; color:black;"><center>Ahşap Rengi</center></th>
+                                        <th style="width:10%; color:black;"><center>Deri Rengi</center></th>
+                                        <th style="width:10%; color:black;"><center>Özel Not</center></th>
+                                        <th style="width:10%; color:black;"><center>Başlangıç Tarihi</center></th>
+                                        <th style="width:10%; color:black;"><center>Bitiş Tarihi</center></th>
+                                        <th style="width:10%; color:black;"><center>Personel</center></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header border-transparent">
+                <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <center><h2>AMBALAJDAN GİDEN AYLIK İŞ EMİRLERİ</h2></center>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <table id="myTable2" class="table table-bordered" style="width:100%; font-size:16px;">
+                                <thead>
+                                    <tr style="background-color:#B17F2C">
+                                        <th style="width:5%; color:black;"><center>Sipariş Tarihi</center></th>
+                                        <th style="width:5%; color:black;"><center>Sipariş No</center></th>
+                                        <th style="width:10%; color:black;"><center>Bayi Adı<br />Sipariş Adı</center></th>
+                                        <th style="width:10%; color:black;"><center>Ürün Resmi</center></th>
+                                        <th style="width:6%; color:black;"><center>Ürün Kodu</center></th>
+                                        <th style="width:10%; color:black;"><center>Ürün Adı</center></th>
+                                        <th style="width:4%; color:black;"><center>Sipariş <br /> Adedi</center></th>
+                                        <th style="width:4%; color:black;"><center>Ambalaja<br />Gelen <br /> Adet</center></th>
+                                        <th style="width:4%; color:black;"><center>Ambalajdan<br />Çıkan <br /> Adet</center></th>
+                                        <th style="width:4%; color:black;"><center>Siparişten<br />Kalan <br /> Adet</center></th>
+                                        <th style="width:10%; color:black;"><center>Ahşap Rengi</center></th>
+                                        <th style="width:10%; color:black;"><center>Deri Rengi</center></th>
+                                        <th style="width:10%; color:black;"><center>Özel Not</center></th>
+                                        <th style="width:10%; color:black;"><center>Başlangıç Tarihi</center></th>
+                                        <th style="width:10%; color:black;"><center>Bitiş Tarihi</center></th>
+                                        <th style="width:10%; color:black;"><center>Personel</center></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    var myDataTable;
+    var myDataTable2;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#myTable', {
+            ajax: {
+                url: '/AmbalajApi/AyBaslaList',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                {
+                    data: 'siparisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisNo',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'bayiID',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'urunID',
+                    render: function (data, type, full, meta) {
+                        return '<center><img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" /></center>';
+                    }
+                },
+                {
+                    data: 'urunKodu',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'urunAdi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'gelenAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'gidenAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'kalanAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'ahsapRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'deriRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'aciklama',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'baslangicTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'bitisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'gorenKullanici',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
+            ordering: false,
+            initComplete: function (settings, json) {
+                loadImages();
+            }
+        });
+        myDataTable.on('draw', function () {
+            loadImages();
+        });
+
+        myDataTable2 = new DataTable('#myTable2', {
+            ajax: {
+                url: '/AmbalajApi/AyBitList',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                {
+                    data: 'siparisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisNo',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'bayiID',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'urunID',
+                    render: function (data, type, full, meta) {
+                        return '<center><img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" /></center>';
+                    }
+                },
+                {
+                    data: 'urunKodu',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'urunAdi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'gelenAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'gidenAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'kalanAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'ahsapRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'deriRengi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'aciklama',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'baslangicTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'bitisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'gorenKullanici',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
+            ordering: false,
+            initComplete: function (settings, json) {
+                loadImages();
+            }
+        });
+        myDataTable2.on('draw', function () {
+            loadImages();
+        });
+    }
+    function loadImages() {
+        $('td img.img-thumbnail').each(function () {
+            var imgElement = $(this);
+            var id = imgElement.attr('id').split('_')[1];
+
+            if (imgElement.attr('src') === '') {
+                $.ajax({
+                    url: '/UrunApi/GetResim',
+                    method: 'POST',
+                    data: { id: id },
+                    xhrFields:
+                    {
+                        responseType: 'blob' // Blob tipi ile yanıt alın
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        imgElement.attr('src', url); // Blob URL'yi kullanarak resmi yükle
+                    }
+                });
+            }
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        if (myDataTable2) {
+            myDataTable2.destroy();
+        }
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        initializeDataTable();
+    })
+</script>

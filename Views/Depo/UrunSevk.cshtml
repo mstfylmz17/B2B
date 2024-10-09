@@ -31,7 +31,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Hammadde & Hırdavatlar Listesi</h4>
+                            <center><h2>HAMMADDE & HIRDAVAT LİSTESİ</h2></center>
                         </div>
                         <div class="col">
                             @Html.DropDownList("fUrunTuruID", (List<SelectListItem>)ViewBag.urungrubu, "Ürün Türü Filtrele", new { @class = "form-control basic", id = "fUrunTuruID" })
@@ -51,13 +51,13 @@
                         <table id="myTable" class="table table-hover" style="width:100%; color:black;">
                             <thead>
                                 <tr style="color:white;">
-                                    <th>Resim</th>
-                                    <th>Ürün Türü</th>
-                                    <th>Ürün Kodu</th>
-                                    <th>Ürün Adı</th>
-                                    <th>Marka</th>
-                                    <th>Kritik Stok Miktarı</th>
-                                    <th>Güncel Stok</th>
+                                    <th>RESİM</th>
+                                    <th>ÜRÜN TÜRÜ</th>
+                                    <th>ÜRÜN KODU</th>
+                                    <th>ÜRÜN ADI</th>
+                                    <th>MARKA</th>
+                                    <th>KRİTİK STOK MİKTARI</th>
+                                    <th>GÜNCEL STOK</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -240,6 +240,7 @@
                     confirmButtonText: 'Tamam'
                 });
                 if (result.status == "success") {
+                    $('#modal-lg').modal('hide');
                     tabloGuncelle();
                 }
             }

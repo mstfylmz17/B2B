@@ -2,6 +2,9 @@
 using EntityLayer.Concrate;
 using EntityLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Processing;
 
 namespace VNNB2B.Controllers.Api
 {
@@ -241,21 +244,69 @@ namespace VNNB2B.Controllers.Api
         }
         //Kategori İşlemleri
         [HttpPost]
-        public IActionResult KategoriList()
+        public async Task<IActionResult> KategoriList(int id)
         {
-            var veri = c.UrunKategoris.Where(v => v.Durum == true).OrderByDescending(v => v.ID).ToList();
-            List<DtoUrunKategori> ham = new List<DtoUrunKategori>();
-            foreach (var x in veri)
+            if (id == 4)
             {
-                DtoUrunKategori list = new DtoUrunKategori();
-                list.ID = Convert.ToInt32(x.ID);
-                if (x.Adi != null) list.Adi = x.Adi.ToString(); else list.Adi = "Tanımlanmamış...";
-                if (x.Resim != null) list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(x.Resim); else list.Resim = "";
-                list.Kodu = x.Kodu;
-                list.SiraNo = x.SiraNo;
-                ham.Add(list);
+                var veri = c.UrunKategoris.Where(v => v.Durum == true)
+                                          .OrderByDescending(v => v.ID)
+                                          .Select(x => new DtoUrunKategori
+                                          {
+                                              ID = x.ID,
+                                              Adi = x.Adi ?? "",
+                                              SiraNo = x.SiraNo,
+                                          }).ToList();
+
+                return Json(veri.OrderBy(v => v.SiraNo));
             }
-            return Json(ham.OrderBy(v => v.SiraNo));
+            else
+            {
+                var veri = c.UrunKategoris.Where(v => v.Durum == true && v.ID != 63)
+                                          .OrderByDescending(v => v.ID)
+                                          .Select(x => new DtoUrunKategori
+                                          {
+                                              ID = x.ID,
+                                              Adi = x.Adi ?? "",
+                                              SiraNo = x.SiraNo,
+                                          }).ToList();
+
+                return Json(veri.OrderBy(v => v.SiraNo));
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetResim(int id)
+        {
+            var urun = await c.UrunKategoris.FindAsync(id);
+            if (urun == null || urun.Resim == null)
+            {
+                return NotFound();
+            }
+            return File(urun.Resim, "image/jpeg");
+        }
+        //Resim Küçültme
+        private async Task<byte[]> CompressImageAsync(byte[] imageBytes, int width, int height, int quality)
+        {
+            using (var inputStream = new MemoryStream(imageBytes))
+            using (var outputStream = new MemoryStream())
+            {
+                using (var image = await Image.LoadAsync(inputStream))
+                {
+                    image.Mutate(x => x.Resize(new ResizeOptions
+                    {
+                        Mode = ResizeMode.Max,
+                        Size = new Size(width, height)
+                    }));
+
+                    var encoder = new JpegEncoder
+                    {
+                        Quality = quality // 0-100 arası kalite (daha düşük kalite, daha küçük boyut)
+                    };
+
+                    await image.SaveAsJpegAsync(outputStream, encoder);
+                }
+
+                return outputStream.ToArray();
+            }
         }
         [HttpPost]
         public async Task<IActionResult> KategoriEkle(UrunKategori d, IFormFile imagee)
@@ -391,13 +442,14 @@ namespace VNNB2B.Controllers.Api
         [HttpPost]
         public IActionResult YetkiTurlariID(int id)
         {
-            var veri = c.YetkiTanimlaris.Where(v => v.Durum == true && v.KullaniciID == id).OrderByDescending(v => v.ID).ToList();
+            var veri = c.PanelTanimlaris.Where(v => v.Durum == true && v.KullaniciID == id).OrderByDescending(v => v.ID).ToList();
             List<DtoYetkiTanimlari> ham = new List<DtoYetkiTanimlari>();
             foreach (var x in veri)
             {
+                int depid = Convert.ToInt32(x.DepartmanID);
                 DtoYetkiTanimlari list = new DtoYetkiTanimlari();
                 list.ID = Convert.ToInt32(x.ID);
-                if (x.YetkiTurlariID != null) list.YetkiTurlariID = c.YetkiTurlaris.FirstOrDefault(v => v.ID == x.YetkiTurlariID).YetkiAdi.ToString(); else list.YetkiTurlariID = "Tanımlanmamış...";
+                if (x.DepartmanID != null) list.YetkiTurlariID = c.Panellers.FirstOrDefault(v => v.ID == depid).PanelAdi.ToString(); else list.YetkiTurlariID = "";
                 ham.Add(list);
             }
             return Json(ham);
@@ -411,7 +463,7 @@ namespace VNNB2B.Controllers.Api
             var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
             if (kul != null)
             {
-                YetkiTanimlari de = c.YetkiTanimlaris.FirstOrDefault(v => v.ID == id);
+                PanelTanimlari de = c.PanelTanimlaris.FirstOrDefault(v => v.ID == id);
                 de.Durum = false;
                 c.SaveChanges();
                 result = new { status = "success", message = "Kayıt Silindi..." };
@@ -433,11 +485,11 @@ namespace VNNB2B.Controllers.Api
             {
                 if (d.YetkiTurlariID != null)
                 {
-                    YetkiTanimlari k = new YetkiTanimlari();
+                    PanelTanimlari k = new PanelTanimlari();
                     k.KullaniciID = d.KullaniciID;
-                    k.YetkiTurlariID = d.YetkiTurlariID;
+                    k.DepartmanID = d.YetkiTurlariID;
                     k.Durum = true;
-                    c.YetkiTanimlaris.Add(k);
+                    c.PanelTanimlaris.Add(k);
                     c.SaveChanges();
                     result = new { status = "success", message = "Kayıt Başarılı..." };
                 }

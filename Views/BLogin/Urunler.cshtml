@@ -21,6 +21,7 @@
         </script>
     }
     BLoginHata.Icerik = "";
+    int bayiid = Convert.ToInt32(ViewBag.bayiid);
 }
 
 <div class="card" style="background-color:white;">
@@ -49,19 +50,28 @@
 <script>
     $(document).ready(function () {
         var allData = [];
-        function renderItems(items) {
+        var itemsPerPage = 9;
+        var currentPage = 0;
+        var loading = false;
+
+        function renderItems(items, append = false) {
             var container = $('#kategori-container');
-            container.empty();
+            if (!append) {
+                container.empty();
+            }
+
             var row;
+            var fragment = $(document.createDocumentFragment());
 
             $.each(items, function (index, item) {
                 if (index % 3 === 0) {
                     row = $('<div class="row mb-4"></div>');
-                    container.append(row);
+                    fragment.append(row);
                 }
 
-                var col = $('<div class="col-md-4 text-center" style="width:100%; color:transparent; border:none;"></div>');
-                var img = $('<img src="' + item.resim + '" class="img-thumbnail" style="width: 100%; cursor: pointer;  border:groove; border-radius:15px;" />');
+                var col = $('<div class="col-md-4 text-center"></div>');
+                // Resim kaynağını GetResim API'sinden çekiyoruz
+                var img = $('<img src="/ParametreApi/GetResim?id=' + item.id + '" class="img-thumbnail" style="width: 100%; cursor: pointer; border: groove; border-radius: 15px;" loading="lazy"/>');
                 var name = $('<h5 style="color:#B17F2C;">' + item.adi + '</h5>');
 
                 img.click(function () {
@@ -72,13 +82,43 @@
                 col.append(name);
                 row.append(col);
             });
+
+            container.append(fragment);
         }
+
+        function loadItems(page) {
+            if (loading) return; // Tekrar eden yüklemeleri önleyelim
+            loading = true;
+
+            var start = page * itemsPerPage;
+            var end = start + itemsPerPage;
+            var itemsToRender = allData.slice(start, end);
+
+            if (itemsToRender.length > 0) {
+                renderItems(itemsToRender, page > 0);
+                loading = false;
+            } else {
+                loading = false;
+            }
+        }
+
+        function debounce(func, wait) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
+
         $.ajax({
-            url: '/ParametreApi/KategoriList',
+            url: '/ParametreApi/KategoriList/' + @bayiid,
             method: 'POST',
             success: function (data) {
                 allData = data;
-                renderItems(allData);
+                loadItems(currentPage);
             },
             error: function (xhr, error, thrown) {
                 if (xhr.status === 404) {
@@ -91,12 +131,20 @@
                 }
             }
         });
-        $('#search').on('input', function () {
+
+        $(window).scroll(debounce(function () {
+            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                currentPage++;
+                loadItems(currentPage);
+            }
+        }, 200)); // Scroll olayını optimize edelim
+
+        $('#search').on('input', debounce(function () {
             var searchTerm = $(this).val().toLowerCase();
             var filteredData = allData.filter(function (item) {
                 return item.adi.toLowerCase().includes(searchTerm);
             });
             renderItems(filteredData);
-        });
+        }, 300)); // Aramayı debounce ile optimize edelim
     });
 </script>

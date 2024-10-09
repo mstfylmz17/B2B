@@ -57,6 +57,7 @@
                                 </thead>
                             </table>
                         </div>
+                        <button id="uretimgonderButonu" class="btn btn-info mb-2 mr-2 btn-rounded" style="float:right;">Seçilenleri Üretime Gönder</button>
                         <button id="gonderButonu" class="btn btn-primary mb-2 mr-2 btn-rounded" style="float:right;">Seçilenler İle Satın Alma Talep Oluştur</button>
                     </div>
                 </div>
@@ -368,6 +369,39 @@
                     });
                     if (result.status == "success") {
                         tabloGuncelle();
+                    }
+                }
+            });
+        }
+        else {
+            Swal.fire({
+                title: 'Uyarı',
+                text: 'Lütfen en az bir ürün seçin.',
+                icon: 'warning',
+                confirmButtonText: 'Tamam'
+            });
+        }
+    });
+    $('#uretimgonderButonu').on('click', function () {
+        var selectedIds = [];
+        $('.select-checkbox:checked').each(function () {
+            selectedIds.push($(this).val());
+        });
+        if (selectedIds.length > 0) {
+            $.ajax({
+                url: '/SatinAlmaTalepApi/UretimOlustur',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(selectedIds),
+                success: function (result) {
+                    swal.fire({
+                        title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                        text: result.message,
+                        type: result.status === "success" ? 'success' : 'warning',
+                        confirmButtonText: 'Tamam'
+                    });
+                    if (result.status == "success") {
+                        location.reload();
                     }
                 }
             });

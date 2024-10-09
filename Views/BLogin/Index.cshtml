@@ -13,8 +13,12 @@
         <script>
             $(document).ready(function () {
                 Swal.fire({
-                    icon: 'info',
-                    title: '@mesaj'
+                    imageUrl: '/Resimler/vnnlogotrans.png',
+                    imageWidth: 450,
+                    imageHeight: 200,
+                    imageAlt: 'Resim açıklaması',
+                    title: ' ',
+                    html: '@Html.Raw(mesaj)',
                 });
             });
         </script>
@@ -28,7 +32,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>VNN Mobilya | Bayi Giriş</title>
+    <title>VNN | BAYİ PANELİ</title>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
     <link href="~/Template/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />

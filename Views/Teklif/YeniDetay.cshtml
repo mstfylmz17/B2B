@@ -64,144 +64,157 @@
 <div class="col-lg-12">
     <div class="card" style="background-color:white;">
         <div class="card-body">
+            <center><h4 style="color:#B17F2C; font-weight:bold;">TEKLİF FORMU</h4></center>
             <div class="row">
-                <div class="col-12 col-sm-12">
+                <div class="col-6 col-sm-6">
                     <div class="card-body" style="font-size:16px;">
                         <table class=" table-tab" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>BAYİ ADI</th>
-                                    <th id="txtfirmaadi"></th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">
+                                        FATURA ÜNVANI
+                                    </th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black;" id="txtunvan"></th>
                                 </tr>
                                 <tr>
-                                    <th>TEKLİF NO</th>
-                                    <th id="txtsiparisno"></th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">
+                                        FİRMA ADI
+                                    </th>
+                                    <th style="color:black; width:22.5%; text-align: center; border-color:black;" id="txtfirmaadi"></th>
+                                </tr>
+                                <tr style="background-color:black; height:20px;">
+                                    <th style="background-color:black; border-color:black; color:black;">B</th>
+                                    <th style="background-color:black; text-align: center; border-color:black;"></th>
                                 </tr>
                                 <tr>
-                                    <th>TEKLİF TARİHİ</th>
-                                    <th id="txtsiparistarihi"></th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">
+                                        SİPARİŞ ADI
+                                    </th>
+                                    <th style="color:red;width:22.5%; text-align: center; font-size:16px; border-color:black;">
+                                        <label id="txtmusteri" style="color:red; border-color:black; height:15px; font-size:17px; font-weight:bold;"></label>
+                                    </th>
                                 </tr>
                                 <tr>
-                                    <th>TEKLİF DURUMU</th>
-                                    <th id="txtsiparisdurum"></th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">TEKLİF NO</th>
+                                    <th style="color:red;width:22.5%; text-align: center; font-size:16px; border-color:black;">
+                                        <label id="txtsiparisno" style="color:red; border-color:black; height:15px; font-size:14px;"></label>
+                                    </th>
                                 </tr>
                                 <tr>
-                                    <th>ONAYLAYAN YETKİLİ</th>
-                                    <th id="txtkullanici"></th>
+                                    <th style="width:22.5%; background-color:#B17F2C; color:black; border-color:black;">TEKLİF TARİHİ</th>
+                                    <th style="color:red; width:22.5%; text-align: center; font-size:16px; border-color:black;">
+                                        <label id="txtsiparistarihi" style="color:red; border-color:black; height:15px; font-size:14px;"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6">
+                    <div class="card-body" style="font-size:16px;">
+                        <table class=" table-tab" style="width:100%; border-color:black;">
+                            <thead>
+                                <tr>
+                                    <th style="color:black;width:22.5%;background-color:#B17F2C; border-color:black;">TOPLAM TEKLİF - ADEDİ</th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black;" id="txttoplamadet"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:22.5%;background-color:#B17F2C; border-color:black;">TOPLAM TEKLİF - PAKET ADEDİ</th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black;" id="txttoplamparcaadet"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:22.5%;background-color:#B17F2C; border-color:black;">TOPLAM TEKLİF - M3</th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black;" id="txttoplamm3"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:22.5%;background-color:#B17F2C; border-color:black;">TOPLAM TEKLİF - KG</th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black;" id="txttoplamkg"></th>
+                                </tr>
+                                <tr style="background-color:black; height:27px;">
+                                    <th style="background-color:black; border-color:black;"></th>
+                                    <th style="background-color:black; border-color:black;" "></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:22.5%;background-color:#B17F2C; border-color:black;">LİSTE TOPLAM</th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black;" id="txtaratoplam"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:22.5%;background-color:#B17F2C; border-color:black;">BAYİ İSKONTO %@ViewBag.iskonto</th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black;" id="txtiskontotoplam"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:22.5%;background-color:#B17F2C; border-color:black;">İSKONTOLU FİYAT</th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black; color:red;" id="txtindirimlifiyat"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:22.5%;background-color:#B17F2C; border-color:black;">KDV TOPLAM %@ViewBag.kdv</th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black; color:red;" id="txtkdvtoplam"></th>
+                                </tr>
+                                <tr>
+                                    <th style="color:black;width:22.5%;background-color:#B17F2C; border-color:black;">GENEL TOPLAM</th>
+                                    <th style="color:black;width:22.5%; text-align: center; border-color:black; color:red;" id="txtgeneltoplam"></th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
                 </div>
                 <div class="col-12 col-sm-12">
-                    <div style="margin:10px;">
-                        <a href="#" data-toggle="modal" data-target="#urunler" class="btn btn-primary btn-sm">Ürün Seç</a>
-                        <a href="/TeklifApi/SiparisYeniOnay/@id" class="btn btn-success btn-sm">Kaydet</a>
-                        <a href="#" class="btn btn-info btn-sm"> <i class="fas fa-print"></i> Yazdır</a>
-                    </div>
                     <div style="font-size:12px;">
                         <table class="table table-bordered" id="sepettable">
                             <thead>
                                 <tr style="background-color:#B17F2C">
-                                    <th style="width:15%;">
+                                    <th style="width:8%; color:black;">
                                         <center>
-                                            Ürün Resmi
+                                            ÜRÜN RESMİ
                                         </center>
                                     </th>
-                                    <th style="width:5%;">
+                                    <th style="width:10%; color:black;">
                                         <center>
-                                            Ürün Kodu
+                                            ÜRÜM KODU
                                         </center>
                                     </th>
-                                    <th style="width:10%;">
+                                    <th style="width:18%; color:black;">
                                         <center>
-                                            Ürün Adı
+                                            ÜRÜN ADI
                                         </center>
                                     </th>
-                                    <th style="width:5%;"><center>Adet</center></th>
-                                    <th style="width:13%;"><center>Ahşap Rengi</center></th>
-                                    <th style="width:13%;"><center>Deri Rengi</center></th>
-                                    <th style="width:13%;">
+                                    <th style="width:5%; color:black;"><center>ADET</center></th>
+                                    <th style="width:10%; color:black;"><center>AHŞAP RENGİ</center></th>
+                                    <th style="width:10%; color:black;"><center>DERİ RENGİ</center></th>
+                                    <th style="width:10%; color:black;">
                                         <center>
-                                            Özel Not
+                                            ÖZEL NOT
                                         </center>
                                     </th>
-                                    <th style="width:9%;">
+                                    <th style="width:7%; color:black;">
                                         <center>
-                                            Birim Fiyat
+                                            LİSTE FİYAT
                                         </center>
                                     </th>
-                                    <th style="width:9%;">
+                                    <th style="width:7%; color:black;">
                                         <center>
-                                            Toplam Fiyat
+                                            İNDİRİMLİ FİYAT
                                         </center>
                                     </th>
-                                    <th style="width:8%;"></th>
-                                </tr>
+                                    <th style="width:10%; color:black;">
+                                        <center>
+                                            TOPLAM FİYAT
+                                        </center>
+                                    </th>
+                                    <th style="width:7%; color:black;"><center><i class="fas fa-eye"></i></center></th>
                             </thead>
                         </table>
                     </div>
-                </div>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="card-body">
-                                <table class="table-tab">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:50%;">TOPLAM TEKLİF ADEDİ</th>
-                                            <th style="width:50%; text-align: center;" id="txttoplamadet"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%;">TOPLAM TEKLİF PARÇA ADEDİ</th>
-                                            <th style="width:50%; text-align: center;" id="txttoplamparcaadet"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%;">TOPLAM TEKLİF M3</th>
-                                            <th style="width:50%; text-align: center;" id="txttoplamm3"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%;">TOPLAM TEKLİF KG</th>
-                                            <th style="width:50%; text-align: center;" id="txttoplamkg"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="card-body">
-                                <table class="table-tab">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:50%;">ARA TOPLAM</th>
-                                            <th style="width:50%; text-align: center;" id="txtaratoplam"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%;">BAYİ İSKONTO % @ViewBag.iskonto</th>
-                                            <th style="width:50%; text-align: center;" id="txtiskontotoplam"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%; background-color:lightgray;">İNDİRİMLİ FİYAT</th>
-                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtindirimlifiyat"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%; background-color:lightgray;">KDV TOPLAM % @ViewBag.kdv</th>
-                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtkdvtoplam"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width:50%; background-color:lightgray;">GENEL TOPLAM</th>
-                                            <th style="width:50%; background-color:lightgray; text-align: center;" id="txtgeneltoplam"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <br />
+                    <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#urunler"><i class="fas fa-box"></i> Ürün Ekle</a>
+                    <a href="#" onclick="Git()" class="btn btn-success btn-sm"><i class="fas fa-save"></i> Kaydet</a>
+                    <a href="#" onclick="yazdir()" class="btn btn-info btn-sm"><i class="fas fa-print"></i> Yazdır</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="modal fade" id="urunler">
     <div class="modal-dialog modal-xl">
@@ -292,7 +305,7 @@
                 {
                     data: 'resim',
                     render: function (data, type, full, meta) {
-                        return '<img src="' + data + '" class="img-thumbnail" style="width: 100px;" />';
+                        return '<center><img src="' + data + '" class="img-thumbnail" style="width: 100px;" /></center>';
                     }
                 },
                 {
@@ -338,6 +351,12 @@
                     }
                 },
                 {
+                    data: 'indirimFiyat',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
                     data: 'satirToplam',
                     render: function (data, type, row, meta) {
                         return '<div style="text-align: center; color:black;">' + data + '</div>';
@@ -346,7 +365,7 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<div class="row"><div class="col-6"><button class="btn btn-info btn-xs" style="margin-right:2px; float:left;" type="button" onclick="SatirNo(' + data + ')"> Güncelle</a></div>' + '<div class="col-6"><button type="button" onclick="sil(' + data + ')" style="float:right;" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button></div></div>'
+                        return '<center><button class="btn btn-info btn-xs" style="margin-right:2px;" type="button" onclick="SatirNo(' + data + ')"> Güncelle</a>' + '<button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button></center>'
                     }
                 }
             ],
@@ -412,6 +431,9 @@
         myDataTable2.on('draw', function () {
             loadImages();
         });
+    }
+    function Git() {
+        window.location.href = "/TeklifApi/SiparisYeniOnay/" + @id;
     }
     function loadImages() {
         $('td img.img-thumbnail').each(function () {
@@ -542,7 +564,8 @@
                 $("#txtsiparisdurum").text(x.siparisDurum);
                 $("#txtkullanici").text(x.kullanici);
                 $("#txtindirimlifiyat").text(x.indirimlifiyat);
-                $("#txtfirmaadi").text(x.unvan + " / " + x.firmaAdi);
+                $("#txtunvan").text(x.unvan);
+                $("#txtfirmaadi").text(x.firmaAdi);
                 $("#txtyetkili").text(x.yetkili);
                 $("#txttelefon").text(x.telefon);
                 $("#txtadres").text(x.adres);
@@ -566,29 +589,29 @@
 
                 $('#productForm').empty();
                 $('#productForm').append(`
-                                                                                                                                                                                                                                                <div class="form-group">
-                                                                                                                                                                                                                                                            <label style="margin-bottom:-5px;" for="Miktar">ADET</label>
-                                                                                                                                                                                                                                                    <input id="Miktar" class="form-control" type="number" maxlength="2" />
-                                                                                                                                                                                                                                                    </div><br/>
-                                                                                                                                                                                                                                        `);
+                                                                                                                                                                                                                                                                <div class="form-group">
+                                                                                                                                                                                                                                                                            <label style="margin-bottom:-5px;" for="Miktar">ADET</label>
+                                                                                                                                                                                                                                                                    <input id="Miktar" class="form-control" type="number" maxlength="2" />
+                                                                                                                                                                                                                                                                    </div><br/>
+                                                                                                                                                                                                                                                        `);
 
                 data.urunOzellikleri.forEach(function (ozellik) {
                     $('#productForm').append(`
-                                                                                                                                                                                                                                       <div class="form-group">
-                                                                                                                                                                                                                                         <label style="margin-bottom:-5px;" for="${ozellik.id}">${ozellik.urunOzellikTanimi}</label>
-                                                                                                                                                                                                                                         <select class="form-control" id="${ozellik.id}">x
-                                                                                                                                                                                                                                            <option>Yükleniyor...</option>
-                                                                                                                                                                                                                                         </select>
-                                                                                                                                                                                                                                       </div><br/>`);
+                                                                                                                                                                                                                                                       <div class="form-group">
+                                                                                                                                                                                                                                                         <label style="margin-bottom:-5px;" for="${ozellik.id}">${ozellik.urunOzellikTanimi}</label>
+                                                                                                                                                                                                                                                         <select class="form-control" id="${ozellik.id}">x
+                                                                                                                                                                                                                                                            <option>Yükleniyor...</option>
+                                                                                                                                                                                                                                                         </select>
+                                                                                                                                                                                                                                                       </div><br/>`);
 
                     fetchOzellikDegerleri(ozellik.id);
                 });
                 $('#productForm').append(`
-                                                                                                                                                                                                                                    <div class="form-group">
-                                                                                                                                                                                                                                                <label style="margin-bottom:-5px;" for="Aciklama">AÇIKLAMA / EXPLANATION <br/></label>
-                                                                                                                                                                                                                                                <textarea rows="3" class="form-control" id="Aciklama" placeholder="Lütfen Ürün İle İlgili Özel Notlarınızı Yazınız..."></textarea>
-                                                                                                                                                                                                                                        </div><br/>
-                                                                                                                                                                                                                                `);
+                                                                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                                                                                <label style="margin-bottom:-5px;" for="Aciklama">AÇIKLAMA / EXPLANATION <br/></label>
+                                                                                                                                                                                                                                                                <textarea rows="3" class="form-control" id="Aciklama" placeholder="Lütfen Ürün İle İlgili Özel Notlarınızı Yazınız..."></textarea>
+                                                                                                                                                                                                                                                        </div><br/>
+                                                                                                                                                                                                                                                `);
             },
             error: function () {
                 alert('Ürün bilgileri alınamadı.');
@@ -661,5 +684,45 @@
                 });
             }
         });
+    }
+    function yazdir() {
+        $.ajax({
+            url: '/Teklif/FormYazdir?id=' + @id,
+            type: 'GET',
+            success: function (response) {
+                var pdfUrl = response.pdfUrl;
+                var reportName = response.fileName;
+                downloadPDF(pdfUrl, reportName);
+            },
+            error: function (error) {
+                console.error("Error while downloading PDF:", error);
+            }
+        });
+    }
+    function downloadPDF(pdfUrl, reportName) {
+        var link = document.createElement("a");
+        link.href = pdfUrl;
+        link.download = reportName;
+        link.click();
+    }
+    function base64ToArrayBuffer(base64) {
+        var binaryString = window.atob(base64);
+        var binaryLen = binaryString.length;
+        var bytes = new Uint8Array(binaryLen);
+        for (var i = 0; i < binaryLen; i++) {
+            var ascii = binaryString.charCodeAt(i);
+            bytes[i] = ascii;
+        }
+        return new Promise((resolve, reject) => {
+            resolve(bytes);
+        });
+    }
+    function saveByteArray(reportName, byte) {
+        var blob = new Blob([byte], { type: "application/pdf" });
+        var link = document.createElement("a");
+        link.type = blob.type;
+        link.href = window.URL.createObjectURL(blob);
+        link.download = reportName;
+        link.click();
     }
 </script>

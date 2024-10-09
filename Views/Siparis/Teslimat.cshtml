@@ -23,7 +23,6 @@
     SiparisHata.Icerik = "";
 }
 <br />
-
 <div class="card">
     <div class="card-header border-transparent">
         <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
@@ -31,26 +30,27 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Teslimat Oluştur</h4>
+                            <center><h2>TESLİMAT OLUŞTUR</h2></center>
                         </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
-                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:14px;">
+                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:16px;">
                         <thead>
                             <tr style="background-color:#B17F2C">
-                                <th style="width:9%;"><center>Sipariş No</center></th>
-                                <th style="width:10%;"><center>Bayi Adı</center></th>
-                                <th style="width:10%;"><center>Ürün Resmi</center></th>
-                                <th style="width:6%;"><center>Ürün Kodu</center></th>
-                                <th style="width:13%;"><center>Ürün Adı</center></th>
-                                <th style="width:2%;"><center>Sipariş Adedi</center></th>
-                                <th style="width:2%;"><center>Hazır Adet</center></th>
-                                <th style="width:2%;"><center>Kalan Adet</center></th>
-                                <th style="width:15%;"><center>Ahşap Rengi</center></th>
-                                <th style="width:15%;"><center>Deri Rengi</center></th>
-                                <th style="width:15%;"><center>Özel Not</center></th>
-                                <th style="width:1%;"><center><i class="fas fa-check"></i></center></th>
+                                <th style="width:5%; color:black;"><center>Sipariş Tarihi</center></th>
+                                <th style="width:5%; color:black;"><center>Sipariş No</center></th>
+                                <th style="width:10%; color:black;"><center>Bayi Adı<br />Sipariş Adı</center></th>
+                                <th style="width:10%; color:black;"><center>Ürün Resmi</center></th>
+                                <th style="width:6%; color:black;"><center>Ürün Kodu</center></th>
+                                <th style="width:10%; color:black;"><center>Ürün Adı</center></th>
+                                <th style="width:4%; color:black;"><center>Sipariş Adedi</center></th>
+                                <th style="width:4%; color:black;"><center>Yüklemeye<br />Hazır<br /> Adet</center></th>
+                                <th style="width:4%; color:black;"><center>Kalan Adet</center></th>
+                                <th style="width:10%; color:black;"><center>Ahşap Rengi</center></th>
+                                <th style="width:10%; color:black;"><center>Deri Rengi</center></th>
+                                <th style="width:10%; color:black;"><center>Özel Not</center></th>
+                                <th style="width:5%; color:black;"><center><i class="fas fa-check"></i></center></th>
                             </tr>
                         </thead>
                     </table>
@@ -88,6 +88,12 @@
             },
             columns: [
                 {
+                    data: 'siparisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
                     data: 'siparisID',
                     render: function (data, type, full, meta) {
                         return '<center>' + data + '</center>';
@@ -120,7 +126,7 @@
                 {
                     data: 'miktar',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
@@ -156,7 +162,7 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<center><input style="width: 7px; height: 7px; transform: scale(4); " type="checkbox" class="select-checkbox" id="ch-' + data + '" value="' + data + '"></center>';
+                        return '<center><input style="width: 7px; height: 7px; transform: scale(4);" type="checkbox" class="select-checkbox btn-goruldu" id="ch-' + data + '" value="' + data + '"><div id="text-input-' + data + '" class="text-input" style="display:none;"><input type="text" class="form-control extra-info" /></div></center>';
                     },
                     orderable: false
                 },
@@ -170,10 +176,12 @@
             ordering: false,
             initComplete: function (settings, json) {
                 loadImages();
+                attachCheckboxListener();
             }
         });
         myDataTable.on('draw', function () {
             loadImages();
+            attachCheckboxListener();
         });
     }
     function loadImages() {
@@ -206,14 +214,25 @@
     $(document).ready(function () {
         initializeDataTable();
     })
+    function attachCheckboxListener() {
+        $('.select-checkbox').on('change', function () {
+            var id = $(this).val();
+            if ($(this).is(':checked')) {
+                $('#text-input-' + id).show();
+            } else {
+                $('#text-input-' + id).hide();
+                $('#text-input-' + id + ' input').val('');
+            }
+        });
+    }
     function uyari() {
         swal.fire({
             title: 'Emin Misin?',
-            text: "Seçilen Ürünler İçin Teslimat Belgesi Oluşturulacak!",
+            text: "Seçilen Ürünler Teslim Edilecek Alınacak!",
             type: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Evet, Oluştur!',
-            cancelButtonText: 'Hayır, Vazgeç!',
+            confirmButtonText: 'Evet!',
+            cancelButtonText: 'Hayır!',
             reverseButtons: true,
             padding: '2em'
         }).then(function (result) {
@@ -222,26 +241,50 @@
             }
         })
     }
+
     function Gonder() {
-        var selectedIds = [];
+        var selectedItems = [];
+        var hasEmptyExtraInfo = false;
+
         $('.select-checkbox:checked').each(function () {
-            selectedIds.push($(this).val());
+            var rowId = $(this).val();
+            var extraInfo = $('#text-input-' + rowId).find('.extra-info').val();
+
+            if (!extraInfo || extraInfo.trim() === '') {
+                hasEmptyExtraInfo = true;
+            } else {
+                selectedItems.push({
+                    id: rowId,
+                    extraInfo: extraInfo
+                });
+            }
         });
-        if (selectedIds.length > 0) {
+
+        if (hasEmptyExtraInfo) {
+            Swal.fire({
+                title: 'Uyarı',
+                text: 'Tüm satırların yanındaki metin alanları doldurulmalıdır.',
+                icon: 'warning',
+                confirmButtonText: 'Tamam'
+            });
+            return;
+        }
+
+        if (selectedItems.length > 0) {
             $.ajax({
                 url: '/SiparisApi/TeslimatOlustur',
                 method: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify(selectedIds),
+                data: JSON.stringify(selectedItems),
                 success: function (result) {
-                    swal.fire({
+                    Swal.fire({
                         title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
                         text: result.message,
-                        type: result.status === "success" ? 'success' : 'warning',
+                        icon: result.status === "success" ? 'success' : 'warning',
                         confirmButtonText: 'Tamam'
                     });
-                    if (result.redirectUrl) {
-                        window.location.href = result.redirectUrl;
+                    if (result.status == "success") {
+                        window.location.href = "/Siparis/Teslimatlar/";
                     }
                 }
             });
@@ -249,7 +292,7 @@
         else {
             Swal.fire({
                 title: 'Uyarı',
-                text: 'Lütfen en az bir ürün seçin.',
+                text: 'Lütfen en az bir kayıt seçin.',
                 icon: 'warning',
                 confirmButtonText: 'Tamam'
             });

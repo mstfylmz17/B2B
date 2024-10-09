@@ -30,26 +30,26 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Kısmi Teslim Edilen Siparişler</h4>
+                            <center><h2>KISMİ TESLİM EDİLEN SİPARİŞLER</h2></center>
                         </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
-                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:14px;">
+                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:16px;">
                         <thead>
                             <tr style="background-color:#B17F2C">
-                                <th style="width:9%;"><center>Sipariş No</center></th>
-                                <th style="width:10%;"><center>Bayi Adı</center></th>
-                                <th style="width:10%;"><center>Ürün Resmi</center></th>
-                                <th style="width:6%;"><center>Ürün Kodu</center></th>
-                                <th style="width:13%;"><center>Ürün Adı</center></th>
-                                <th style="width:2%;"><center>Sipariş Adedi</center></th>
-                                <th style="width:2%;"><center>Hazır Adet</center></th>
-                                <th style="width:2%;"><center>Kalan Adet</center></th>
-                                <th style="width:15%;"><center>Ahşap Rengi</center></th>
-                                <th style="width:15%;"><center>Deri Rengi</center></th>
-                                <th style="width:15%;"><center>Özel Not</center></th>
-                                <th style="width:1%;"><center><i class="fas fa-eye"></i></center></th>
+                                <th style="color:black;"><center>SİPARİŞ TARİHİ</center></th>
+                                <th style="color:black;"><center>SİPARİŞ NO</center></th>
+                                <th style="color:black;"><center>BAYİ ADI</center></th>
+                                <th style="color:black;"><center>SİPARİŞ ADI</center></th>
+                                <th style="color:black;"><center>TOPLAM<br /> SİPARİŞ<br /> MİKTARI</center></th>
+                                <th style="color:black;"><center>TOPLAM<br />SİPARİŞ<br /> TUTARI</center></th>
+                                <th style="color:black;"><center>TESLİM<br /> EDİLEN<br /> SİPARİŞ<br /> MİKTARI</center></th>
+                                <th style="color:black;"><center>TESLİM<br /> EDİLEN<br /> SİPARİŞ<br /> TUTARI</center></th>
+                                <th style="color:black;"><center>KALAN<br /> SİPARİŞ<br /> MİKTARI</center></th>
+                                <th style="color:black;"><center>KALAN<br /> SİPARİŞ<br /> TUTARI</center></th>
+                                <th style="color:black;"><center>SİPARİŞ DURUMU</center></th>
+                                <th style="color:black;"><center><i class="fas fa-pen"></i></center></th>
                             </tr>
                         </thead>
                     </table>
@@ -86,7 +86,13 @@
             },
             columns: [
                 {
-                    data: 'siparisID',
+                    data: 'siparisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisNo',
                     render: function (data, type, full, meta) {
                         return '<center>' + data + '</center>';
                     }
@@ -98,55 +104,49 @@
                     }
                 },
                 {
-                    data: 'urunID',
-                    render: function (data, type, full, meta) {
-                        return '<center><img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" /></center>';
-                    }
-                },
-                {
-                    data: 'urunKodu',
+                    data: 'siparisBayiAciklama',
                     render: function (data, type, full, meta) {
                         return '<center>' + data + '</center>';
                     }
                 },
                 {
-                    data: 'urunAciklama',
+                    data: 'toplamAdet',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
-                    data: 'miktar',
+                    data: 'toplamTutar',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
-                    data: 'hazirAdet',
+                    data: 'toplamTeslimEdilen',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-warning" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
-                    data: 'teslimAdet',
+                    data: 'toplamTeslimTutar',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-warning" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
-                    data: 'ahsapRengi',
+                    data: 'kalanMiktar',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-danger" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
-                    data: 'deriRengi',
+                    data: 'kalanTutar',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-danger" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
-                    data: 'aciklama',
+                    data: 'siparisDurum',
                     render: function (data, type, full, meta) {
                         return '<center>' + data + '</center>';
                     }
@@ -154,7 +154,7 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="/Siparis/Detay/' + data + '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>'
+                        return '<center><a href="/Siparis/Detay/' + data + '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a></center>'
                     }
                 }
             ],

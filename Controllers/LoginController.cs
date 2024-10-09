@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Concrate;
 using EntityLayer.Concrate;
 using Microsoft.AspNetCore.Mvc;
+using VNNB2B.Models;
 using VNNB2B.Models.Hata;
 
 namespace VNNB2B.Controllers
@@ -31,6 +32,8 @@ namespace VNNB2B.Controllers
                     SameSite = SameSiteMode.Strict // Çerez sadece aynı site üzerinden gönderilsin
                 };
 
+                Formuller f = new Formuller(c);
+                f.SipSil();
                 HttpContext.Response.Cookies.Append("VNNCerez", kul.ID.ToString(), cookieOptions);
                 return RedirectToAction("Index", "Admin");
             }

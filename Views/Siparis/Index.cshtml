@@ -32,22 +32,21 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Onay Bekleyen Siparişler</h4>
+                            <center><h2>ONAY BEKLEYEN SİPARİŞLER</h2></center>
                         </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive">
-                        <table id="myTable" class="table table-hover" style="width:100%">
+                        <table id="myTable" class="table table-bordered" style="width:100%; font-size:16px;">
                             <thead>
-                                <tr>
-                                    <th>Bayi Adı</th>
-                                    <th>Sipariş Tarihi</th>
-                                    <th>Sipariş No</th>
-                                    <th>Toplam Sipariş Miktarı</th>
-                                    <th>Sipariş Tutarı</th>
-                                    <th>Sipariş Durumu</th>
-                                    <th></th>
+                                <tr style="background-color:#B17F2C">
+                                    <th style="color:black;"><center>BAYİ ADI</center></th>
+                                    <th style="color:black;"><center>SİPARİŞ ADI</center></th>
+                                    <th style="color:black;"><center>TOPLAM SİPARİŞ MİKTARI</center></th>
+                                    <th style="color:black;"><center>SİPARİŞ TUTARI</center></th>
+                                    <th style="color:black;"><center>SİPARİŞ DURUMU</center></th>
+                                    <th style="color:black;"><center><i class="fas fa-pen"></i></center></th>
                                 </tr>
                             </thead>
                         </table>
@@ -75,13 +74,9 @@
             <form action="/SiparisApi/SiparisOnayla" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input id="SiparisNo" type="hidden" name="id" />
-                    <div class="form-group mb-3">
-                        <label>Açıklama</label>
-                        <input type="text" class="form-control" id="OnayAciklama" name="OnayAciklama">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Evrak Yükleme</label>
-                        <input type="file" class="form-control-file" id="imagee" name="imagee">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="imagee" name="imagee">
+                        <label class="custom-file-label" for="imagee">Dosya Seç</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -114,16 +109,40 @@
                 }
             },
             columns: [
-                { data: 'bayiID' },
-                { data: 'siparisTarihi' },
-                { data: 'siparisNo' },
-                { data: 'toplamAdet' },
-                { data: 'toplamTutar' },
-                { data: 'siparisDurum' },
+                {
+                    data: 'bayiID',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisBayiAciklama',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'toplamAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
+                    }
+                },
+                {
+                    data: 'toplamTutar',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'siparisDurum',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="/Siparis/Detay/' + data + '" class="btn btn-info btn-sm" style="margin-right:3px;"><i class="fas fa-eye"></i> </a>' + '<button type="button" onclick="onayla(' + data + ')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-check"></i></button>' + ' <button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>'
+                        return '<center><a href="/Siparis/YeniDetay/' + data + '" class="btn btn-info btn-sm" style="margin-right:3px;"><i class="fas fa-eye"></i> </a>' + '<button type="button" onclick="onayla(' + data + ')" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-check"></i></button>' + ' <button type="button" onclick="sil(' + data + ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></center>'
                     }
                 }
             ],
@@ -181,4 +200,10 @@
         satir = element;
         $("#SiparisNo").val(element);
     }
+
+    document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+        var fileName = document.getElementById("imagee").files[0].name;
+        var nextSibling = e.target.nextElementSibling;
+        nextSibling.innerText = fileName;
+    });
 </script>

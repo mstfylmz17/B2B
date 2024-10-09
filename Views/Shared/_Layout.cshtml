@@ -1,10 +1,10 @@
 ﻿
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>VNN | SYS Paneli</title>
+    <title>VNN | SYS PANELİ</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="/Tema/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="/Tema/plugins/daterangepicker/daterangepicker.css">
@@ -21,7 +21,6 @@
     <style>
         table.table-tab {
             border-collapse: collapse;
-            border-color:black;
             width: 100%;
         }
 
@@ -52,7 +51,30 @@
             line-height: 25px;
             vertical-align: middle;
         }
+
+        #sepettable, #sepettable th, #sepettable td {
+            border: 1px solid black !important;
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                url: "/BilgiApi/PanelYetkileri",
+                data: {},
+                success: function (response) {
+                    $.each(response, function (index, item) {
+                        var element = $("#" + item.departman);
+                        element.css('display', 'block');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    $("#result").html("Hata: " + error);
+                }
+            });
+        });
+    </script>
 </head>
 <body class="hold-transitione dark-mode layout-top-nav">
     <div class="wrapper">
@@ -75,14 +97,14 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="1" style="display:none;">
                             <a href="/Urunler" class="nav-link">
                                 <p>
                                     Ürünler
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="2" style="display:none;">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Cari</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
@@ -104,13 +126,13 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="/Odemeler" class="nav-link">
+                            <a href="/Odemeler" class="nav-link" id="3" style="display:none;">
                                 <p>
                                     Ödemeler
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="4" style="display:none;">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Sipariş</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
@@ -195,7 +217,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="5" style="display:none;">
                             <a id="dropdownSubMenu2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Satın Alma</a>
                             <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
@@ -272,7 +294,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="6" style="display:none;">
                             <a id="dropdownSubMenu3" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Üretim</a>
                             <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
@@ -325,7 +347,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="7" style="display:none;">
                             <a id="dropdownSubMenu4" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Depo</a>
                             <ul aria-labelledby="dropdownSubMenu4" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
@@ -386,7 +408,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="8" style="display:none;">
                             <a id="dropdownSubMenu5" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Boya</a>
                             <ul aria-labelledby="dropdownSubMenu5" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
@@ -439,7 +461,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="9" style="display:none;">
                             <a id="dropdownSubMenu6" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Döşeme</a>
                             <ul aria-labelledby="dropdownSubMenu6" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
@@ -492,7 +514,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="10" style="display:none;">
                             <a id="dropdownSubMenu7" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Ambalaj</a>
                             <ul aria-labelledby="dropdownSubMenu7" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">
@@ -553,11 +575,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="11" style="display:none;">
                             <a id="dropdownSubMenu8" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Sevkiyat</a>
                             <ul aria-labelledby="dropdownSubMenu8" class="dropdown-menu border-0 shadow" style="width:260px;">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/Sevkiyat" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:green"></i>
                                             Yeni İş Emirleri
@@ -565,7 +587,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/Sevkiyat/Devam" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:black"></i>
                                             Devam Eden Siparişler
@@ -573,7 +595,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/Sevkiyat/KT" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:black"></i>
                                             Kısmi Teslim Siparişler
@@ -581,7 +603,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/Siparis/YH" class="nav-link">
                                         <p>
                                             <i class="fa fa-circle nav-icon" style="color:black"></i>
                                             Yüklemeye Hazır Siparişler
@@ -614,7 +636,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="12" style="display:none;">
                             <a id="dropdownSubMenu9" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Parametreler</a>
                             <ul aria-labelledby="dropdownSubMenu9" class="dropdown-menu border-0 shadow" style="width:250px;">
                                 <li class="nav-item">

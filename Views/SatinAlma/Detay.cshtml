@@ -62,6 +62,7 @@
 <div class="col-lg-12">
     <div class="card" style="background-color:white;">
         <div class="card-body">
+            <center><h4 style="color:#B17F2C; font-weight:bold;">SATIN ALMA FORMU</h4></center>
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive" style="font-size:14px;">
@@ -90,17 +91,17 @@
                 <div class="col-12">
                     <div class="widget-content widget-content-area">
                         <div class="table-responsive" style="font-size:14px;">
-                            <table id="myTable" class="table-tab" style="width:100%">
+                            <table class="table table-bordered" id="myTable">
                                 <thead>
-                                    <tr>
-                                        <th>Resim</th>
-                                        <th>Ürün</th>
-                                        <th>Adet/MT</th>
-                                        <th>Renk</th>
-                                        <th>Ölçü / Not</th>
-                                        <th>Birim Fiyat</th>
-                                        <th>Satır Toplam</th>
-                                        <th></th>
+                                    <tr style="background-color:#B17F2C; color:black;">
+                                        <th style="width:10%; color:black; border-color:black;">Resim</th>
+                                        <th style="width:10%; color:black; border-color:black;">Ürün</th>
+                                        <th style="width:5%; color:black; border-color:black;">Adet/MT</th>
+                                        <th style="width:10%; color:black; border-color:black;">Renk</th>
+                                        <th style="width:10%; color:black; border-color:black;">Ölçü / Not</th>
+                                        <th style="width:10%; color:black; border-color:black;">Birim Fiyat</th>
+                                        <th style="width:10%; color:black; border-color:black;">Satır Toplam</th>
+                                        <th style="width:5%; color:black; border-color:black;"></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -182,10 +183,15 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<img id="img_' + full.urun + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" />';
+                        return '<center><img id="img_' + full.urun + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" /></center>';
                     }
                 },
-                { data: 'urunID' },
+                {
+                    data: 'urunID',
+                    render: function (data, type, full, meta) {
+                        return '<div style="color:black;"><center>' + data + '</center></div>';
+                    }
+                },
                 {
                     data: 'miktar',
                     render: function (data, type, full, meta) {
@@ -193,7 +199,7 @@
                             return '<input name="miktar-' + full.id + '" id="miktar-' + full.id + '" class="form-control" style="background-color:white; color:black;" value="' + data + '"/>';
                         }
                         else {
-                            return '' + data + '';
+                            return '<div style="color:black;">' + data + '</div>';
                         }
                     }
                 },
@@ -204,7 +210,7 @@
                             return '<input name="renk-' + full.id + '" id="renk-' + full.id + '" style="background-color:white; color:black;" class="form-control" value="' + data + '"/>';
                         }
                         else {
-                            return '' + data + '';
+                            return '<div style="color:black;">' + data + '</div>';
                         }
                     }
                 },
@@ -215,7 +221,7 @@
                             return '<input name="aciklama-' + full.id + '" id="aciklama-' + full.id + '" style="background-color:white; color:black;" class="form-control" value="' + data + '"/>';
                         }
                         else {
-                            return '' + data + '';
+                            return '<div style="color:black;">' + data + '</div>';
                         }
                     }
                 },
@@ -226,19 +232,24 @@
                             return '<input name="birimFiyat-' + full.id + '" id="birimFiyat-' + full.id + '" style="background-color:white; color:black;" class="form-control" value="' + data + '"/>';
                         }
                         else {
-                            return '' + data + '';
+                            return '<div style="color:black;">' + data + '</div>';
                         }
                     }
                 },
-                { data: 'satirToplam' },
+                {
+                    data: 'satirToplam',
+                    render: function (data, type, full, meta) {
+                        return '<div style="color:black;"><center>' + data + '</center></div>';
+                    }
+                },
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
                         if (full.durum === 'Onaylandı') {
-                            return '<div class="row"><div id="butt-' + data + '" class="col-6" style="display:none;"><a href="#" onclick="Guncelle(' + data + ')" class="btn btn-info btn-sm"><i class="fas fa-pen"></i> </a>' + '<a href="#" onclick=sil("' + data + '") class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a></div></div>';
+                            return '<center><div id="butt-' + data + '" style="display:none;"><a href="#" onclick="Guncelle(' + data + ')" class="btn btn-info btn-sm"><i class="fas fa-pen"></i> </a>' + '<a href="#" style="margi-left:5px;" onclick=sil("' + data + '") class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a></center>';
                         }
                         else {
-                            return '<div class="row"><div id="butt-' + data + '" class="col-6"><a href="#" onclick="Guncelle(' + data + ')" class="btn btn-info btn-sm"><i class="fas fa-pen"></i> </a>' + '<a href="#" onclick=sil("' + data + '") class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a></div></div>';
+                            return '<center><div id="butt-' + data + '"><a href="#" onclick="Guncelle(' + data + ')" class="btn btn-info btn-sm"><i class="fas fa-pen"></i> </a>' + '<a href="#" style="margi-left:5px;" onclick=sil("' + data + '") class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a></center>';
                         }
                     }
                 }
@@ -259,25 +270,25 @@
         });
     }
     function loadImages() {
-         $('td img.img-thumbnail').each(function () {
-     var imgElement = $(this);
-     var id = imgElement.attr('id').split('_')[1];
+        $('td img.img-thumbnail').each(function () {
+            var imgElement = $(this);
+            var id = imgElement.attr('id').split('_')[1];
 
-     if (imgElement.attr('src') === '') {
-         $.ajax({
-             url: '/UrunApi/GetResim',
-             method: 'POST',
-             data: { id: id },
-             xhrFields: {
-                 responseType: 'blob' // Blob tipi ile yanıt alın
-             },
-             success: function (blob) {
-                 var url = URL.createObjectURL(blob);
-                 imgElement.attr('src', url); // Blob URL'yi kullanarak resmi yükle
-             }
-         });
-     }
- });
+            if (imgElement.attr('src') === '') {
+                $.ajax({
+                    url: '/UrunApi/GetResim',
+                    method: 'POST',
+                    data: { id: id },
+                    xhrFields: {
+                        responseType: 'blob' // Blob tipi ile yanıt alın
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        imgElement.attr('src', url); // Blob URL'yi kullanarak resmi yükle
+                    }
+                });
+            }
+        });
     }
     function tabloGuncelle() {
         if (myDataTable) {

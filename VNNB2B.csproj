@@ -590,6 +590,7 @@
     <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2024.2.1" />
     <PackageReference Include="FastReport.OpenSource.Web" Version="2024.2.1" />
     <PackageReference Include="jQuery" Version="3.7.1" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">

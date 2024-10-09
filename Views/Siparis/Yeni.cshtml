@@ -32,7 +32,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Kaydedilmeyen Siparişler</h4>
+                            <center><h2>KAYDEDİLMEYEN SİPARİŞLER</h2></center>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Bayi Seçimi (Yeni Sipariş)</h4>
+                            <center><h2>BAYİ SEÇİMİ (YENİ SİPARİŞ)</h2></center>
                         </div>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
                 {
                     data: 'id',
                     render: function (data, type, full, meta) {
-                        return '<a href="/Siparis/YeniDetay/' + data + '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>'
+                        return '<a href="/Siparis/YeniDetay/' + data + '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a> <button type = "button" onclick = "sil(' + data + ')" class="btn btn-danger btn-sm" > <i class="fas fa-trash" > </i></button>'
                     }
                 }
             ],
@@ -226,6 +226,38 @@
                         window.location.href = result.redirectUrl;
                     }
                 });
+            }
+        });
+    }
+    function sil(element) {
+        swal.fire({
+            title: 'Emin Misin?',
+            text: "Kayıt Silinecek!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'Hayır, Vazgeç!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                silForm(element);
+            }
+        })
+    }
+    function silForm(element) {
+        $.ajax({
+            type: "POST",
+            url: "/SiparisApi/SiparisSil/" + element,
+            dataType: "json",
+            success: function (result) {
+                swal.fire({
+                    title: result.status === "success" ? 'Başarılı!' : 'Başarısız!',
+                    text: result.message,
+                    type: result.status === "success" ? 'success' : 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                tabloGuncelle();
             }
         });
     }

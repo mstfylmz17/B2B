@@ -30,26 +30,28 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Geçmiş Siparişler</h4>
+                            <center><h2>GEÇMİŞ SİPARİŞLER</h2></center>
                         </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
-                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:14px;">
+                    <table id="myTable" class="table table-bordered" style="width:100%; font-size:16px;">
                         <thead>
                             <tr style="background-color:#B17F2C">
-                                <th style="width:9%;"><center>Sipariş No</center></th>
-                                <th style="width:10%;"><center>Bayi Adı</center></th>
-                                <th style="width:10%;"><center>Ürün Resmi</center></th>
-                                <th style="width:6%;"><center>Ürün Kodu</center></th>
-                                <th style="width:13%;"><center>Ürün Adı</center></th>
-                                <th style="width:2%;"><center>Sipariş Adedi</center></th>
-                                <th style="width:2%;"><center>Hazır Adet</center></th>
-                                <th style="width:2%;"><center>Kalan Adet</center></th>
-                                <th style="width:15%;"><center>Ahşap Rengi</center></th>
-                                <th style="width:15%;"><center>Deri Rengi</center></th>
-                                <th style="width:15%;"><center>Özel Not</center></th>
-                                <th style="width:1%;"><center><i class="fas fa-eye"></i></center></th>
+                                <th style="width:5%; color:black;"><center>Sipariş Tarihi</center></th>
+                                <th style="width:5%; color:black;"><center>Sipariş No</center></th>
+                                <th style="width:10%; color:black;"><center>Bayi Adı<br />Sipariş Adı</center></th>
+                                <th style="width:10%; color:black;"><center>Ürün Resmi</center></th>
+                                <th style="width:6%; color:black;"><center>Ürün Kodu</center></th>
+                                <th style="width:10%; color:black;"><center>Ürün Adı</center></th>
+                                <th style="width:4%; color:black;"><center>Sipariş<br /> Adet</center></th>
+                                <th style="width:4%; color:black;"><center>Hazır<br /> Adet</center></th>
+                                <th style="width:4%; color:black;"><center>Kalan<br /> Adet</center></th>
+                                <th style="width:4%; color:black;"><center>Teslim<br /> Adet</center></th>
+                                <th style="width:10%; color:black;"><center>Ahşap Rengi</center></th>
+                                <th style="width:10%; color:black;"><center>Deri Rengi</center></th>
+                                <th style="width:10%; color:black;"><center>Özel Not</center></th>
+                                <th style="width:4%; color:black;"><center><i class="fas fa-eye"></i></center></th>
                             </tr>
                         </thead>
                     </table>
@@ -86,6 +88,12 @@
             },
             columns: [
                 {
+                    data: 'siparisTarihi',
+                    render: function (data, type, full, meta) {
+                        return '<center>' + data + '</center>';
+                    }
+                },
+                {
                     data: 'siparisID',
                     render: function (data, type, full, meta) {
                         return '<center>' + data + '</center>';
@@ -118,7 +126,7 @@
                 {
                     data: 'miktar',
                     render: function (data, type, full, meta) {
-                        return '<center>' + data + '</center>';
+                        return '<center><span class="right badge badge-success" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {
@@ -128,9 +136,15 @@
                     }
                 },
                 {
-                    data: 'teslimAdet',
+                    data: 'kalanMiktar',
                     render: function (data, type, full, meta) {
                         return '<center>' + data + '</center>';
+                    }
+                },
+                {
+                    data: 'teslimAdet',
+                    render: function (data, type, full, meta) {
+                        return '<center><span class="right badge badge-warning" style="font-size:14px;">' + data + '</span></center>';
                     }
                 },
                 {

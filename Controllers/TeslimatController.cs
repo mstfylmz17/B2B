@@ -14,7 +14,7 @@ namespace VNNB2B.Controllers
         public IActionResult Gun()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -28,7 +28,7 @@ namespace VNNB2B.Controllers
         public IActionResult Hafta()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -42,7 +42,7 @@ namespace VNNB2B.Controllers
         public IActionResult Ay()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");
@@ -56,7 +56,7 @@ namespace VNNB2B.Controllers
         public IActionResult Yil()
         {
             HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
-            if (Cerez == null && Cerez == "")
+            if (Cerez == null && Cerez == "" && Cerez == "0")
             {
                 LoginHata.Icerik = "Lütfen Giriş Yapınız...";
                 return RedirectToAction("Index", "Login");

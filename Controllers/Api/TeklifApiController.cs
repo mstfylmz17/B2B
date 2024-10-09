@@ -71,15 +71,39 @@ namespace VNNB2B.Controllers.Api
                     if (urun.Boyut != null)
                         list.UrunAciklama += " <br/> " + urun.Boyut.ToString();
                     if (urun.Resim != null) list.Resim = "data:image/jpeg;base64," + Convert.ToBase64String(urun.Resim);
-                    if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = "";
-                    if (x.Miktar != null) list.Miktar = Convert.ToInt32(x.Miktar).ToString(); else list.Miktar = "1";
-                    if (x.SatirToplam != null && x.SatirToplam > 0) list.SatirToplam = Convert.ToDecimal(x.SatirToplam).ToString("N2") + para; else list.SatirToplam = "0,00" + para;
+                    if (x.Aciklama != null) if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = ""; else list.Aciklama = "Açıklama Yok!";
+                    list.Miktar = Convert.ToInt32(x.Miktar).ToString();
+                    list.KalanMiktar = Convert.ToInt32(x.Miktar - x.TeslimAdet).ToString();
+                    if (x.TeslimAdet != null) list.TeslimAdet = Convert.ToInt32(x.TeslimAdet).ToString(); else list.TeslimAdet = "0";
+                    if (bayi.IskontoOran > 0)
+                    {
+                        if (x.SatirToplam != null && x.SatirToplam > 0) list.SatirToplam = Convert.ToDecimal((x.BirimFiyat * x.Miktar) - (((x.BirimFiyat * bayi.IskontoOran) / 100) * x.Miktar)).ToString("N2") + para; else list.SatirToplam = "0,00" + para;
+                    }
+                    else
+                    {
+                        if (x.SatirToplam != null && x.SatirToplam > 0) list.SatirToplam = Convert.ToDecimal((x.BirimFiyat) * x.Miktar).ToString("N2") + para; else list.SatirToplam = "0,00" + para;
+                    }
                     if (x.BirimFiyat != null && x.BirimFiyat > 0) list.BirimFiyat = Convert.ToDecimal(x.BirimFiyat).ToString("N2") + para; else list.BirimFiyat = "0,00" + para;
-                    var ozellik = c.SiparisIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.ID && v.Durum == true).ToList();
+                    if (x.BirimFiyat != null && x.BirimFiyat > 0) list.indirimFiyat = Convert.ToDecimal(x.BirimFiyat - ((x.BirimFiyat * bayi.IskontoOran) / 100)).ToString("N2") + para; else list.indirimFiyat = "0,00" + para;
+                    var ozellik = c.TeklifIcerikUrunOzellikleris.Where(v => v.SiaprisIcerikID == x.ID && v.Durum == true).ToList();
                     foreach (var v in ozellik)
                     {
                         var o = c.UrunAltOzellikleris.FirstOrDefault(a => a.ID == v.UrunAltOzellikID);
-                        if (o.UrunOzellikTurlariID == 6) list.DeriRengi = o.OzellikAdi.ToString(); else if (o.UrunOzellikTurlariID == 7) { if (o != null) list.AhsapRengi = o.OzellikAdi.ToString(); else list.AhsapRengi = ""; }
+                        if (o.UrunOzellikTurlariID == 6)
+                        {
+                            if (o != null) list.DeriRengi = o.OzellikAdi.ToString();
+                            else list.DeriRengi = "";
+                        }
+                        else if (o.UrunOzellikTurlariID == 7)
+                        {
+                            list.DeriRengi = "";
+                            if (o != null) list.AhsapRengi = o.OzellikAdi.ToString();
+                            else list.AhsapRengi = "";
+                        }
+                        else
+                        {
+                            list.AhsapRengi = "";
+                        }
                     }
                     ham.Add(list);
                 }
@@ -105,16 +129,18 @@ namespace VNNB2B.Controllers.Api
                 if (x.SiparisBayiAciklama != null) list.SiparisBayiAciklama = x.SiparisBayiAciklama; else list.SiparisBayiAciklama = "";
                 var kismivarmi = c.Teslimats.FirstOrDefault(v => v.SiparisID == x.ID && v.Durum == true);
                 if (x.TeslimTarihi != null && kismivarmi != null) list.TeslimTarihi = Convert.ToDateTime(x.TeslimTarihi).ToString("dd/MM/yyyy"); else if (x.TeslimTarihi == null && kismivarmi == null) list.TeslimTarihi = "Teslim Edilmedi..."; else list.TeslimTarihi = "Kısmi Teslimatlar Var...";
-                list.ToplamTeslimEdilen = Convert.ToInt32(c.TeslimatIceriks.Where(v => v.SiparisID == x.ID && v.Durum == true).Sum(v => v.Miktar)).ToString();
+
                 list.SiparisNo = x.SiparisNo.ToString();
                 if (x.SiparisDurum != null) list.SiparisDurum = x.SiparisDurum.ToString(); else list.SiparisDurum = "";
                 list.ToplamAdet = Convert.ToInt32(x.ToplamAdet).ToString();
+                list.SiparisBayiAciklama = x.SiparisBayiAciklama.ToString();
+                if (x.TerminTarihi != null) list.TerminTarihi = Convert.ToDateTime(x.TerminTarihi).ToString("dd/MM/yyyy"); else list.TerminTarihi = "HENÜZ BELİRTİLMEDİ / NOT YET SPECIFIED";
                 list.ToplamTutar = Convert.ToDecimal(x.ToplamTutar).ToString("N2") + para;
                 list.AraToplam = Convert.ToDecimal(x.AraToplam).ToString("N2") + para;
                 list.IstoktoToplam = Convert.ToDecimal(x.IstoktoToplam).ToString("N2") + para;
                 list.DosyaYolu = x.DosyaYolu;
                 list.KDVToplam = Convert.ToDecimal(x.KDVToplam).ToString("N2") + para;
-                if (x.OnaylayanID != null)
+                if (x.OnaylayanID != null && x.OnaylayanID > 0)
                     list.Kullanici = c.Kullanicis.FirstOrDefault(v => v.ID == x.OnaylayanID).AdSoyad.ToString();
                 else
                     list.Kullanici = "";

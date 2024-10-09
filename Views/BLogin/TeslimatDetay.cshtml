@@ -1,0 +1,454 @@
+﻿@using VNNB2B.Models.Hata
+@{
+    ViewData["Title"] = "TeslimatDetay";
+    Layout = "~/Views/Shared/_Bayi.cshtml";
+}
+
+@{
+    string mesaj = ViewBag.hata;
+    var hasError = !string.IsNullOrEmpty(ViewBag.hata);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (hasError)
+    {
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    icon: 'info',
+                    title: '@mesaj'
+                });
+            });
+        </script>
+    }
+    BLoginHata.Icerik = "";
+    int id = Convert.ToInt32(ViewBag.id);
+}
+<style>
+    table.table-tes {
+        border-collapse: collapse;
+        border-color: white;
+        width: 100%;
+    }
+
+        table.table-tes th, table.table-tes td {
+            border: 2px double #000000;
+        }
+
+        table.table-tes th {
+            background-color: #f8f9fa;
+            color: #1E90FF;
+            border-top: 2px solid #1E90FF;
+        }
+
+        table.table-tes td {
+            background-color: white;
+            color: #1E90FF;
+        }
+
+        table.table-tes thead th {
+            border-top: 2px solid #000000;
+        }
+
+    table.dataTable tbody tr {
+        height: 25px;
+    }
+
+    table.dataTable tbody td {
+        line-height: 25px;
+        vertical-align: middle;
+    }
+</style>
+<br />
+<div class="col-lg-12">
+    <div class="card" style="background-color:white;">
+        <div class="card-body">
+            <center><h4 style="color:#1E90FF; font-weight:bold;">TESLİMAT FORMU</h4></center>
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card-body" style="font-size:16px;">
+                                <table class=" table-tes" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; border-color:black;">
+                                                FATURA ÜNVANI
+                                            </th>
+                                            <th style="color:black;" id="txtfaturaunvan"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; border-color:black;">
+                                                FİRMA ADI
+                                            </th>
+                                            <th style="color:black;" id="txtkullanici"></th>
+                                        </tr>
+                                        <tr style="background-color:black; height:20px;">
+                                            <th style="background-color:black;"></th>
+                                            <th style="background-color:black;"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:22.5%; border-color:black;">
+                                                YÜKLEME TARİHİ
+                                            </th>
+                                            <th style="color:red;width:22.5%; text-align: center; font-size:16px;">
+                                              <label id="txtsiparistarihi" style="color:red; border-color:black; height:15px; font-size:14px;"></label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; border-color:black;">
+                                                ŞOFÖR ADI
+                                            </th>
+                                            <th style="color:red;width:22.5%; text-align: center; font-size:16px;">
+                                                <input id="Sofor" type="text" class="form-control" style="background-color:white; color:red;text-align: center; height:20px; font-weight: bold; font-size:17px;" />
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; border-color:black;">
+                                                ŞOFÖR TELEFON
+                                            </th>
+                                            <th style="color:red;width:22.5%; text-align: center; font-size:16px;">
+                                                <input id="Telefon" type="text" class="form-control" style="background-color:white; color:red;text-align: center; height:20px; font-weight: bold; font-size:17px;" />
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; border-color:black;">
+                                                ARAÇ PLAKA
+                                            </th>
+                                            <th style="color:red;width:22.5%; text-align: center; font-size:16px;">
+                                                <input id="Plaka" type="text" class="form-control" style="background-color:white; color:red;text-align: center; height:20px; font-weight: bold; font-size:17px;" />
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card-body">
+                                <table class="table-tes">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:50%; border-color:black;">TOPLAM SİPARİŞ - ADEDİ</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txttopurun"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:50%; border-color:black;">TOPLAM SİPARİŞ - PARÇA ADEDİ</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txttopparca"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:50%; border-color:black;">TOPLAM SİPARİŞ - M3</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txttopm3"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:50%; border-color:black;">TOPLAM SİPARİŞ - KG</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txttopKG"></th>
+                                        </tr>
+                                        <tr style="background-color:black; height:20px;">
+                                            <th style="background-color:black;"></th>
+                                            <th style="background-color:black;"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:50%; border-color:black;">LİSTE TOPLAM</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txtaratoplam"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:50%; border-color:black;">BAYİ İSKONTO %@ViewBag.iskonto</th>
+                                            <th style="width:50%; color:black; text-align: center;" id="txtiskontotoplam"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:50%; border-color:black;">İSKONTOLU FİYAT</th>
+                                            <th style="width:50%; color:black; background-color:lightgray; color:red; text-align: center;" id="txtindirimlifiyat"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:50%; border-color:black;">KDV TOPLAM %@ViewBag.kdv</th>
+                                            <th style="width:50%; color:black; background-color:lightgray; color:red; text-align: center;" id="txtkdvtoplam"></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background-color:dodgerblue; color:black; width:50%; border-color:black;">GENEL TOPLAM</th>
+                                            <th style="width:50%; color:black; background-color:lightgray; color:red; text-align: center;" id="txtgeneltoplam"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12">
+                    <div style="font-size:12px;">
+                        <table class="table table-bordered" id="sepettable">
+                            <thead>
+                                <tr style="background-color:dodgerblue; border-color:dodgerblue">
+                                    <th style="width:5%; border-color:black; color:black;"><center>Sipariş Tarihi</center></th>
+                                    <th style="width:5%; border-color:black; color:black;"><center>Sipariş No</center></th>
+                                    <th style="width:9%; border-color:black; color:black;"><center>Bayi Adı<br />Sipariş Adı</center></th>
+                                    <th style="width:9%; border-color:black; color:black;"><center>Ürün Resmi</center></th>
+                                    <th style="width:6%; border-color:black; color:black;"><center>Ürün Kodu</center></th>
+                                    <th style="width:9%; border-color:black; color:black;"><center>Ürün Adı</center></th>
+                                    <th style="width:5%; border-color:black; color:black;"><center>Teslim<br /> Miktarı</center></th>
+                                    <th style="width:10%; border-color:black; color:black;"><center>Ahşap Rengi</center></th>
+                                    <th style="width:10%; border-color:black; color:black;"><center>Deri Rengi</center></th>
+                                    <th style="width:10%; border-color:black; color:black;"><center>Özel Not</center></th>
+                                    <th style="width:7%; border-color:black; color:black;">
+                                        <center>
+                                            LİSTE FİYAT
+                                        </center>
+                                    </th>
+                                    <th style="width:7%; border-color:black; color:black;">
+                                        <center>
+                                            İNDİRİMLİ FİYAT
+                                        </center>
+                                    </th>
+                                    <th style="width:10%; border-color:black; color:black;">
+                                        <center>
+                                            TOPLAM FİYAT
+                                        </center>
+                                    </th>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script>
+    let DisplayButton = 'inline-block';
+    var teslimdurum = 0;
+    var myDataTable;
+    function initializeDataTable() {
+        myDataTable = new DataTable('#sepettable', {
+            ajax: {
+                url: '/SiparisApi/TeslimatIcerik/@id',
+                method: 'POST',
+                dataSrc: '',
+                error: function (xhr, error, thrown) {
+                    if (xhr.status === 404) {
+                        Swal.fire({
+                            title: 'Veri alınamadı',
+                            animation: false,
+                            customClass: 'animated tada',
+                            padding: '2em'
+                        });
+                    }
+                    return false;
+                }
+            },
+            columns: [
+                {
+                    data: 'siparisTarihi',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'siparisNo',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'bayiID',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'urunID',
+                    render: function (data, type, full, meta) {
+                        return '<center><img id="img_' + data + '" loading="lazy" class="img-thumbnail" style="width: 150px; height: 100px;" src="" /></center>';
+                    }
+                },
+                {
+                    data: 'urunKodu',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'urunAciklama',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        if (teslimdurum == 0) {
+                            return '<input type="number" style="text-align:center; width: 100%; box-sizing: border-box; padding: 4px; margin: 0;" class="miktar-input" id="mik-' + data + '" placeholder="' + row.miktar + '">';
+                        }
+                        else {
+                            return '<div style="color:black;">' + row.miktar + '</div>';
+                        }
+                    }
+                },
+                {
+                    data: 'ahsapRengi',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'deriRengi',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'aciklama',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'birimFiyat',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'indirimFiyat',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+                {
+                    data: 'satirToplam',
+                    render: function (data, type, row, meta) {
+                        return '<div style="text-align: center; color:black;">' + data + '</div>';
+                    }
+                },
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            },
+            paging: false,
+            scrollY: '73vh',
+            scrollCollapse: true,
+            ordering: false,
+            initComplete: function (settings, json) {
+                loadImages();
+            }
+        });
+        myDataTable.on('draw', function () {
+            loadImages();
+        });
+    }
+    function loadImages() {
+        $('td img.img-thumbnail').each(function () {
+            var imgElement = $(this);
+            var id = imgElement.attr('id').split('_')[1];
+
+            if (imgElement.attr('src') === '') {
+                $.ajax({
+                    url: '/UrunApi/GetResim',
+                    method: 'POST',
+                    data: { id: id },
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        imgElement.attr('src', url);
+                    }
+                });
+            }
+        });
+    }
+    function tabloGuncelle() {
+        if (myDataTable) {
+            myDataTable.destroy();
+        }
+        Bilgiler();
+        initializeDataTable();
+    }
+    $(document).ready(function () {
+        Bilgiler();
+        initializeDataTable();
+    })
+    function Bilgiler() {
+        $.ajax({
+            type: "POST",
+            url: "/SiparisApi/TeslimatDetayBilgi",
+            data: { id: @id },
+            success: function (x) {
+                if (x.tamamlanmaDurum == 'Tamamlandi') {
+                    teslimdurum = 1;
+                    DisplayButton = "none";
+                }
+
+                $("#Plaka").val(x.aracPlaka);
+                $("#txtTeslimEden").text(x.teslimEden);
+                $("#Sofor").val(x.teslimatNo);
+                $("#Telefon").val(x.teslimAlan);
+                $("#txtsiparistarihi").text(x.teslimatTarihi);
+
+                $("#txttopurun").text(x.toplamAdet);
+                $("#txttopparca").text(x.toplamParca);
+                $("#txttopm3").text(x.toplamM3);
+                $("#txttopKG").text(x.toplamKG);
+
+                $("#txtfaturaunvan").text(x.faturaUnvan);
+                $("#txttelefon").text(x.telefon);
+                $("#txtadres").text(x.adres);
+                $("#txtkullanici").text(x.musteriAdi);
+                $("#txttesadres").text(x.teslimAdres);
+
+                $("#txtaratoplam").text(x.araToplam);
+                $("#txtgeneltoplam").text(x.toplamTutar);
+                $("#txtiskontotoplam").text(x.istoktoToplam);
+                $("#txtkdvtoplam").text(x.kdvToplam);
+                $("#txtindirimlifiyat").text(x.indirimlifiyat);
+
+                $("#filePreview").attr("src", x.dosyaYolu);
+
+                $('#duzenlebutton').css("display", DisplayButton);
+            }
+        });
+    }
+
+    // function yazdir() {
+    //     $.ajax({
+    //         url: '/Siparis/TeslimatYazdir?id=' + @id,
+    //         type: 'GET',
+    //         success: function (response) {
+    //             var pdfUrl = response.pdfUrl;
+    //             var reportName = response.fileName;
+    //             downloadPDF(pdfUrl, reportName);
+    //         },
+    //         error: function (error) {
+    //             console.error("Error while downloading PDF:", error);
+    //         }
+    //     });
+    // }
+    // function downloadPDF(pdfUrl, reportName) {
+    //     var link = document.createElement("a");
+    //     link.href = pdfUrl;
+    //     link.download = reportName;
+    //     link.click();
+    // }
+    // function base64ToArrayBuffer(base64) {
+    //     var binaryString = window.atob(base64);
+    //     var binaryLen = binaryString.length;
+    //     var bytes = new Uint8Array(binaryLen);
+    //     for (var i = 0; i < binaryLen; i++) {
+    //         var ascii = binaryString.charCodeAt(i);
+    //         bytes[i] = ascii;
+    //     }
+    //     return new Promise((resolve, reject) => {
+    //         resolve(bytes);
+    //     });
+    // }
+    // function saveByteArray(reportName, byte) {
+    //     var blob = new Blob([byte], { type: "application/pdf" });
+    //     var link = document.createElement("a");
+    //     link.type = blob.type;
+    //     link.href = window.URL.createObjectURL(blob);
+    //     link.download = reportName;
+    //     link.click();
+    // }
+</script>

@@ -31,12 +31,14 @@ namespace VNNB2B.Controllers.Api
                 DtoSatinAlmaTalepler list = new DtoSatinAlmaTalepler();
                 list.ID = Convert.ToInt32(x.ID);
                 list.UrunID = grup.Adi + " - " + urun.UrunKodu.ToString() + " - " + urun.UrunAdi.ToString();
+                if (urun.Boyut != null)
+                    list.UrunID += "<br/>" + urun.Boyut.ToString();
                 list.Urun = x.UrunID.ToString();
                 list.Birim = birim.BirimAdi.ToString();
                 list.Tarih = Convert.ToDateTime(x.Tarih).ToString("dd/MM/yyyy");
                 list.Miktar = Convert.ToDecimal(x.Miktar).ToString("N2");
                 list.TalepEden = x.TalepEden.ToString();
-                if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = "";
+                if (x.Aciklama != null) if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = ""; else list.Aciklama = "";
                 var endusuktl = c.SatinAlmaIcerikFiyat.Where(v => v.SatinAlmaTalepID == x.ID && v.Durum == true && v.ParaBirimiID == 1).OrderBy(V => V.BirimFiyat).FirstOrDefault();
                 var endusukusd = c.SatinAlmaIcerikFiyat.Where(v => v.SatinAlmaTalepID == x.ID && v.Durum == true && v.ParaBirimiID == 2).OrderBy(V => V.BirimFiyat).FirstOrDefault();
                 var endusukeuro = c.SatinAlmaIcerikFiyat.Where(v => v.SatinAlmaTalepID == x.ID && v.Durum == true && v.ParaBirimiID == 3).OrderBy(V => V.BirimFiyat).FirstOrDefault();
@@ -60,11 +62,13 @@ namespace VNNB2B.Controllers.Api
                 DtoSatinAlmaTalepler list = new DtoSatinAlmaTalepler();
                 list.ID = Convert.ToInt32(x.ID);
                 list.UrunID = urun.UrunKodu.ToString() + " - " + urun.UrunAdi.ToString();
+                if (urun.Boyut != null)
+                    list.UrunID += "<br/>" + urun.Boyut.ToString();
                 list.Birim = birim.BirimAdi.ToString();
                 list.Tarih = Convert.ToDateTime(x.Tarih).ToString("dd/MM/yyyy");
                 list.Miktar = Convert.ToDecimal(x.Miktar).ToString("N2");
                 list.TalepEden = x.TalepEden.ToString();
-                if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = "";
+                if (x.Aciklama != null) if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = ""; else list.Aciklama = "";
                 ham.Add(list);
             }
             return Json(ham);
@@ -145,7 +149,7 @@ namespace VNNB2B.Controllers.Api
                 list.ID = Convert.ToInt32(x.ID);
                 if (x.ParaBirimiID != null) { list.ParaBirimiID = parabirimi.ParaBirimAdi.ToString(); if (parabirimi.ParaBirimAdi == "TL") kisa = "₺"; else if (parabirimi.ParaBirimAdi == "USD") kisa = "$"; else if (parabirimi.ParaBirimAdi == "EURO") kisa = "€"; } else list.ParaBirimiID = "";
                 if (ted.Length > 0) list.TedarikciID = ted; else list.TedarikciID = "Tanımlanmamış Yanlış Kayıt...";
-                if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = "";
+                if (x.Aciklama != null) if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = ""; else list.Aciklama = "";
                 if (x.BirimFiyat != null) list.BirimFiyat = Convert.ToDecimal(x.BirimFiyat).ToString("N2") + kisa; else list.BirimFiyat = "0,00" + kisa;
                 if (x.kdvoran != null) list.KDV = Convert.ToInt32(x.kdvoran).ToString("N2"); else list.KDV = "0";
                 ham.Add(list);
@@ -351,6 +355,43 @@ namespace VNNB2B.Controllers.Api
             return Json(result);
         }
         [HttpPost]
+        public IActionResult UretimOlustur([FromBody] List<int> selectedIds)
+        {
+            HttpContext.Request.Cookies.TryGetValue("VNNCerez", out var Cerez);
+            int kulid = Convert.ToInt32(Cerez);
+            var result = new { status = "error", message = "İşlem Başarısız..." };
+            var kul = c.Kullanicis.FirstOrDefault(v => v.ID == kulid);
+            if (kul != null)
+            {
+                foreach (var x in selectedIds)
+                {
+                    var tal = c.SatinAlmaTalepleri.FirstOrDefault(v => v.ID == x);
+                    UretimIsEmirleri u = new UretimIsEmirleri();
+                    u.SatinAlmaIcerikID = tal.ID;
+                    u.KullaniciID = kulid;
+                    u.UrunID = tal.UrunID;
+                    u.SiparisAdet = Convert.ToInt32(tal.Miktar);
+                    u.GelenAdet = Convert.ToInt32(tal.Miktar);
+                    u.GorulduMu = false;
+                    u.KalanAdet = Convert.ToInt32(tal.Miktar);
+                    u.Durum = true;
+                    u.IslemdekiAdet = 0;
+                    u.GidenAdet = 0;
+                    u.BitirmeDurum = false;
+                    c.UretimIsEmirleris.Add(u);
+                    c.SaveChanges();
+                    tal.Durum = false;
+                    c.SaveChanges();
+                }
+                result = new { status = "success", message = "Seçili Ürünler İçin Üretim İş Emri Oluşturuldu..." };
+            }
+            else
+            {
+                result = new { status = "error", message = "Yetkiniz Yok Lütfen Yöneticinize Başvurunuz..." };
+            }
+            return Json(result);
+        }
+        [HttpPost]
         public IActionResult SatinAlmaBekleyenList()
         {
             var veri = c.SatinAlmas.Where(v => v.Durum == true && v.OnayDurum != true).OrderByDescending(v => v.ID).ToList();
@@ -395,9 +436,10 @@ namespace VNNB2B.Controllers.Api
                 DtoSatinAlmaIcerik list = new DtoSatinAlmaIcerik();
                 list.ID = Convert.ToInt32(x.ID);
                 list.UrunID = grup.Adi + " - " + urun.UrunKodu.ToString() + " - " + urun.UrunAdi.ToString();
+                if (urun.Boyut != null) list.UrunID += "<br/>" + urun.Boyut.ToString();
                 list.Urun = x.UrunID.ToString();
                 if (x.Renk != null) list.Renk = x.Renk.ToString(); else list.Renk = "";
-                if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = "";
+                if (x.Aciklama != null) if (x.Aciklama != null) list.Aciklama = x.Aciklama.ToString(); else list.Aciklama = ""; else list.Aciklama = "";
                 if (x.BirimFiyat != null) list.BirimFiyat = Convert.ToDecimal(x.BirimFiyat).ToString("N2");
                 if (x.SatirToplam != null) list.SatirToplam = Convert.ToDecimal(x.SatirToplam).ToString("N2") + parakisa;
                 list.KabulMiktar = x.KabulMiktar.ToString();
@@ -581,7 +623,7 @@ namespace VNNB2B.Controllers.Api
             {
                 SatinAlmaHata.Icerik = "Onay Evrağını Eklemeden Siparişi Onaylayamazsınız...";
             }
-            return RedirectToAction("Index", "Bekleyen");
+            return RedirectToAction("Bekleyen", "SatinAlma");
         }
         [HttpPost]
         public IActionResult KabulOlustur(SatinAlmaIcerik i)

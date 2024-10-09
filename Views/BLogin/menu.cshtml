@@ -17,8 +17,12 @@
         <script>
             $(document).ready(function () {
                 Swal.fire({
-                    icon: 'info',
-                    title: '@mesaj'
+                    imageUrl: '/Resimler/vnnlogotrans.png',
+                    imageWidth: 450,
+                    imageHeight: 200,
+                    imageAlt: 'Resim açıklaması',
+                    title: ' ',
+                    html: '@Html.Raw(mesaj)',
                 });
             });
         </script>
@@ -30,6 +34,42 @@
     int bayiid = Convert.ToInt32(cerez);
     var bayi = c.Bayilers.FirstOrDefault(v => v.ID == bayiid);
 }
+
+
+<style>
+    table.table-tab {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        table.table-tab th, table.table-tab td {
+            border: 2px double #B17F2C;
+        }
+
+        table.table-tab th {
+            background-color: #f8f9fa;
+            color: #B17F2C;
+            border-top: 2px solid #B17F2C;
+        }
+
+        table.table-tab td {
+            background-color: white;
+            color: #B17F2C;
+        }
+
+        table.table-tab thead th {
+            border-top: 2px solid #B17F2C;
+        }
+
+    table.dataTable tbody tr {
+        height: 25px;
+    }
+
+    table.dataTable tbody td {
+        line-height: 25px;
+        vertical-align: middle;
+    }
+</style>
 
 <div class="card">
     <div class="card-header">
@@ -68,16 +108,17 @@
             <div class="card-body" style="font-size:14px;">
                 <table id="SipTable" class="table table-bordered">
                     <thead>
-                        <tr>
-                            <th>Sipariş No / Order No</th>
+                        <tr style="background-color:#B17F2C">
                             <th>
-                                Sipariş Tarihi / Order Date
+                                SİPARİŞ TARİHİ / ORDER DATE
                             </th>
+                            <th>SİPARİŞ NO / ORDER NO</th>
+                            <th>SİPARİŞ ADI / ORDER NAME</th>
                             <th>
-                                Sipariş Durumu /
-                                Order Status
+                                SİPARİŞ DURUMU /
+                                ORDER STATUS
                             </th>
-                            <th>Sipariş Detay / Order Detail</th>
+                            <th>SİPARİŞ DETAY / ORDER DETAIL</th>
                         </tr>
                     </thead>
                 </table>
@@ -132,8 +173,9 @@
                 }
             },
             columns: [
-                { data: 'siparisNo' },
                 { data: 'siparisTarihi' },
+                { data: 'siparisNo' },
+                { data: 'siparisBayiAciklama' },
                 {
                     data: 'siparisDurum',
                     render: function (data, type, full, meta) {
